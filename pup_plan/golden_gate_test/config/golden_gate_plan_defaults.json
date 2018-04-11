@@ -1,0 +1,12 @@
+{
+  "defaults": [
+    {
+      "name": "Transform Cells from Stripwell",
+      "defaults": { "Comp Cells": "DH5alpha" }
+    },
+    {
+      "name": "Send to Sequencing",
+      "defaults": { "Sequencing Primer": "SequencingCustom_F" }
+    }
+  ]
+}

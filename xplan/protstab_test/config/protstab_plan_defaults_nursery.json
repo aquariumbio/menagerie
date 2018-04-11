@@ -1,0 +1,51 @@
+{
+  "concentrations": {
+    "default": 0,
+
+    "T1": 9.5,
+    "T2": 28,
+    "T3": 83,
+    "T4": 250,
+    "T5": 750,
+    "T6": 2250,
+
+    "C1": 9.5,
+    "C2": 28,
+    "C3": 83,
+    "C4": 250,
+    "C5": 750,
+    "C6": 2250
+  },
+  "input_samples": {
+    "http://hub.sd2e.org/user/sd2e/protstab/Y/1": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/naive": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/naive-P0": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C1": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C2": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C2-expressing": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C3": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C4": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C4-expressing": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C5": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/C6": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T1": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T2": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T2-expressing": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T3": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T4": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T4-expressing": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T5": 17136,
+    "http://hub.sd2e.org/user/sd2e/022218/T6": 17136,
+    "http://hub.sd2e.org/user/sd2e/design/55555/1": 17137,
+    "http://hub.sd2e.org/user/sd2e/design/66666/1": 17081,
+    "http://sd2e.org#Chymotrypsin":	17021,
+    "http://sd2e.org#Trypsin": 17020
+  },
+  "defaults": [
+    {"name": "Innoculate Yeast Library", "defaults": {"Media": "SDO -His -Trp -Ura"} },
+    {"name": "Dilute Yeast Library", "defaults": {"Media": "SDO + 2% Galactose -His -Trp -Ura"} },
+    {"name": "Challenge and Label", "defaults": {"Antibody": "Anti-Myc-FITC"} },
+    {"name": "Sort Yeast Display Library", "defaults": {"Control?": "no", "Sort?": "yes"} },
+    {"name": "Store Yeast Library Sample", "defaults": {} }
+  ]
+}
