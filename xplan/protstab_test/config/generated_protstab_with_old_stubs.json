@@ -1,0 +1,654 @@
+{
+    "cost": 9.0,
+    "experimentId": "1",
+    "experimentLab": "biofab",
+    "experimentSet": "https://hub.sd2e.org/user/sd2e/experiment/protstab_Q2/1",
+    "id": "https://hub.sd2e.org/user/sd2e/experiment/biofab_protstab_Q2_1/1",
+    "name": "protstab-Q2_1_biofab_bae762e4-4df5-44b4-984d-3f24f7475785_Plan",
+    "steps": [
+        {
+            "id": 0,
+            "name": "Step 0",
+            "operator": {
+                "comment": "...",
+                "description": "...",
+                "id": 0,
+                "name": "Provision Operator",
+                "transformations": [
+                    {
+                        "destination": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1",
+                        "source": "https://hub.sd2e.org/user/sd2e/design/Y/1"
+                    },
+                    {
+                        "destination": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1",
+                        "source": "https://hub.sd2e.org/user/sd2e/design/d66666/1"
+                    },
+                    {
+                        "destination": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796/1",
+                        "source": "https://hub.sd2e.org/user/sd2e/design/d55555/1"
+                    },
+                    {
+                        "destination": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1",
+                        "source": "https://hub.sd2e.org/user/sd2e/design/Trypsin/1"
+                    },
+                    {
+                        "destination": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1",
+                        "source": "https://hub.sd2e.org/user/sd2e/design/Chymotrypsin/1"
+                    }
+                ],
+                "type": "provision"
+            }
+        },
+        {
+            "id": 1,
+            "name": "Step 1",
+            "operator": {
+                "comment": "...",
+                "description": "...",
+                "id": 1,
+                "instrument_configuration": "agave://data-sd2e-community/biofab/instruments/facs_aria/P65011000073/04032018/cytometer_configuration.json",
+                "manifest": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/manifest/manifest.json",
+                "measurements": [
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s858_R966.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R966/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s858_R1047.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1047/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s858_R1128.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s858_R1209.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1209/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s858_R1290.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s827_R1343.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1343/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s827_R1396.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1396/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s827_R1449.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1449/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/1/instrument_output/s796_R1498.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R1498/1"
+                    }
+                ],
+                "name": "Protstab Round",
+                "transformations": [
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R966/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1047/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1209/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1343/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1396/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1449/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R1498/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796/1"
+                        ]
+                    }
+                ],
+                "type": "protstab_round"
+            }
+        },
+        {
+            "id": 2,
+            "name": "Step 2",
+            "operator": {
+                "comment": "...",
+                "description": "...",
+                "id": 2,
+                "instrument_configuration": "agave://data-sd2e-community/biofab/instruments/facs_aria/P65011000073/04032018/cytometer_configuration.json",
+                "manifest": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/manifest/manifest.json",
+                "measurements": [
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1128_R1590.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1590/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1128_R1645.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1645/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1128_R1700.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1290_R1748.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1748/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1290_R1796.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1796/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s858_R1290_R1844.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s827_R1905.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1905/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s827_R1966.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1966/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s827_R2027.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2027/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/2/instrument_output/s796_R2084.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R2084/1"
+                    }
+                ],
+                "name": "Protstab Round",
+                "transformations": [
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1590/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1645/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1748/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1796/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1905/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R1966/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2027/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R2084/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796/1"
+                        ]
+                    }
+                ],
+                "type": "protstab_round"
+            }
+        },
+        {
+            "id": 3,
+            "name": "Step 3",
+            "operator": {
+                "comment": "...",
+                "description": "...",
+                "id": 3,
+                "instrument_configuration": "agave://data-sd2e-community/biofab/instruments/facs_aria/P65011000073/04032018/cytometer_configuration.json",
+                "manifest": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/manifest/manifest.json",
+                "measurements": [
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2176.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2176/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2231/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2286/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2334.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2334/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2382/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2430/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s827_R2491.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2491/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s827_R2552.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2552/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s827_R2613.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2613/1"
+                    },
+                    {
+                        "file": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s796_R2670.fcs",
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R2670/1"
+                    }
+                ],
+                "name": "Protstab Round",
+                "transformations": [
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2176/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2231/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2286/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s712/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2334/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2382/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2430/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1",
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s765/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2491/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2552/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827_R2613/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s827/1"
+                        ]
+                    },
+                    {
+                        "destination": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796_R2670/1"
+                        ],
+                        "source": [
+                            "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s796/1"
+                        ]
+                    }
+                ],
+                "type": "protstab_round"
+            }
+        },
+        {
+            "id": 4,
+            "name": "Step 4",
+            "operator": {
+                "comment": "...",
+                "description": "...",
+                "id": 4,
+                "manifest": "agave://data-sd2e-community/biofab/protstab-Q2/1/3/manifest/manifest.json",
+                "measurements": [
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1209_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1209/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1047_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1047/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R966_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R966/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2382_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2382/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2231_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2231/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1796_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1796/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1645_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1645/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_R2430_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844_R2430/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_R2286_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700_R2286/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1290_R1844_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1290_R1844/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_R1128_R1700_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858_R1128_R1700/1"
+                    },
+                    {
+                        "file": [
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0001_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0001_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0002_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0002_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0003_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0003_R2.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0004_R1.fastq",
+                            "agave://data-sd2e-community/biofab/protstab-Q2/1/3/instrument_output/s858_L0004_R2.fastq"
+                        ],
+                        "source": "https://hub.sd2e.org/user/sd2e/biofab_protstab_Q2_1/s858/1"
+                    }
+                ],
+                "name": "DNA Seq Operator",
+                "type": "dna_seq"
+            }
+        }
+    ]
+}

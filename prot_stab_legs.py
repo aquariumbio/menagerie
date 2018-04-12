@@ -76,7 +76,8 @@ class SampleLeg(ProtStabLeg):
 
     def get_protease(self, source):
         protease_inputs = self.plan_step.get_inputs('Protease')
-        p = [x for x in self.source if x in protease_inputs] or ['http://sd2e.org#Trypsin']
+        default = [self.ext_plan.default_protease]
+        p = [x for x in self.source if x in protease_inputs] or default
         return self.ext_plan.input_samples[p[0]]
 
     def get_treatment_key(self):

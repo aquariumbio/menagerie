@@ -17,7 +17,7 @@
     "C6": 2250
   },
   "input_samples": {
-    "http://hub.sd2e.org/user/sd2e/protstab/Y/1": 17136,
+    "https://hub.sd2e.org/user/sd2e/design/Y/1": 17136,
     "http://hub.sd2e.org/user/sd2e/022218/naive": 17136,
     "http://hub.sd2e.org/user/sd2e/022218/naive-P0": 17136,
     "http://hub.sd2e.org/user/sd2e/022218/C1": 17136,
@@ -36,13 +36,19 @@
     "http://hub.sd2e.org/user/sd2e/022218/T4-expressing": 17136,
     "http://hub.sd2e.org/user/sd2e/022218/T5": 17136,
     "http://hub.sd2e.org/user/sd2e/022218/T6": 17136,
-    "http://hub.sd2e.org/user/sd2e/design/55555/1": 17137,
-    "http://hub.sd2e.org/user/sd2e/design/66666/1": 17081,
-    "http://sd2e.org#Chymotrypsin":	17021,
-    "http://sd2e.org#Trypsin": 17020
+    "https://hub.sd2e.org/user/sd2e/design/d55555/1": 17137,
+    "https://hub.sd2e.org/user/sd2e/design/d66666/1": 17081,
+    "https://hub.sd2e.org/user/sd2e/design/Trypsin/1":	17021,
+    "https://hub.sd2e.org/user/sd2e/design/Chymotrypsin/1": 17020
   },
   "defaults": [
-    {"name": "Innoculate Yeast Library", "defaults": {"Media": "SDO -His -Trp -Ura"} },
+    {
+      "name": "Innoculate Yeast Library",
+      "defaults": {
+        "Media": "SDO -His -Trp -Ura",
+        "Options": "{}"
+      }
+    },
     {"name": "Dilute Yeast Library", "defaults": {"Media": "SDO + 2% Galactose -His -Trp -Ura"} },
     {"name": "Challenge and Label", "defaults": {"Antibody": "Anti-Myc-FITC"} },
     {"name": "Sort Yeast Display Library", "defaults": {"Control?": "no", "Sort?": "yes"} },
