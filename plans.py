@@ -82,13 +82,16 @@ class PlanStep:
     def __init__(self, plan, plan_step):
         self.plan = plan
         self.plan_step = plan_step
+        self.transformations = []
 
-    def get_transformations_by_input(self, input_sample):
-        return [t for t in self.transformations if input_sample in t['source']]
+    def get_transformations_by_input(self, input):
+        txns = self.transformations
+        return [t for t in txns if input in t.source_samples()]
 
     def uniq_plan_inputs(self):
-        plan_inputs = [t['source'] for t in self.transformations]
-        return sorted(list(set(PlanStep.flatten_list(plan_inputs))))
+        plan_inputs = [t.source_samples() for t in self.transformations]
+        plan_inputs = [i for i in self.flatten_list(plan_inputs)]
+        return sorted(list(set(plan_inputs)))
 
     def get_inputs(self, sample_type_name):
         sample_type_inputs = []
@@ -102,6 +105,7 @@ class PlanStep:
 
         return sample_type_inputs
 
+    @staticmethod
     def flatten_list(nested_list):
         flattened = []
 
@@ -113,3 +117,8 @@ class PlanStep:
                 flattened.append(element)
 
         return flattened
+
+
+class Transformation:
+    def __init__(self, transformation):
+        pass

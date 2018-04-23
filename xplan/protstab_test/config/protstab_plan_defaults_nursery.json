@@ -17,29 +17,11 @@
     "C6": 2250
   },
   "input_samples": {
-    "https://hub.sd2e.org/user/sd2e/design/Y/1": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/naive": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/naive-P0": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C1": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C2": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C2-expressing": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C3": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C4": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C4-expressing": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C5": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/C6": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T1": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T2": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T2-expressing": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T3": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T4": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T4-expressing": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T5": 17136,
-    "http://hub.sd2e.org/user/sd2e/022218/T6": 17136,
-    "https://hub.sd2e.org/user/sd2e/design/d55555/1": 17137,
-    "https://hub.sd2e.org/user/sd2e/design/d66666/1": 17081,
-    "https://hub.sd2e.org/user/sd2e/design/Trypsin/1":	17021,
-    "https://hub.sd2e.org/user/sd2e/design/Chymotrypsin/1": 17020
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/Y\/1": 17136,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21535\/1": 17137,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21171\/1": 17081,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_2\/1":	17021,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_1\/1": 17020
   },
   "defaults": [
     {
@@ -49,9 +31,29 @@
         "Options": "{}"
       }
     },
-    {"name": "Dilute Yeast Library", "defaults": {"Media": "SDO + 2% Galactose -His -Trp -Ura"} },
-    {"name": "Challenge and Label", "defaults": {"Antibody": "Anti-Myc-FITC"} },
-    {"name": "Sort Yeast Display Library", "defaults": {"Control?": "no", "Sort?": "yes"} },
-    {"name": "Store Yeast Library Sample", "defaults": {} }
+    {
+      "name": "Dilute Yeast Library",
+      "defaults": {
+        "Media": "SDO + 2% Galactose -His -Trp -Ura"
+      }
+    },
+    {
+      "name": "Challenge and Label",
+      "defaults": {
+        "Antibody":
+        "Anti-Myc-FITC"
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "defaults": {
+        "Control?": "no",
+        "Sort?": "yes"
+      }
+    },
+    {
+      "name": "Store Yeast Library Sample",
+      "defaults": {}
+    }
   ]
 }

@@ -11,26 +11,32 @@ def get_op(leg, name):
 
 
 class Leg:
-    def __init__(self, plan_step, source, destination, leg_order, aq_defaults_path):
+
+    leg_order = []
+    primary_handles = []
+
+    def __init__(self, plan_step, cursor, aq_defaults_path):
         self.plan_step = plan_step
         self.ext_plan = self.plan_step.plan
         self.aq_plan = self.ext_plan.aq_plan
-        self.source = source
-        self.destination = destination
-        self.set_params(leg_order)
-        self.set_container_types(aq_defaults_path)
         self.session = self.ext_plan.session
+        self.cursor = cursor
+        self.set_params()
+        self.set_container_types(aq_defaults_path)
 
-        self.primary_handles = []
         self.sample_io = {}
-        self.aq_plan_objs = {
+        self.aq_plan_objs = Leg.get_init_plan_objects()
+
+    def get_init_plan_objects():
+        init_plan_objs = {
             'ops': [],
             'wires': []
         }
+        return init_plan_objs
 
-    def set_params(self, leg_order):
+    def set_params(self):
         self.params = []
-        for x in leg_order:
+        for x in self.leg_order:
             p = copy.deepcopy(get_op(self.ext_plan.defaults, x))
             p = p or { "name": x, "defaults": {} }
             self.params.append(p)
@@ -60,18 +66,21 @@ class Leg:
                     raise 'Option required to specify container: ' + container_name
             return self.session.ObjectType.where({'name': container_name})[0]
 
-    def add(self, cursor, container_opt=None):
-        self.create(cursor, container_opt)
+    def add(self, source, destination, container_opt=None):
+        self.create(source, destination, container_opt)
         self.aq_plan.add_operations(self.aq_plan_objs['ops'])
         self.aq_plan.add_wires(self.aq_plan_objs['wires'])
+        print('### ' + str(len(self.aq_plan.operations)) + 'total operations')
+        print()
         return self.aq_plan_objs
 
-    def create(self, cursor, container_opt):
+    def create(self, source, destination, container_opt):
         for i in range(len(self.params)):
             step_params = self.params[i]
-            op = self.initialize_op(step_params['name'], cursor)
+            print("Added " + step_params['name'])
+            op = self.initialize_op(step_params['name'])
 
-            cursor.decr_y()
+            self.cursor.decr_y()
 
             step_defaults = step_params['defaults']
             this_io = { **step_defaults, **self.sample_io }
@@ -104,7 +113,7 @@ class Leg:
 
             if i > 0: self.wire_internal(i)
 
-    def initialize_op(self, ot_name, cursor):
+    def initialize_op(self, ot_name):
         op_types = self.session.OperationType.where({
             'name': ot_name,
             "deployed": True
@@ -112,8 +121,8 @@ class Leg:
         op_type = op_types[0]
 
         op = op_type.instance()
-        op.x = cursor.x
-        op.y = cursor.y
+        op.x = self.cursor.x
+        op.y = self.cursor.y
 
         return op
 

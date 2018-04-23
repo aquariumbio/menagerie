@@ -1,7 +1,7 @@
 import json
 import re
 
-from plans import ExternalPlan, PlanStep
+from plans import ExternalPlan, PlanStep, Transformation
 
 import pydent
 from pydent import models
@@ -20,16 +20,19 @@ class XPlan(ExternalPlan):
             self.concentrations = plan_defaults['concentrations']
 
             self.input_samples = {}
-            # for uri, sample_id in plan_defaults['input_samples'].items():
-            #     self.input_samples[uri] = self.session.Sample.find(sample_id)
-            sids = plan_defaults['input_samples']
             for txn in self.provision_steps()[0].transformations:
-                dst_uri = txn['destination']
-                src_uri = txn['source']
-                sample = self.session.Sample.find(sids[src_uri])
-                self.input_samples[dst_uri] = sample
+                dst_uri = txn.destination[0]['sample']
+                src_uri = txn.source[0]['sample']
+                sample = self.session.Sample.find(plan_defaults['input_samples'][src_uri])
+                self.add_input_sample(dst_uri, sample)
+
+        # Assumes that there is only one source and only one dna_seq_step
+        self.ngs_samples = self.dna_seq_steps()[0].measured_samples
 
         self.set_default_protease()
+
+    def add_input_sample(self, uri, sample):
+        self.input_samples[uri] = sample
 
     def get_steps_by_type(self, type):
         return [s for s in self.steps if s.operator_type == type]
@@ -49,20 +52,32 @@ class XPlan(ExternalPlan):
     def protstab_round_steps(self):
         return self.get_steps_by_type('protstab_round')
 
-    def ngs_samples(self):
-        ngs_map = [x.measurements for x in self.dna_seq_steps()][0]
-        return [x['source'] for x in ngs_map]
-
     def set_default_protease(self):
-        pat = re.compile(r'(?<!chymo)trypsin', re.IGNORECASE)
+        def_prot_pat = re.compile(r'protease_2', re.IGNORECASE)
+
+        possible_defaults = self.protease_inputs()
+        test = [s for s in possible_defaults if re.search(def_prot_pat, s)]
+
+        if test:
+            unprovisioned = test[0]
+
+        else:
+            unprovisioned = possible_defaults[0]
+
         txns = self.provision_steps()[0].transformations
-        self.default_protease = [t['destination'] for t in txns if re.search(pat, t['source'])][0]
+        provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
+        self.default_protease = provisioned.destination[0]['sample']
 
-    def get_concentration(self, key):
-        return self.concentrations.get(key) or self.concentrations.get('default')
+    def protease_inputs(self):
+        protease_inputs = []
+        prot_pat = re.compile(r'protease', re.IGNORECASE)
 
-    def get_treatment_key(destination):
-        return destination.split('/')[-1]
+        for t in self.provision_steps()[0].transformations:
+            for s in t.source:
+                if re.search(prot_pat, s['sample']):
+                    protease_inputs.append(s['sample'])
+
+        return list(set(protease_inputs))
 
 
 class XPlanStep(PlanStep):
@@ -76,11 +91,52 @@ class XPlanStep(PlanStep):
         self.operator = self.plan_step['operator']
         self.operator_type = self.operator['type']
 
-        self.transformations = self.operator.get('transformations')
+        self.transformations = []
+        for txn in self.operator.get('transformations', []):
+            self.transformations.append(XPlanTransformation(txn))
 
-        self.measurements = self.operator.get('measurements')
+        self.measurements = []
+        for msmt in self.operator.get('measurements', []):
+            self.measurements.append(XPlanMeasurement(msmt))
+
+        self.measured_samples = [m.source for m in self.measurements]
+
+        # self.flow_samples = [m.source for m in self.measurements if m.file.endswith('.fcs')]
 
     # TODO: Need to make this sort for the GUI layout.
     def get_sorted_transformations(self):
         txns = self.operator.get('transformations')
         return txns
+
+
+class XPlanTransformation(Transformation):
+    def __init__(self, transformation):
+        super().__init__(transformation)
+        self.source = self.format(transformation['source'])
+        self.destination = self.format(transformation['destination'])
+
+    def source_samples(self):
+        return [x['sample'] for x in self.source]
+
+    def destination_samples(self):
+        return [x['sample'] for x in self.destination]
+
+    @staticmethod
+    def format(element):
+        if isinstance(element, list):
+            return [{ 'sample': e } if isinstance(e, str) else e for e in element]
+
+        elif isinstance(element, dict):
+            return [element]
+
+        elif isinstance(element, str):
+            return [{ 'sample': element }]
+
+        else:
+            raise Exception('Format of %s not recognized' % str(element))
+
+
+class XPlanMeasurement():
+    def __init__(self, measurement):
+        self.source = measurement['source']
+        self.file = measurement['file']
