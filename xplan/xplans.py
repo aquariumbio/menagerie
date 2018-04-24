@@ -17,7 +17,7 @@ class XPlan(ExternalPlan):
             plan_defaults = json.load(f)
 
             # This is unique to protein stability and should be moved
-            self.concentrations = plan_defaults['concentrations']
+            # self.concentrations = plan_defaults['concentrations']
 
             self.input_samples = {}
             for txn in self.provision_steps()[0].transformations:
@@ -53,9 +53,9 @@ class XPlan(ExternalPlan):
         return self.get_steps_by_type('protstab_round')
 
     def set_default_protease(self):
-        def_prot_pat = re.compile(r'protease_2', re.IGNORECASE)
+        def_prot_pat = re.compile(r'protease_1', re.IGNORECASE)
 
-        possible_defaults = self.protease_inputs()
+        possible_defaults = self.raw_protease_inputs()
         test = [s for s in possible_defaults if re.search(def_prot_pat, s)]
 
         if test:
@@ -64,11 +64,9 @@ class XPlan(ExternalPlan):
         else:
             unprovisioned = possible_defaults[0]
 
-        txns = self.provision_steps()[0].transformations
-        provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
-        self.default_protease = provisioned.destination[0]['sample']
+        self.default_protease = self.get_provisioned(unprovisioned)
 
-    def protease_inputs(self):
+    def raw_protease_inputs(self):
         protease_inputs = []
         prot_pat = re.compile(r'protease', re.IGNORECASE)
 
@@ -78,6 +76,14 @@ class XPlan(ExternalPlan):
                     protease_inputs.append(s['sample'])
 
         return list(set(protease_inputs))
+
+    def prov_protease_inputs(self):
+        return [self.get_provisioned(i) for i in self.raw_protease_inputs()]
+
+    def get_provisioned(self, unprovisioned):
+        txns = self.provision_steps()[0].transformations
+        provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
+        return provisioned.destination[0]['sample']
 
 
 class XPlanStep(PlanStep):
@@ -93,11 +99,11 @@ class XPlanStep(PlanStep):
 
         self.transformations = []
         for txn in self.operator.get('transformations', []):
-            self.transformations.append(XPlanTransformation(txn))
+            self.transformations.append(XPlanTransformation(self, txn))
 
         self.measurements = []
         for msmt in self.operator.get('measurements', []):
-            self.measurements.append(XPlanMeasurement(msmt))
+            self.measurements.append(XPlanMeasurement(self, msmt))
 
         self.measured_samples = [m.source for m in self.measurements]
 
@@ -110,8 +116,8 @@ class XPlanStep(PlanStep):
 
 
 class XPlanTransformation(Transformation):
-    def __init__(self, transformation):
-        super().__init__(transformation)
+    def __init__(self, plan_step, transformation):
+        super().__init__(plan_step, transformation)
         self.source = self.format(transformation['source'])
         self.destination = self.format(transformation['destination'])
 
@@ -120,6 +126,15 @@ class XPlanTransformation(Transformation):
 
     def destination_samples(self):
         return [x['sample'] for x in self.destination]
+
+    def protease(self):
+        provisioned = self.plan.prov_protease_inputs()
+        proteases = [x for x in self.source if x['sample'] in provisioned]
+
+        if proteases:
+            return proteases[0]
+        else:
+            return {}
 
     @staticmethod
     def format(element):
@@ -137,6 +152,8 @@ class XPlanTransformation(Transformation):
 
 
 class XPlanMeasurement():
-    def __init__(self, measurement):
+    def __init__(self, plan_step, measurement):
+        self.plan_step = plan_step
+        self.plan = self.plan_step.plan
         self.source = measurement['source']
         self.file = measurement['file']

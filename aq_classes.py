@@ -62,15 +62,17 @@ class Leg:
             if isinstance(container_name, dict):
                 if container_opt:
                     container_name = container_name[container_opt]
+
                 else:
                     raise 'Option required to specify container: ' + container_name
+                    
             return self.session.ObjectType.where({'name': container_name})[0]
 
     def add(self, source, destination, container_opt=None):
         self.create(source, destination, container_opt)
         self.aq_plan.add_operations(self.aq_plan_objs['ops'])
         self.aq_plan.add_wires(self.aq_plan_objs['wires'])
-        print('### ' + str(len(self.aq_plan.operations)) + 'total operations')
+        print('### ' + str(len(self.aq_plan.operations)) + ' total operations')
         print()
         return self.aq_plan_objs
 
@@ -79,8 +81,6 @@ class Leg:
             step_params = self.params[i]
             print("Added " + step_params['name'])
             op = self.initialize_op(step_params['name'])
-
-            self.cursor.decr_y()
 
             step_defaults = step_params['defaults']
             this_io = { **step_defaults, **self.sample_io }
@@ -112,6 +112,8 @@ class Leg:
             self.aq_plan_objs['ops'].append(op)
 
             if i > 0: self.wire_internal(i)
+
+            self.cursor.decr_y()
 
     def initialize_op(self, ot_name):
         op_types = self.session.OperationType.where({
@@ -170,6 +172,19 @@ class Cursor:
         self.x_home = self.x
         self.max_x = self.x
 
+        self.y_home = self.y
+        self.max_y = self.y
+
+    def set_x(self, x):
+        self.x = x
+
+    def set_y(self, y):
+        self.y = y
+
+    def set_xy(self, x, y):
+        self.set_x(x)
+        self.set_y(y)
+
     def incr_x(self, mult=1):
         self.x += mult * self.x_incr
 
@@ -187,6 +202,12 @@ class Cursor:
 
     def return_x(self):
         self.x = self.x_home
+
+    def set_y_home(self, y=None):
+        self.y_home = y or self.y
+
+    def return_y(self):
+        self.y = self.y_home
 
     def update_max_x(self):
         if self.x > self.max_x:

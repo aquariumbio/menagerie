@@ -42,34 +42,57 @@ prev_step_outputs = {}
 
 for step_id in plan.step_ids(plan.protstab_round_steps()):
     plan_step = plan.step(step_id)
-    if int(step_id) > 2: break
+
+    # if int(step_id) > 2: break
 
     if not prev_step_outputs:
         # This should only happen on the first protstab round
+        cursor.incr_y(2)
         overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
         overnight_plan_objs = overnight_leg.add(None, None, 'library start')
-        cursor.decr_y()
-        cursor.set_x_home(cursor.x_home + 2 * cursor.x_incr)
-        samples = plan.input_samples
+        cursor.return_y()
 
-        # Can only handle one library
+        naive_offest = SortLeg.length() - NaiveLeg.length()
+        cursor.decr_y(naive_offest)
+        naive_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
+        naive_plan_objs = naive_leg.add(None, None, 'library')
+        cursor.return_y()
+
+        upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], 'Innoculate Yeast Library')
+        dnstr_op = ProtStabLeg.select_op(naive_plan_objs['ops'], 'Store Yeast Library Sample')
+        naive_leg.wire_to_prev(upstr_op, dnstr_op)
+
+        # Can only handle one input library
+        samples = plan.input_samples
         library_sample = next(k for k, v in samples.items() if v.sample_type.name == "DNA Library")
         next_step_inputs = { library_sample: overnight_leg.get_output_op() }
 
-    else:
-        cursor.decr_y(SortLeg.length())
-        next_step_inputs = prev_step_outputs
-        overnight_plan_objs = Leg.get_init_plan_objects()
+        # cursor.incr_y(naive_offest - 1)
+        # cursor.set_y_home()
 
-    yeast_inputs = sorted(next_step_inputs.keys(), key=lambda k: next_step_inputs[k].x)
+    else:
+        next_step_inputs = { i: prev_step_outputs[i] for i in plan_step.get_inputs('DNA Library') }
+
+        cursor.decr_y(SortLeg.length() + 2)
+        cursor.set_y_home()
+
+    yeast_inputs = sorted(next_step_inputs.keys(), key=lambda i: next_step_inputs[i].x)
 
     for input_yeast in yeast_inputs:
-        start = datetime.now()
         upstr_op = next_step_inputs[input_yeast]
         input_sample = upstr_op.output('Yeast Culture').sample
 
+        cursor.set_x(upstr_op.x)
+        if int(step_id) == 1:
+            cursor.incr_x()
+        else:
+            cursor.decr_x(2)
+        cursor.return_y()
+
+        cursor.incr_y(2)
         induction_leg = InductionLeg(plan_step, cursor, aq_defaults_path)
         induction_plan_objects = induction_leg.add( None, None, 'library')
+        cursor.return_y()
 
         for k in Leg.get_init_plan_objects().keys():
             overnight_plan_objs[k].extend(induction_plan_objects[k])
@@ -77,52 +100,72 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
         dnstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], 'Dilute Yeast Library')
         induction_leg.wire_to_prev(upstr_op, dnstr_op)
 
-        cursor.decr_y()
+        # cursor.decr_y()
 
         txns = [t for t in plan_step.transformations if input_yeast in t.source_samples()]
-        print(str((datetime.now() - start).total_seconds()))
 
-        for txn in txns:
-            src = txn.source
-            for dst in txn.destination:
-                # Measured samples is not a very good descriptor here
-                # Better to have something that captures flow cytometry
-                if dst['sample'] in plan_step.measured_samples:
+        partitioned = {}
 
-                    if dst['sample'] in plan.ngs_samples:
-                        this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
+        for t in txns:
+            sample = t.protease().get('sample', '')
 
-                    else:
-                        this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
+            if not partitioned.get(sample):
+                partitioned[sample] = []
 
-                    this_leg.set_protease(src)
-                    overnight_ot = 'Dilute Yeast Library'
-                    this_ot = 'Challenge and Label'
+            partitioned[sample].append(t)
 
-                else:
-                    cursor.decr_y(SortLeg.length() - NaiveLeg.length())
-                    this_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
-                    overnight_ot = 'Innoculate Yeast Library'
-                    this_ot = 'Store Yeast Library Sample'
+        proteases = list(partitioned.keys())
+        proteases.sort()
 
-                this_plan_objs = this_leg.add(src, dst, 'library')
+        for p in proteases:
+            txns = partitioned[p]
+            txns.sort(key=lambda t: t.protease().get('concentration', 0))
 
-                upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], overnight_ot)
-                dnstr_op = ProtStabLeg.select_op(this_plan_objs['ops'], this_ot)
-                this_leg.wire_to_prev(upstr_op, dnstr_op)
+            for txn in txns:
+                src = txn.source
+                for dst in txn.destination:
+                    # Measured samples is not a very good descriptor here
+                    # Better to have something that captures flow cytometry
+                    if dst['sample'] in plan_step.measured_samples:
 
-                output_op = this_leg.get_output_op()
-                if output_op:
-                    prev_step_outputs[dst['sample']] = output_op
-                    plan.add_input_sample(dst['sample'], output_op.output('Yeast Culture').sample)
+                        if dst['sample'] in plan.ngs_samples:
+                            this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
 
-                cursor.incr_x()
-                cursor.incr_y(SortLeg.length())
+                        else:
+                            this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
+
+                        this_leg.set_protease(src)
+                        overnight_ot = 'Dilute Yeast Library'
+                        this_ot = 'Challenge and Label'
+
+                    # This is supposed to deal with the naive leg but for some reason it isn't reached.
+                    # else:
+                        # cursor.decr_y(SortLeg.length() - NaiveLeg.length())
+                        # this_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
+                        # overnight_ot = 'Innoculate Yeast Library'
+                        # this_ot = 'Store Yeast Library Sample'
+
+                    this_plan_objs = this_leg.add(src, dst, 'library')
+
+                    upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], overnight_ot)
+                    dnstr_op = ProtStabLeg.select_op(this_plan_objs['ops'], this_ot)
+                    this_leg.wire_to_prev(upstr_op, dnstr_op)
+
+                    output_op = this_leg.get_output_op()
+
+                    if output_op:
+                        prev_step_outputs[dst['sample']] = output_op
+                        plan.add_input_sample(dst['sample'], output_op.output('Yeast Culture').sample)
+
+                    cursor.incr_x()
+                    cursor.return_y()
 
             cursor.incr_x()
 
+        overnight_plan_objs = Leg.get_init_plan_objects()
+
     cursor.update_max_x()
-    cursor.return_x()
+    # cursor.return_x()
     cursor.decr_y(1)
 
     print(plan_step.name + ' complete')

@@ -93,6 +93,8 @@ class TreatmentLeg(ProtStabLeg):
         self.sample_io['Protease'] = prot_samp
         self.sample_io['Protease Concentration'] = prot_conc
 
+        print(prot_samp.name + " " + str(prot_conc))
+
 
 class SortLeg(TreatmentLeg):
 

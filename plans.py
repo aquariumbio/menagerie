@@ -120,5 +120,6 @@ class PlanStep:
 
 
 class Transformation:
-    def __init__(self, transformation):
-        pass
+    def __init__(self, plan_step, transformation):
+        self.plan_step = plan_step
+        self.plan = self.plan_step.plan
