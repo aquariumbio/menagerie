@@ -109,6 +109,16 @@ class XPlanStep(PlanStep):
 
         # self.flow_samples = [m.source for m in self.measurements if m.file.endswith('.fcs')]
 
+    def yeast_inputs(self):
+        yeast_handles = ["DNA Library", "Yeast Strain"]
+        yeast_inputs = []
+
+        for h in yeast_handles:
+            yeast_inputs.extend(self.get_inputs(h))
+
+        return yeast_inputs
+
+
     # TODO: Need to make this sort for the GUI layout.
     def get_sorted_transformations(self):
         txns = self.operator.get('transformations')
@@ -135,6 +145,9 @@ class XPlanTransformation(Transformation):
             return proteases[0]
         else:
             return {}
+
+    def yeast(self):
+        return [x for x in source_samples(self) if x in self.plan_step.yeast_inputs()]
 
     @staticmethod
     def format(element):

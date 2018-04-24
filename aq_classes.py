@@ -65,7 +65,7 @@ class Leg:
 
                 else:
                     raise 'Option required to specify container: ' + container_name
-                    
+
             return self.session.ObjectType.where({'name': container_name})[0]
 
     def add(self, source, destination, container_opt=None):
@@ -79,7 +79,6 @@ class Leg:
     def create(self, source, destination, container_opt):
         for i in range(len(self.params)):
             step_params = self.params[i]
-            print("Added " + step_params['name'])
             op = self.initialize_op(step_params['name'])
 
             step_defaults = step_params['defaults']
@@ -114,6 +113,8 @@ class Leg:
             if i > 0: self.wire_internal(i)
 
             self.cursor.decr_y()
+
+            print("Added " + step_params['name'])
 
     def initialize_op(self, ot_name):
         op_types = self.session.OperationType.where({

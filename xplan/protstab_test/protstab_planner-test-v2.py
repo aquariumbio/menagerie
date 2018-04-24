@@ -42,56 +42,64 @@ prev_step_outputs = {}
 
 for step_id in plan.step_ids(plan.protstab_round_steps()):
     plan_step = plan.step(step_id)
+    next_step_inputs = prev_step_outputs
+    prev_step_outputs = {}
 
-    # if int(step_id) > 2: break
+    # if int(step_id) > 1: break
 
-    if not prev_step_outputs:
-        # This should only happen on the first protstab round
-        cursor.incr_y(2)
-        overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
-        overnight_plan_objs = overnight_leg.add(None, None, 'library start')
-        cursor.return_y()
+    for input_yeast in plan_step.yeast_inputs():
+        st_name = plan.input_samples[input_yeast].sample_type.name
+        is_library = st_name == 'DNA Library'
 
-        naive_offest = SortLeg.length() - NaiveLeg.length()
-        cursor.decr_y(naive_offest)
-        naive_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
-        naive_plan_objs = naive_leg.add(None, None, 'library')
-        cursor.return_y()
+        if not next_step_inputs.get(input_yeast):
+            cursor.incr_y(2)
+            overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
+            overnight_leg.set_yeast(input_yeast)
 
-        upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], 'Innoculate Yeast Library')
-        dnstr_op = ProtStabLeg.select_op(naive_plan_objs['ops'], 'Store Yeast Library Sample')
-        naive_leg.wire_to_prev(upstr_op, dnstr_op)
+            if is_library:
+                opt = 'library start'
+            else:
+                opt = 'control'
 
-        # Can only handle one input library
-        samples = plan.input_samples
-        library_sample = next(k for k, v in samples.items() if v.sample_type.name == "DNA Library")
-        next_step_inputs = { library_sample: overnight_leg.get_output_op() }
+            overnight_plan_objs = overnight_leg.add(None, None, opt)
+            cursor.return_y()
 
-        # cursor.incr_y(naive_offest - 1)
-        # cursor.set_y_home()
+            if input_yeast in plan.ngs_samples:
+                naive_offest = SortLeg.length() - NaiveLeg.length()
+                cursor.decr_y(naive_offest)
+                naive_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
+                naive_leg.set_yeast(input_yeast)
+                naive_plan_objs = naive_leg.add(None, None, 'library')
+                cursor.return_y()
 
-    else:
-        next_step_inputs = { i: prev_step_outputs[i] for i in plan_step.get_inputs('DNA Library') }
+                upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], 'Innoculate Yeast Library')
+                dnstr_op = ProtStabLeg.select_op(naive_plan_objs['ops'], 'Store Yeast Library Sample')
+                naive_leg.wire_to_prev(upstr_op, dnstr_op)
 
-        cursor.decr_y(SortLeg.length() + 2)
-        cursor.set_y_home()
+            next_step_inputs[input_yeast] = overnight_leg.get_output_op()
 
-    yeast_inputs = sorted(next_step_inputs.keys(), key=lambda i: next_step_inputs[i].x)
-
-    for input_yeast in yeast_inputs:
         upstr_op = next_step_inputs[input_yeast]
         input_sample = upstr_op.output('Yeast Culture').sample
 
         cursor.set_x(upstr_op.x)
-        if int(step_id) == 1:
-            cursor.incr_x()
-        else:
+
+        if int(step_id) > 1 and is_library:
             cursor.decr_x(2)
+        else:
+            cursor.incr_x()
+
         cursor.return_y()
 
         cursor.incr_y(2)
         induction_leg = InductionLeg(plan_step, cursor, aq_defaults_path)
-        induction_plan_objects = induction_leg.add( None, None, 'library')
+        induction_leg.set_yeast(input_yeast)
+
+        if is_library:
+            opt = 'library'
+        else:
+            opt = 'control'
+
+        induction_plan_objects = induction_leg.add( None, None, opt)
         cursor.return_y()
 
         for k in Leg.get_init_plan_objects().keys():
@@ -134,6 +142,7 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                         else:
                             this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
 
+                        this_leg.set_yeast(input_yeast)
                         this_leg.set_protease(src)
                         overnight_ot = 'Dilute Yeast Library'
                         this_ot = 'Challenge and Label'
@@ -145,7 +154,7 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                         # overnight_ot = 'Innoculate Yeast Library'
                         # this_ot = 'Store Yeast Library Sample'
 
-                    this_plan_objs = this_leg.add(src, dst, 'library')
+                    this_plan_objs = this_leg.add(src, dst, opt)
 
                     upstr_op = ProtStabLeg.select_op(overnight_plan_objs['ops'], overnight_ot)
                     dnstr_op = ProtStabLeg.select_op(this_plan_objs['ops'], this_ot)
@@ -166,13 +175,14 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
 
     cursor.update_max_x()
     # cursor.return_x()
-    cursor.decr_y(1)
+    cursor.decr_y(SortLeg.length() + 3)
+    cursor.set_y_home()
 
     print(plan_step.name + ' complete')
     print()
 
 print(len(plan.aq_plan.operations))
 print(len(plan.aq_plan.wires))
-plan.launch_aq_plan()
+# plan.launch_aq_plan()
 
-# test_plan(plan, out_path, ref_path)
+test_plan(plan, out_path, ref_path)

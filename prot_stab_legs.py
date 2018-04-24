@@ -14,7 +14,7 @@ class ProtStabLeg(Leg):
     def __init__(self, plan_step, cursor, aq_defaults_path):
         super().__init__(plan_step, cursor, aq_defaults_path)
 
-        input_sample_uri = self.plan_step.get_inputs('DNA Library')[0]
+    def set_yeast(self, input_sample_uri):
         input_sample = self.ext_plan.input_samples[input_sample_uri]
 
         for h in self.primary_handles:

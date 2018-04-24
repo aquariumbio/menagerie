@@ -3,19 +3,30 @@
     "destination": null,
     "id": null,
     "layout": "{\"id\": 0, \"children\": [], \"documentation\": \"No documentation ofr this module\", \"height\": 60, \"input\": [], \"output\": [], \"name\": \"no_name\", \"parent_id\": -1, \"width\": 160, \"wires\": []}",
-    "name": "ProtStab Test Plan",
+    "name": "ProtStab Test Plan 3",
     "operations": [
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 69,
+            "rid": 33,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 64,
-            "y": 1536
+            "y": 1664
+        },
+        {
+            "id": null,
+            "operation_type_id": 1135,
+            "parent": 0,
+            "rid": 76,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "x": 64,
+            "y": 1344
         },
         {
             "id": null,
@@ -26,392 +37,549 @@
                 "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
-            "x": 64,
+            "x": 256,
+            "y": 1664
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 147,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 256,
+            "y": 1536
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 194,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "x": 256,
             "y": 1472
         },
         {
             "id": null,
-            "operation_type_id": 1135,
+            "operation_type_id": 758,
             "parent": 0,
-            "rid": 147,
+            "rid": 229,
             "routing": {
-                "Y": "17136: NODS4"
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
             },
-            "x": 64,
-            "y": 1152
+            "x": 256,
+            "y": 1408
         },
         {
             "id": null,
-            "operation_type_id": 764,
+            "operation_type_id": 1135,
             "parent": 0,
-            "rid": 179,
+            "rid": 272,
             "routing": {
-                "Ab": "16967: anti-Myc-FITC",
-                "P": "17020: Trypsin",
-                "YL": "17136: NODS4"
+                "Y": "17136: NODS4"
             },
             "x": 256,
             "y": 1344
         },
         {
             "id": null,
-            "operation_type_id": 765,
-            "parent": 0,
-            "rid": 226,
-            "routing": {
-                "YL": "17136: NODS4"
-            },
-            "x": 256,
-            "y": 1280
-        },
-        {
-            "id": null,
-            "operation_type_id": 758,
-            "parent": 0,
-            "rid": 261,
-            "routing": {
-                "M": "11786: SDO -His -Trp -Ura",
-                "YL": "17136: NODS4"
-            },
-            "x": 256,
-            "y": 1216
-        },
-        {
-            "id": null,
-            "operation_type_id": 1135,
-            "parent": 0,
-            "rid": 300,
-            "routing": {
-                "Y": "17136: NODS4"
-            },
-            "x": 256,
-            "y": 1152
-        },
-        {
-            "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 341,
+            "rid": 313,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17021: Chymotrypsin",
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 1344
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 388,
+            "rid": 360,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 1280
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 423,
+            "rid": 395,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 1216
+            "y": 1408
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 462,
+            "rid": 438,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 640,
-            "y": 1152
+            "y": 1344
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 503,
+            "rid": 479,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17021: Chymotrypsin",
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 1344
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 550,
+            "rid": 526,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 1280
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 585,
+            "rid": 561,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 1216
+            "y": 1408
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 624,
+            "rid": 604,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 832,
-            "y": 1152
+            "y": 1344
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 665,
+            "rid": 645,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 1344
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 712,
+            "rid": 692,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 1280
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 747,
+            "rid": 727,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 1216
+            "y": 1408
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 786,
+            "rid": 770,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1216,
-            "y": 1152
+            "y": 1344
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 827,
+            "rid": 811,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 1344
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 874,
+            "rid": 858,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 1280
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 909,
+            "rid": 893,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 1216
+            "y": 1408
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 948,
+            "rid": 936,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1408,
-            "y": 1152
+            "y": 1344
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 977,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1792,
+            "y": 1664
         },
         {
             "id": null,
             "operation_type_id": 763,
             "parent": 0,
-            "rid": 993,
+            "rid": 1020,
             "routing": {
                 "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
-                "YL": "17136: NODS4"
+                "YL": "17137: EBY100 + pETcon3"
             },
-            "x": 448,
-            "y": 1024
+            "x": 1984,
+            "y": 1664
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 1032,
+            "rid": 1059,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
-                "P": "17021: Chymotrypsin",
-                "YL": "17136: NODS4"
+                "P": "17020: Trypsin",
+                "YL": "17137: EBY100 + pETcon3"
             },
-            "x": 448,
-            "y": 896
+            "x": 1984,
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 1079,
+            "rid": 1106,
             "routing": {
-                "YL": "17136: NODS4"
+                "YL": "17137: EBY100 + pETcon3"
             },
-            "x": 448,
-            "y": 832
-        },
-        {
-            "id": null,
-            "operation_type_id": 764,
-            "parent": 0,
-            "rid": 1120,
-            "routing": {
-                "Ab": "16967: anti-Myc-FITC",
-                "P": "17021: Chymotrypsin",
-                "YL": "17136: NODS4"
-            },
-            "x": 640,
-            "y": 896
-        },
-        {
-            "id": null,
-            "operation_type_id": 765,
-            "parent": 0,
-            "rid": 1167,
-            "routing": {
-                "YL": "17136: NODS4"
-            },
-            "x": 640,
-            "y": 832
+            "x": 1984,
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 1202,
+            "rid": 1147,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
-                "YL": "17136: NODS4"
+                "YL": "17081: AMA1-best"
             },
-            "x": 640,
-            "y": 768
+            "x": 2368,
+            "y": 1664
         },
         {
             "id": null,
-            "operation_type_id": 1135,
+            "operation_type_id": 763,
             "parent": 0,
-            "rid": 1241,
+            "rid": 1190,
             "routing": {
-                "Y": "17136: NODS4"
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
             },
-            "x": 640,
-            "y": 704
+            "x": 2560,
+            "y": 1664
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 1282,
+            "rid": 1229,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
-                "P": "17021: Chymotrypsin",
-                "YL": "17136: NODS4"
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
             },
-            "x": 832,
-            "y": 896
+            "x": 2560,
+            "y": 1536
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 1329,
+            "rid": 1276,
             "routing": {
-                "YL": "17136: NODS4"
+                "YL": "17081: AMA1-best"
             },
-            "x": 832,
-            "y": 832
+            "x": 2560,
+            "y": 1472
         },
         {
             "id": null,
-            "operation_type_id": 758,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 1317,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2752,
+            "y": 1536
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
             "parent": 0,
             "rid": 1364,
             "routing": {
-                "M": "11786: SDO -His -Trp -Ura",
-                "YL": "17136: NODS4"
+                "YL": "17081: AMA1-best"
             },
-            "x": 832,
-            "y": 768
+            "x": 2752,
+            "y": 1472
         },
         {
             "id": null,
-            "operation_type_id": 1135,
+            "operation_type_id": 764,
             "parent": 0,
-            "rid": 1403,
+            "rid": 1405,
             "routing": {
-                "Y": "17136: NODS4"
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
             },
-            "x": 832,
-            "y": 704
+            "x": 2944,
+            "y": 1536
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 1452,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2944,
+            "y": 1472
         },
         {
             "id": null,
             "operation_type_id": 763,
             "parent": 0,
-            "rid": 1444,
+            "rid": 1493,
             "routing": {
                 "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 448,
+            "y": 1216
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 1532,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 448,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 1579,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "x": 448,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 1620,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 640,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 1667,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "x": 640,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 1702,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 640,
+            "y": 960
+        },
+        {
+            "id": null,
+            "operation_type_id": 1135,
+            "parent": 0,
+            "rid": 1745,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "x": 640,
+            "y": 896
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 1786,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 832,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 1833,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "x": 832,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 1868,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 832,
+            "y": 960
+        },
+        {
+            "id": null,
+            "operation_type_id": 1135,
+            "parent": 0,
+            "rid": 1911,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "x": 832,
+            "y": 896
+        },
+        {
+            "id": null,
+            "operation_type_id": 763,
+            "parent": 0,
+            "rid": 1952,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 1024,
+            "y": 1216
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 1991,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 1024,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 2038,
+            "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1024,
@@ -421,127 +589,271 @@
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 1483,
-            "routing": {
-                "Ab": "16967: anti-Myc-FITC",
-                "P": "17020: Trypsin",
-                "YL": "17136: NODS4"
-            },
-            "x": 1024,
-            "y": 896
-        },
-        {
-            "id": null,
-            "operation_type_id": 765,
-            "parent": 0,
-            "rid": 1530,
-            "routing": {
-                "YL": "17136: NODS4"
-            },
-            "x": 1024,
-            "y": 832
-        },
-        {
-            "id": null,
-            "operation_type_id": 764,
-            "parent": 0,
-            "rid": 1571,
+            "rid": 2079,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 896
+            "y": 1088
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 1618,
+            "rid": 2126,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 832
+            "y": 1024
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 1653,
+            "rid": 2161,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 768
+            "y": 960
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 1692,
+            "rid": 2204,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1216,
-            "y": 704
+            "y": 896
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 1733,
+            "rid": 2245,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 896
+            "y": 1088
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 1780,
+            "rid": 2292,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 832
+            "y": 1024
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 1815,
+            "rid": 2327,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 768
+            "y": 960
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 1854,
+            "rid": 2370,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1408,
-            "y": 704
+            "y": 896
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 2411,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1792,
+            "y": 1216
         },
         {
             "id": null,
             "operation_type_id": 763,
             "parent": 0,
-            "rid": 1899,
+            "rid": 2454,
             "routing": {
                 "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 1216
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 2493,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 2540,
+            "routing": {
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 2581,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2368,
+            "y": 1216
+        },
+        {
+            "id": null,
+            "operation_type_id": 763,
+            "parent": 0,
+            "rid": 2624,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 1216
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 2663,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 2710,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 2751,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2752,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 2798,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2752,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 2839,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2944,
+            "y": 1088
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 2886,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2944,
+            "y": 1024
+        },
+        {
+            "id": null,
+            "operation_type_id": 763,
+            "parent": 0,
+            "rid": 2927,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 448,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 2966,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 448,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 3013,
+            "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 448,
@@ -551,127 +863,127 @@
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 1938,
-            "routing": {
-                "Ab": "16967: anti-Myc-FITC",
-                "P": "17021: Chymotrypsin",
-                "YL": "17136: NODS4"
-            },
-            "x": 448,
-            "y": 448
-        },
-        {
-            "id": null,
-            "operation_type_id": 765,
-            "parent": 0,
-            "rid": 1985,
-            "routing": {
-                "YL": "17136: NODS4"
-            },
-            "x": 448,
-            "y": 384
-        },
-        {
-            "id": null,
-            "operation_type_id": 764,
-            "parent": 0,
-            "rid": 2026,
+            "rid": 3054,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17021: Chymotrypsin",
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 448
+            "y": 640
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 2073,
+            "rid": 3101,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 384
+            "y": 576
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 2108,
+            "rid": 3136,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 640,
-            "y": 320
+            "y": 512
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 2147,
+            "rid": 3179,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 640,
-            "y": 256
+            "y": 448
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 2188,
+            "rid": 3220,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17021: Chymotrypsin",
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 448
+            "y": 640
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 2235,
+            "rid": 3267,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 384
+            "y": 576
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 2270,
+            "rid": 3302,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 832,
-            "y": 320
+            "y": 512
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 2309,
+            "rid": 3345,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 832,
-            "y": 256
+            "y": 448
         },
         {
             "id": null,
             "operation_type_id": 763,
             "parent": 0,
-            "rid": 2350,
+            "rid": 3386,
             "routing": {
                 "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "x": 1024,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 3425,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "x": 1024,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 3472,
+            "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1024,
@@ -681,389 +993,629 @@
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 2389,
-            "routing": {
-                "Ab": "16967: anti-Myc-FITC",
-                "P": "17020: Trypsin",
-                "YL": "17136: NODS4"
-            },
-            "x": 1024,
-            "y": 448
-        },
-        {
-            "id": null,
-            "operation_type_id": 765,
-            "parent": 0,
-            "rid": 2436,
-            "routing": {
-                "YL": "17136: NODS4"
-            },
-            "x": 1024,
-            "y": 384
-        },
-        {
-            "id": null,
-            "operation_type_id": 764,
-            "parent": 0,
-            "rid": 2477,
+            "rid": 3513,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 448
+            "y": 640
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 2524,
+            "rid": 3560,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 384
+            "y": 576
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 2559,
+            "rid": 3595,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1216,
-            "y": 320
+            "y": 512
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 2598,
+            "rid": 3638,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1216,
-            "y": 256
+            "y": 448
         },
         {
             "id": null,
             "operation_type_id": 764,
             "parent": 0,
-            "rid": 2639,
+            "rid": 3679,
             "routing": {
                 "Ab": "16967: anti-Myc-FITC",
                 "P": "17020: Trypsin",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 448
+            "y": 640
         },
         {
             "id": null,
             "operation_type_id": 765,
             "parent": 0,
-            "rid": 2686,
+            "rid": 3726,
             "routing": {
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 384
+            "y": 576
         },
         {
             "id": null,
             "operation_type_id": 758,
             "parent": 0,
-            "rid": 2721,
+            "rid": 3761,
             "routing": {
                 "M": "11786: SDO -His -Trp -Ura",
                 "YL": "17136: NODS4"
             },
             "x": 1408,
-            "y": 320
+            "y": 512
         },
         {
             "id": null,
             "operation_type_id": 1135,
             "parent": 0,
-            "rid": 2760,
+            "rid": 3804,
             "routing": {
                 "Y": "17136: NODS4"
             },
             "x": 1408,
-            "y": 256
+            "y": 448
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 3845,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1792,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 763,
+            "parent": 0,
+            "rid": 3888,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 3927,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 3974,
+            "routing": {
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "x": 1984,
+            "y": 576
+        },
+        {
+            "id": null,
+            "operation_type_id": 758,
+            "parent": 0,
+            "rid": 4015,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2368,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 763,
+            "parent": 0,
+            "rid": 4058,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 768
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 4097,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 4144,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2560,
+            "y": 576
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 4185,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2752,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 4232,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2752,
+            "y": 576
+        },
+        {
+            "id": null,
+            "operation_type_id": 764,
+            "parent": 0,
+            "rid": 4273,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2944,
+            "y": 640
+        },
+        {
+            "id": null,
+            "operation_type_id": 765,
+            "parent": 0,
+            "rid": 4320,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "x": 2944,
+            "y": 576
         }
     ],
     "plan_associations": null,
-    "rid": 10,
+    "rid": 4,
     "source": null,
     "status": "planning",
     "wires": [
+        {
+            "active": true,
+            "rid": 103
+        },
         {
             "active": true,
             "rid": 142
         },
         {
             "active": true,
-            "rid": 174
+            "rid": 299
         },
         {
             "active": true,
-            "rid": 327
+            "rid": 302
         },
         {
             "active": true,
-            "rid": 330
+            "rid": 305
         },
         {
             "active": true,
-            "rid": 333
+            "rid": 308
         },
         {
             "active": true,
-            "rid": 336
+            "rid": 465
         },
         {
             "active": true,
-            "rid": 489
+            "rid": 468
         },
         {
             "active": true,
-            "rid": 492
+            "rid": 471
         },
         {
             "active": true,
-            "rid": 495
+            "rid": 474
         },
         {
             "active": true,
-            "rid": 498
+            "rid": 631
         },
         {
             "active": true,
-            "rid": 651
+            "rid": 634
         },
         {
             "active": true,
-            "rid": 654
+            "rid": 637
         },
         {
             "active": true,
-            "rid": 657
+            "rid": 640
         },
         {
             "active": true,
-            "rid": 660
+            "rid": 797
         },
         {
             "active": true,
-            "rid": 813
+            "rid": 800
         },
         {
             "active": true,
-            "rid": 816
+            "rid": 803
         },
         {
             "active": true,
-            "rid": 819
+            "rid": 806
         },
         {
             "active": true,
-            "rid": 822
+            "rid": 963
         },
         {
             "active": true,
-            "rid": 975
+            "rid": 966
         },
         {
             "active": true,
-            "rid": 978
+            "rid": 969
         },
         {
             "active": true,
-            "rid": 981
+            "rid": 972
         },
         {
             "active": true,
-            "rid": 984
+            "rid": 1054
         },
         {
             "active": true,
-            "rid": 1027
+            "rid": 1139
         },
         {
             "active": true,
-            "rid": 1112
+            "rid": 1142
         },
         {
             "active": true,
-            "rid": 1115
+            "rid": 1224
         },
         {
             "active": true,
-            "rid": 1268
+            "rid": 1309
         },
         {
             "active": true,
-            "rid": 1271
+            "rid": 1312
         },
         {
             "active": true,
-            "rid": 1274
+            "rid": 1397
         },
         {
             "active": true,
-            "rid": 1277
+            "rid": 1400
         },
         {
             "active": true,
-            "rid": 1430
+            "rid": 1485
         },
         {
             "active": true,
-            "rid": 1433
+            "rid": 1488
         },
         {
             "active": true,
-            "rid": 1436
+            "rid": 1527
         },
         {
             "active": true,
-            "rid": 1439
+            "rid": 1612
         },
         {
             "active": true,
-            "rid": 1478
+            "rid": 1615
         },
         {
             "active": true,
-            "rid": 1563
+            "rid": 1772
         },
         {
             "active": true,
-            "rid": 1566
+            "rid": 1775
         },
         {
             "active": true,
-            "rid": 1719
+            "rid": 1778
         },
         {
             "active": true,
-            "rid": 1722
+            "rid": 1781
         },
         {
             "active": true,
-            "rid": 1725
+            "rid": 1938
         },
         {
             "active": true,
-            "rid": 1728
+            "rid": 1941
         },
         {
             "active": true,
-            "rid": 1881
+            "rid": 1944
         },
         {
             "active": true,
-            "rid": 1884
+            "rid": 1947
         },
         {
             "active": true,
-            "rid": 1887
+            "rid": 1986
         },
         {
             "active": true,
-            "rid": 1890
+            "rid": 2071
         },
         {
             "active": true,
-            "rid": 1933
+            "rid": 2074
         },
         {
             "active": true,
-            "rid": 2018
+            "rid": 2231
         },
         {
             "active": true,
-            "rid": 2021
+            "rid": 2234
         },
         {
             "active": true,
-            "rid": 2174
+            "rid": 2237
         },
         {
             "active": true,
-            "rid": 2177
+            "rid": 2240
         },
         {
             "active": true,
-            "rid": 2180
+            "rid": 2397
         },
         {
             "active": true,
-            "rid": 2183
+            "rid": 2400
         },
         {
             "active": true,
-            "rid": 2336
+            "rid": 2403
         },
         {
             "active": true,
-            "rid": 2339
+            "rid": 2406
         },
         {
             "active": true,
-            "rid": 2342
+            "rid": 2488
         },
         {
             "active": true,
-            "rid": 2345
+            "rid": 2573
         },
         {
             "active": true,
-            "rid": 2384
+            "rid": 2576
         },
         {
             "active": true,
-            "rid": 2469
+            "rid": 2658
         },
         {
             "active": true,
-            "rid": 2472
+            "rid": 2743
         },
         {
             "active": true,
-            "rid": 2625
+            "rid": 2746
         },
         {
             "active": true,
-            "rid": 2628
+            "rid": 2831
         },
         {
             "active": true,
-            "rid": 2631
+            "rid": 2834
         },
         {
             "active": true,
-            "rid": 2634
+            "rid": 2919
         },
         {
             "active": true,
-            "rid": 2787
+            "rid": 2922
         },
         {
             "active": true,
-            "rid": 2790
+            "rid": 2961
         },
         {
             "active": true,
-            "rid": 2793
+            "rid": 3046
         },
         {
             "active": true,
-            "rid": 2796
+            "rid": 3049
+        },
+        {
+            "active": true,
+            "rid": 3206
+        },
+        {
+            "active": true,
+            "rid": 3209
+        },
+        {
+            "active": true,
+            "rid": 3212
+        },
+        {
+            "active": true,
+            "rid": 3215
+        },
+        {
+            "active": true,
+            "rid": 3372
+        },
+        {
+            "active": true,
+            "rid": 3375
+        },
+        {
+            "active": true,
+            "rid": 3378
+        },
+        {
+            "active": true,
+            "rid": 3381
+        },
+        {
+            "active": true,
+            "rid": 3420
+        },
+        {
+            "active": true,
+            "rid": 3505
+        },
+        {
+            "active": true,
+            "rid": 3508
+        },
+        {
+            "active": true,
+            "rid": 3665
+        },
+        {
+            "active": true,
+            "rid": 3668
+        },
+        {
+            "active": true,
+            "rid": 3671
+        },
+        {
+            "active": true,
+            "rid": 3674
+        },
+        {
+            "active": true,
+            "rid": 3831
+        },
+        {
+            "active": true,
+            "rid": 3834
+        },
+        {
+            "active": true,
+            "rid": 3837
+        },
+        {
+            "active": true,
+            "rid": 3840
+        },
+        {
+            "active": true,
+            "rid": 3922
+        },
+        {
+            "active": true,
+            "rid": 4007
+        },
+        {
+            "active": true,
+            "rid": 4010
+        },
+        {
+            "active": true,
+            "rid": 4092
+        },
+        {
+            "active": true,
+            "rid": 4177
+        },
+        {
+            "active": true,
+            "rid": 4180
+        },
+        {
+            "active": true,
+            "rid": 4265
+        },
+        {
+            "active": true,
+            "rid": 4268
+        },
+        {
+            "active": true,
+            "rid": 4353
+        },
+        {
+            "active": true,
+            "rid": 4356
         }
     ]
 }
