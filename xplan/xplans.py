@@ -107,6 +107,8 @@ class XPlanStep(PlanStep):
 
         self.measured_samples = [m.source for m in self.measurements]
 
+        self.output_operations = {}
+
         # self.flow_samples = [m.source for m in self.measurements if m.file.endswith('.fcs')]
 
     def yeast_inputs(self):
@@ -118,6 +120,8 @@ class XPlanStep(PlanStep):
 
         return yeast_inputs
 
+    def add_output_operation(self, uri, op):
+        self.output_operations[uri] = op
 
     # TODO: Need to make this sort for the GUI layout.
     def get_sorted_transformations(self):
@@ -147,7 +151,7 @@ class XPlanTransformation(Transformation):
             return {}
 
     def yeast(self):
-        return [x for x in source_samples(self) if x in self.plan_step.yeast_inputs()]
+        return [x for x in self.source_samples() if x in self.plan_step.yeast_inputs()]
 
     @staticmethod
     def format(element):

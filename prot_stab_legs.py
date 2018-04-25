@@ -24,21 +24,19 @@ class ProtStabLeg(Leg):
     def length(cls):
          return len(cls.leg_order)
 
-    def select_op(ops, ot_name):
+    def select_op(self, ot_name):
+        ops = self.aq_plan_objs['ops']
         selected = [o for o in ops if o.operation_type.name == ot_name]
         if selected: return selected[0]
 
+    # This should be renamed because it doesn't matter which Leg it is called on.
     def wire_to_prev(self, upstr_op, dnstr_op):
         wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
         self.aq_plan.add_wires([wire_pair])
         self.propagate_sample(upstr_op, dnstr_op)
 
     def get_output_op(self):
-        ops = self.aq_plan_objs['ops']
-        output_op_name = 'Innoculate Yeast Library'
-        ops = [o for o in ops if o.operation_type.name == output_op_name]
-        if ops:
-            return ops[0]
+        return self.select_op('Innoculate Yeast Library')
 
 
 class OvernightLeg(ProtStabLeg):
