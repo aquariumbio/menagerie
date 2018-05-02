@@ -5,7 +5,7 @@ import pydent
 from pydent import models
 from pydent.models import Sample
 
-def get_op(leg, name):
+def get_obj_by_name(leg, name):
     ops = [x for x in leg if x['name'] == name]
     if ops: return ops[0]
 
@@ -21,40 +21,58 @@ class Leg:
         self.aq_plan = self.ext_plan.aq_plan
         self.session = self.ext_plan.session
         self.cursor = cursor
-        self.set_params()
+        self.create_operations()
         self.set_container_types(aq_defaults_path)
 
+        # This is no longer a good name for this variable.
         self.sample_io = {}
-        self.aq_plan_objs = Leg.get_init_plan_objects()
 
-    def get_init_plan_objects():
-        init_plan_objs = {
-            'ops': [],
-            'wires': []
-        }
-        return init_plan_objs
+        # This can probably be replaced by self.operations and self.wires
+        # self.aq_plan_objs = Leg.get_init_plan_objects()
 
-    def set_params(self):
-        self.params = []
-        for x in self.leg_order:
-            p = copy.deepcopy(get_op(self.ext_plan.defaults, x))
-            p = p or { "name": x, "defaults": {} }
-            self.params.append(p)
+    # I don't think this serves a useful function anymore.
+    # def get_init_plan_objects():
+    #     init_plan_objs = {
+    #         'ops': [],
+    #         'wires': []
+    #     }
+    #     return init_plan_objs
+
+    # Does it make sense to populate this intermediate object?
+    # Why not just build the array of operations?
+    def create_operations(self):
+        self.op_data = []
+        self.wires = []
+
+        for ot_name in self.leg_order:
+            od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_name))
+            od = od or { "name": ot_name, "defaults": {} }
+            od['operation'] = self.initialize_op(ot_name)
+
+            if self.op_data:
+                self.wire_internal(self.op_data[-1]['operation'], od['operation'])
+
+            self.op_data.append(od)
+            self.cursor.decr_y()
 
     def set_container_types(self, aq_defaults_path):
         with open(aq_defaults_path, 'r') as f:
             aq_defaults = json.load(f)
             default_container_types = aq_defaults['container_types']
 
-        self.container_types = []
-        for param in self.params:
-            name = param['name']
-            p = copy.deepcopy(get_op(default_container_types, name))
-            p = p or { "name": name, "defaults": {} }
-            self.container_types.append(p)
+        for od in self.op_data:
+            name = od['name']
+            ct = copy.deepcopy(get_obj_by_name(default_container_types, name))
+
+            if ct:
+                ct.pop('name')
+            else:
+                ct = {}
+
+            od['container_types'] = ct
 
     def get_container(self, op_name, io_name, role, container_opt=None):
-        ctypes = get_op(self.container_types, op_name).get(io_name)
+        ctypes = get_obj_by_name(self.op_data, op_name)['container_types'].get(io_name)
 
         if ctypes:
             container_name = ctypes[role + '_container_type']
@@ -64,24 +82,26 @@ class Leg:
                     container_name = container_name[container_opt]
 
                 else:
-                    raise 'Option required to specify container: ' + container_name
+                    raise Exception('Option required to specify container: ' + container_name)
 
             return self.session.ObjectType.where({'name': container_name})[0]
 
-    def add(self, source, destination, container_opt=None):
-        self.create(source, destination, container_opt)
-        self.aq_plan.add_operations(self.aq_plan_objs['ops'])
-        self.aq_plan.add_wires(self.aq_plan_objs['wires'])
+    def add(self, container_opt=None):
+        self.create(container_opt)
+        self.aq_plan.add_operations([od['operation'] for od in self.op_data])
+        self.aq_plan.add_wires(self.wires)
         print('### ' + str(len(self.aq_plan.operations)) + ' total operations')
         print()
-        return self.aq_plan_objs
+        # return self.aq_plan_objs
 
-    def create(self, source, destination, container_opt):
-        for i in range(len(self.params)):
-            step_params = self.params[i]
-            op = self.initialize_op(step_params['name'])
+    # The point of this method seems to be to set samples and containers.
+    # Should move the creation of the operations out of this method.
+    def create(self, container_opt):
+        for i in range(len(self.op_data)):
+            od = self.op_data[i]
+            op = od['operation']
 
-            step_defaults = step_params['defaults']
+            step_defaults = od['defaults']
             this_io = { **step_defaults, **self.sample_io }
 
             for ft in op.operation_type.field_types:
@@ -108,13 +128,13 @@ class Leg:
                 else:
                     op.set_field_value(ft.name, ft.role, value=io_object)
 
-            self.aq_plan_objs['ops'].append(op)
+            # self.aq_plan_objs['ops'].append(op)
 
-            if i > 0: self.wire_internal(i)
+            self.propagate_sample(self.op_data[i - 1]['operation'], self.op_data[i]['operation'])
 
-            self.cursor.decr_y()
+            # self.cursor.decr_y()
 
-            print("Added " + step_params['name'])
+            print("Added " + od['name'])
 
     def initialize_op(self, ot_name):
         op_types = self.session.OperationType.where({
@@ -129,12 +149,9 @@ class Leg:
 
         return op
 
-    def wire_internal(self, i):
-        upstr_op = self.aq_plan_objs['ops'][i - 1]
-        dnstr_op = self.aq_plan_objs['ops'][i]
+    def wire_internal(self, upstr_op, dnstr_op):
         wire = self.get_wire_pair(upstr_op, dnstr_op)
-        self.aq_plan_objs['wires'].append(wire)
-        self.propagate_sample(upstr_op, dnstr_op)
+        self.wires.append(wire)
 
     # This method may be redundant
     def propagate_sample(self, upstr_op, dnstr_op):

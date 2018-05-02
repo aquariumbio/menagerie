@@ -58,16 +58,17 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
             opt = 'library start' if is_library else 'control'
             overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
             overnight_leg.set_yeast(input_yeast)
-            overnight_leg.add(None, None, opt)
+            overnight_leg.add(opt)
             cursor.return_y()
 
             if input_yeast in plan.ngs_samples:
                 cursor.decr_y(SortLeg.length() - NaiveLeg.length())
                 naive_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
                 naive_leg.set_yeast(input_yeast)
-                naive_leg.add(None, None, 'library')
+                naive_leg.add('library')
                 cursor.return_y()
 
+                print(overnight_leg)
                 upstr_op = overnight_leg.select_op('Innoculate Yeast Library')
                 dnstr_op = naive_leg.select_op('Store Yeast Library Sample')
                 naive_leg.wire_to_prev(upstr_op, dnstr_op)
@@ -90,7 +91,7 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
         opt = 'library' if is_library else 'control'
         induction_leg = InductionLeg(plan_step, cursor, aq_defaults_path)
         induction_leg.set_yeast(input_yeast)
-        induction_leg.add( None, None, opt)
+        induction_leg.add(opt)
         cursor.return_y()
 
         dnstr_op = induction_leg.select_op('Dilute Yeast Library')
@@ -133,7 +134,7 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                         overnight_ot = 'Dilute Yeast Library'
                         this_ot = 'Challenge and Label'
 
-                    this_leg.add(src, dst, opt)
+                    this_leg.add(opt)
 
                     upstr_op = induction_leg.select_op('Dilute Yeast Library')
                     dnstr_op = this_leg.select_op(this_ot)
@@ -160,6 +161,6 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
 
 print(len(plan.aq_plan.operations))
 print(len(plan.aq_plan.wires))
-# plan.launch_aq_plan()
+plan.launch_aq_plan()
 
 test_plan(plan, out_path, ref_path)

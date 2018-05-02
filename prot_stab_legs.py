@@ -25,9 +25,8 @@ class ProtStabLeg(Leg):
          return len(cls.leg_order)
 
     def select_op(self, ot_name):
-        ops = self.aq_plan_objs['ops']
-        selected = [o for o in ops if o.operation_type.name == ot_name]
-        if selected: return selected[0]
+        selected = [od for od in self.op_data if od['operation'].operation_type.name == ot_name]
+        if selected: return selected[0]['operation']
 
     # This should be renamed because it doesn't matter which Leg it is called on.
     def wire_to_prev(self, upstr_op, dnstr_op):

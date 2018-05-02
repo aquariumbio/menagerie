@@ -1,4 +1,4 @@
-from aq_classes import Leg, get_op
+from aq_classes import Leg
 
 class GoldenGateLeg(Leg):
     def __init__(self, plan_step, source, destination, leg_order, aq_defaults_path):
