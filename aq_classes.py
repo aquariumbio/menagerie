@@ -27,16 +27,6 @@ class Leg:
         # This is no longer a good name for this variable.
         self.sample_io = {}
 
-        # This can probably be replaced by self.operations and self.wires
-        # self.aq_plan_objs = Leg.get_init_plan_objects()
-
-    # I don't think this serves a useful function anymore.
-    # def get_init_plan_objects():
-    #     init_plan_objs = {
-    #         'ops': [],
-    #         'wires': []
-    #     }
-    #     return init_plan_objs
 
     # Does it make sense to populate this intermediate object?
     # Why not just build the array of operations?
@@ -177,6 +167,24 @@ class Leg:
     def primary_io(self, op, role):
         return next(fv for fv in op.field_values if fv.role == role and fv.name in self.primary_handles)
 
+    def select_op(self, ot_name):
+        selected = [od for od in self.op_data if od['operation'].operation_type.name == ot_name]
+        if selected: return selected[0]['operation']
+
+    def get_output_op(self):
+        return self.get_op_by_index(-1)
+
+    def get_input_op(self):
+        return self.get_op_by_index(0)
+
+    def get_op_by_index(self, i):
+        if self.leg_order:
+            return self.select_op(self.leg_order[i])
+
+    def set_start_date(self, start_date):
+        op = self.get_input_op()
+        v = '{ "delay_until": "%s" }' % start_date
+        op.set_field_value('Options', 'input', value=v)
 
 
 class Cursor:

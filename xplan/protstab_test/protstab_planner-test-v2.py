@@ -1,5 +1,5 @@
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pympler import tracker
 
 trident_path = '/Users/devin/work/trident'
@@ -38,6 +38,36 @@ plan = XPlan(aq_plan_name, plan_path, plan_defaults_path, config_path)
 # This keeps track of where to put the next operation in the GUI.
 cursor = Cursor()
 
+while True:
+    print("Enter the day you want to start the experiment.")
+    print("The date must be on a Friday.")
+    print("If you don't enter anything, the plan will be scheduled as soon as possible.")
+    today = input("Start date (MM/DD/YY): ")
+
+    if not today:
+        today = datetime.today()
+        break
+
+    today = datetime.strptime(today, '%m/%d/%y')
+    if today.weekday() == 4:
+        break
+
+    else:
+        print()
+        print("You entered a value that is not on a Friday. Try again.")
+
+dow = today.weekday()
+
+if dow <= 4:
+    delay = timedelta(days=(4 - dow))
+else:
+    delay = timedelta(days=(11 - dow))
+
+start_date = today + delay
+
+print("\nPlanning experiment to start on " + start_date.strftime('%m/%d/%y'))
+print()
+
 for step_id in plan.step_ids(plan.protstab_round_steps()):
     plan_step = plan.step(step_id)
 
@@ -59,6 +89,8 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
             overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
             overnight_leg.set_yeast(input_yeast)
             overnight_leg.add(opt)
+            overnight_leg.set_start_date(start_date.date())
+            print("Planning innoculation of %s on %s" % (input_yeast, str(start_date.date())))
             cursor.return_y()
 
             if input_yeast in plan.ngs_samples:
@@ -68,12 +100,11 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                 naive_leg.add('library')
                 cursor.return_y()
 
-                print(overnight_leg)
                 upstr_op = overnight_leg.select_op('Innoculate Yeast Library')
                 dnstr_op = naive_leg.select_op('Store Yeast Library Sample')
                 naive_leg.wire_to_prev(upstr_op, dnstr_op)
 
-            new_inputs[input_yeast] = overnight_leg.get_output_op()
+            new_inputs[input_yeast] = overnight_leg.get_innoculate_op()
 
         upstr_op = prev_step_outputs.get(input_yeast) or new_inputs.get(input_yeast)
         input_sample = upstr_op.output('Yeast Culture').sample
@@ -140,7 +171,7 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                     dnstr_op = this_leg.select_op(this_ot)
                     this_leg.wire_to_prev(upstr_op, dnstr_op)
 
-                    output_op = this_leg.get_output_op()
+                    output_op = this_leg.get_innoculate_op()
 
                     if output_op:
                         plan_step.add_output_operation(dst['sample'], output_op)
@@ -156,8 +187,16 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
     cursor.decr_y(SortLeg.length() + 3)
     cursor.set_y_home()
 
+    if start_date.weekday() == 4:
+        incr = 3
+    else:
+        incr = 2
+
+    start_date += timedelta(days=incr)
+
     print(plan_step.name + ' complete')
     print()
+    break
 
 print(len(plan.aq_plan.operations))
 print(len(plan.aq_plan.wires))

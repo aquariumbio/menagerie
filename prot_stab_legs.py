@@ -24,17 +24,13 @@ class ProtStabLeg(Leg):
     def length(cls):
          return len(cls.leg_order)
 
-    def select_op(self, ot_name):
-        selected = [od for od in self.op_data if od['operation'].operation_type.name == ot_name]
-        if selected: return selected[0]['operation']
-
     # This should be renamed because it doesn't matter which Leg it is called on.
     def wire_to_prev(self, upstr_op, dnstr_op):
         wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
         self.aq_plan.add_wires([wire_pair])
         self.propagate_sample(upstr_op, dnstr_op)
 
-    def get_output_op(self):
+    def get_innoculate_op(self):
         return self.select_op('Innoculate Yeast Library')
 
 
@@ -45,11 +41,6 @@ class OvernightLeg(ProtStabLeg):
     def __init__(self, plan_step, cursor, aq_defaults_path):
         super().__init__(plan_step, cursor, aq_defaults_path)
 
-    def set_start_date(self, start_date):
-        op = self.get_output_op()
-        v = '{ "delay_until": "%s" }' % start_date
-        op.set_field_value('Options', 'input', value=v)
-
 
 class NaiveLeg(ProtStabLeg):
 
@@ -57,7 +48,6 @@ class NaiveLeg(ProtStabLeg):
 
     def __init__(self, plan_step, cursor, aq_defaults_path):
         super().__init__(plan_step, cursor, aq_defaults_path)
-
 
 
 class InductionLeg(ProtStabLeg):

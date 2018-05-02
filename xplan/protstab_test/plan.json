@@ -1,0 +1,1139 @@
+{
+    "created_at": "2018-05-02T15:19:01-07:00",
+    "data_associations": null,
+    "id": 104117,
+    "layout": "{\"id\": 0, \"children\": null, \"documentation\": \"No documentation ofr this module\", \"height\": 60, \"input\": null, \"output\": null, \"name\": \"no_name\", \"parent_id\": -1, \"width\": 160, \"wires\": null}",
+    "name": "ProtStab Test Plan 3",
+    "operations": [
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179722,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2342,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 64.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179723,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2343,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 64.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179724,
+            "operation_type_id": 763,
+            "parent_id": null,
+            "rid": 2344,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 256.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179725,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2345,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 256.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179726,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2346,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 256.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179727,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2347,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 256.0,
+            "y": 1408.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179728,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2348,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 256.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179729,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2349,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 640.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179730,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2350,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 640.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179731,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2351,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 640.0,
+            "y": 1408.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179732,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2352,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 640.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179733,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2353,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17021: Chymotrypsin",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 832.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179734,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2354,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 832.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179735,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2355,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 832.0,
+            "y": 1408.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179736,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2356,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 832.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179737,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2357,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1216.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179738,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2358,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1216.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179739,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2359,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1216.0,
+            "y": 1408.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179740,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2360,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1216.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179741,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2361,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1408.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 179742,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2362,
+            "routing": {
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:01-07:00",
+            "user_id": 185,
+            "x": 1408.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179743,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2363,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1408.0,
+            "y": 1408.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179744,
+            "operation_type_id": 1135,
+            "parent_id": null,
+            "rid": 2364,
+            "routing": {
+                "Y": "17136: NODS4"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1408.0,
+            "y": 1344.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179745,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2365,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1792.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179746,
+            "operation_type_id": 763,
+            "parent_id": null,
+            "rid": 2366,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1984.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179747,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2367,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1984.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179748,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2368,
+            "routing": {
+                "YL": "17137: EBY100 + pETcon3"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 1984.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179749,
+            "operation_type_id": 758,
+            "parent_id": null,
+            "rid": 2369,
+            "routing": {
+                "M": "11786: SDO -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2368.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179750,
+            "operation_type_id": 763,
+            "parent_id": null,
+            "rid": 2370,
+            "routing": {
+                "M": "17138: SDO + 2% Galactose -His -Trp -Ura",
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2560.0,
+            "y": 1664.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179751,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2371,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2560.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179752,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2372,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2560.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179753,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2373,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2752.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179754,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2374,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2752.0,
+            "y": 1472.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179755,
+            "operation_type_id": 764,
+            "parent_id": null,
+            "rid": 2375,
+            "routing": {
+                "Ab": "16967: anti-Myc-FITC",
+                "P": "17020: Trypsin",
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2944.0,
+            "y": 1536.0
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 179756,
+            "operation_type_id": 765,
+            "parent_id": null,
+            "rid": 2376,
+            "routing": {
+                "YL": "17081: AMA1-best"
+            },
+            "status": "planning",
+            "updated_at": "2018-05-02T15:19:02-07:00",
+            "user_id": 185,
+            "x": 2944.0,
+            "y": 1472.0
+        }
+    ],
+    "plan_associations": [
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127269,
+            "operation_id": 179722,
+            "plan_id": 104117,
+            "rid": 3505,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127270,
+            "operation_id": 179723,
+            "plan_id": 104117,
+            "rid": 3506,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127271,
+            "operation_id": 179724,
+            "plan_id": 104117,
+            "rid": 3507,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127272,
+            "operation_id": 179725,
+            "plan_id": 104117,
+            "rid": 3508,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127273,
+            "operation_id": 179726,
+            "plan_id": 104117,
+            "rid": 3509,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127274,
+            "operation_id": 179727,
+            "plan_id": 104117,
+            "rid": 3510,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127275,
+            "operation_id": 179728,
+            "plan_id": 104117,
+            "rid": 3511,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127276,
+            "operation_id": 179729,
+            "plan_id": 104117,
+            "rid": 3512,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127277,
+            "operation_id": 179730,
+            "plan_id": 104117,
+            "rid": 3513,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127278,
+            "operation_id": 179731,
+            "plan_id": 104117,
+            "rid": 3514,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127279,
+            "operation_id": 179732,
+            "plan_id": 104117,
+            "rid": 3515,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127280,
+            "operation_id": 179733,
+            "plan_id": 104117,
+            "rid": 3516,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127281,
+            "operation_id": 179734,
+            "plan_id": 104117,
+            "rid": 3517,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127282,
+            "operation_id": 179735,
+            "plan_id": 104117,
+            "rid": 3518,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127283,
+            "operation_id": 179736,
+            "plan_id": 104117,
+            "rid": 3519,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127284,
+            "operation_id": 179737,
+            "plan_id": 104117,
+            "rid": 3520,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127285,
+            "operation_id": 179738,
+            "plan_id": 104117,
+            "rid": 3521,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127286,
+            "operation_id": 179739,
+            "plan_id": 104117,
+            "rid": 3522,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127287,
+            "operation_id": 179740,
+            "plan_id": 104117,
+            "rid": 3523,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:01-07:00",
+            "id": 127288,
+            "operation_id": 179741,
+            "plan_id": 104117,
+            "rid": 3524,
+            "updated_at": "2018-05-02T15:19:01-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127289,
+            "operation_id": 179742,
+            "plan_id": 104117,
+            "rid": 3525,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127290,
+            "operation_id": 179743,
+            "plan_id": 104117,
+            "rid": 3526,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127291,
+            "operation_id": 179744,
+            "plan_id": 104117,
+            "rid": 3527,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127292,
+            "operation_id": 179745,
+            "plan_id": 104117,
+            "rid": 3528,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127293,
+            "operation_id": 179746,
+            "plan_id": 104117,
+            "rid": 3529,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127294,
+            "operation_id": 179747,
+            "plan_id": 104117,
+            "rid": 3530,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127295,
+            "operation_id": 179748,
+            "plan_id": 104117,
+            "rid": 3531,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127296,
+            "operation_id": 179749,
+            "plan_id": 104117,
+            "rid": 3532,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127297,
+            "operation_id": 179750,
+            "plan_id": 104117,
+            "rid": 3533,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127298,
+            "operation_id": 179751,
+            "plan_id": 104117,
+            "rid": 3534,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127299,
+            "operation_id": 179752,
+            "plan_id": 104117,
+            "rid": 3535,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127300,
+            "operation_id": 179753,
+            "plan_id": 104117,
+            "rid": 3536,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127301,
+            "operation_id": 179754,
+            "plan_id": 104117,
+            "rid": 3537,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127302,
+            "operation_id": 179755,
+            "plan_id": 104117,
+            "rid": 3538,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "id": 127303,
+            "operation_id": 179756,
+            "plan_id": 104117,
+            "rid": 3539,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        }
+    ],
+    "rid": 2378,
+    "status": "planning",
+    "updated_at": "2018-05-02T15:19:02-07:00",
+    "user_id": 185,
+    "wires": [
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669004,
+            "id": 19101,
+            "rid": 1499,
+            "to_id": 669007,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669004,
+            "id": 19102,
+            "rid": 1500,
+            "to_id": 669010,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669016,
+            "id": 19103,
+            "rid": 1501,
+            "to_id": 669018,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669019,
+            "id": 19104,
+            "rid": 1502,
+            "to_id": 669022,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669023,
+            "id": 19105,
+            "rid": 1503,
+            "to_id": 669026,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669011,
+            "id": 19106,
+            "rid": 1504,
+            "to_id": 669013,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669032,
+            "id": 19107,
+            "rid": 1505,
+            "to_id": 669034,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669035,
+            "id": 19108,
+            "rid": 1506,
+            "to_id": 669038,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669039,
+            "id": 19109,
+            "rid": 1507,
+            "to_id": 669042,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669011,
+            "id": 19110,
+            "rid": 1508,
+            "to_id": 669029,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669048,
+            "id": 19111,
+            "rid": 1509,
+            "to_id": 669050,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669051,
+            "id": 19112,
+            "rid": 1510,
+            "to_id": 669054,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669055,
+            "id": 19113,
+            "rid": 1511,
+            "to_id": 669058,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669011,
+            "id": 19114,
+            "rid": 1512,
+            "to_id": 669045,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669064,
+            "id": 19115,
+            "rid": 1513,
+            "to_id": 669066,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669067,
+            "id": 19116,
+            "rid": 1514,
+            "to_id": 669070,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669071,
+            "id": 19117,
+            "rid": 1515,
+            "to_id": 669074,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669011,
+            "id": 19118,
+            "rid": 1516,
+            "to_id": 669061,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669080,
+            "id": 19119,
+            "rid": 1517,
+            "to_id": 669082,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669083,
+            "id": 19120,
+            "rid": 1518,
+            "to_id": 669086,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669087,
+            "id": 19121,
+            "rid": 1519,
+            "to_id": 669090,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669011,
+            "id": 19122,
+            "rid": 1520,
+            "to_id": 669077,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669094,
+            "id": 19123,
+            "rid": 1521,
+            "to_id": 669097,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669103,
+            "id": 19124,
+            "rid": 1522,
+            "to_id": 669105,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669098,
+            "id": 19125,
+            "rid": 1523,
+            "to_id": 669100,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669110,
+            "id": 19126,
+            "rid": 1524,
+            "to_id": 669113,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669119,
+            "id": 19127,
+            "rid": 1525,
+            "to_id": 669121,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669114,
+            "id": 19128,
+            "rid": 1526,
+            "to_id": 669116,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669128,
+            "id": 19129,
+            "rid": 1527,
+            "to_id": 669130,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669114,
+            "id": 19130,
+            "rid": 1528,
+            "to_id": 669125,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669137,
+            "id": 19131,
+            "rid": 1529,
+            "to_id": 669139,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        },
+        {
+            "active": true,
+            "created_at": "2018-05-02T15:19:02-07:00",
+            "from_id": 669114,
+            "id": 19132,
+            "rid": 1530,
+            "to_id": 669134,
+            "updated_at": "2018-05-02T15:19:02-07:00"
+        }
+    ]
+}
