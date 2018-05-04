@@ -77,16 +77,13 @@ class Leg:
             return self.session.ObjectType.where({'name': container_name})[0]
 
     def add(self, container_opt=None):
-        self.create(container_opt)
+        self.set_io(container_opt)
         self.aq_plan.add_operations([od['operation'] for od in self.op_data])
         self.aq_plan.add_wires(self.wires)
         print('### ' + str(len(self.aq_plan.operations)) + ' total operations')
         print()
-        # return self.aq_plan_objs
 
-    # The point of this method seems to be to set samples and containers.
-    # Should move the creation of the operations out of this method.
-    def create(self, container_opt):
+    def set_io(self, container_opt):
         for i in range(len(self.op_data)):
             od = self.op_data[i]
             op = od['operation']
@@ -118,13 +115,9 @@ class Leg:
                 else:
                     op.set_field_value(ft.name, ft.role, value=io_object)
 
-            # self.aq_plan_objs['ops'].append(op)
-
             self.propagate_sample(self.op_data[i - 1]['operation'], self.op_data[i]['operation'])
 
-            # self.cursor.decr_y()
-
-            print("Added " + od['name'])
+            print("Set IO for " + od['name'])
 
     def initialize_op(self, ot_name):
         op_types = self.session.OperationType.where({

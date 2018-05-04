@@ -14,12 +14,23 @@ def test_plan(plan, out_path, ref_path):
     with open(ref_path, 'r') as f:
         plan_ref = str(json.load(f))
 
-    # print(remove_gids(plan_out))
-    # print()
-    # print(remove_gids(plan_ref))
-
-    assert remove_gids(plan_out) == remove_gids(plan_ref)
+    assert remove_incidentals(plan_out) == remove_incidentals(plan_ref)
 
 
-def remove_gids(plan_json):
-    return re.sub(r'(?<=("|\')rid("|\'): )\d+', '0', plan_json)
+def remove_incidentals(plan_json):
+    keys = [
+        "rid",
+        "id",
+        "created_at",
+        "updated_at",
+        "operation_id",
+        "plan_id",
+        "from_id",
+        "to_id"
+    ]
+
+    for k in keys:
+        pat = r'(?<=("|\')' + re.escape(k) + r'("|\'): ).+'
+        plan_json = re.sub(pat, '0', plan_json)
+
+    return plan_json

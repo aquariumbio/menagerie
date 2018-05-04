@@ -28,6 +28,8 @@ class ExternalPlan:
             self.steps = []
             self.input_samples = {}
 
+        self.temp_data_associations = []
+
     def set_session(self, config_path):
         with open(config_path, 'r') as f:
             config = yaml.load(f)
@@ -76,6 +78,24 @@ class ExternalPlan:
     def launch_aq_plan(self):
         self.aq_plan.connect_to_session(self.session)
         self.aq_plan.create()
+
+    def update_temp_data_assoc(self, obj, data_associations):
+        tdas = [a for a in self.temp_data_associations if a['object'] == obj]
+
+        if tdas:
+            tda = tdas[0]
+
+        else:
+            tda = { 'object': obj }
+            self.temp_data_associations.append(tda)
+
+        tda.update(data_associations)
+
+    def add_data_associations(self):
+        for tda in self.temp_data_associations:
+            obj = tda.pop('object')
+            for key, value in tda.items():
+                obj.associate(key, value)
 
 
 class PlanStep:

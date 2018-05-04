@@ -152,24 +152,27 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                 for dst in txn.destination:
                     # Measured samples is not a very good descriptor here
                     # Better to have something that captures flow cytometry
-                    if dst['sample'] in plan_step.measured_samples:
+                    # what about transformations that don't meet this criteria?
+                    # if dst['sample'] in plan_step.measured_samples:
 
-                        if dst['sample'] in plan.ngs_samples:
-                            this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
+                    if dst['sample'] in plan.ngs_samples:
+                        this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
 
-                        else:
-                            this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
+                    else:
+                        this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
 
-                        this_leg.set_yeast(input_yeast)
-                        this_leg.set_protease(src)
-                        overnight_ot = 'Dilute Yeast Library'
-                        this_ot = 'Challenge and Label'
+                    this_leg.set_yeast(input_yeast)
+                    this_leg.set_protease(src)
+                    this_leg.set_uri(src, dst)
 
                     this_leg.add(opt)
 
                     upstr_op = induction_leg.select_op('Dilute Yeast Library')
-                    dnstr_op = this_leg.select_op(this_ot)
+                    dnstr_op = this_leg.select_op('Challenge and Label')
                     this_leg.wire_to_prev(upstr_op, dnstr_op)
+
+                    data_assoc = { 'destination': dst['sample'] }
+                    plan.update_temp_data_assoc(dnstr_op, data_assoc)
 
                     output_op = this_leg.get_innoculate_op()
 
@@ -196,10 +199,15 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
 
     print(plan_step.name + ' complete')
     print()
-    break
 
-print(len(plan.aq_plan.operations))
-print(len(plan.aq_plan.wires))
 plan.launch_aq_plan()
+plan.add_data_associations()
+
+url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
+print("Created Plan: {}".format(url))
+print("{} total operations.".format(len(plan.aq_plan.operations)))
+print("{} total wires.".format(len(plan.aq_plan.wires)))
 
 test_plan(plan, out_path, ref_path)
+
+plan.aq_plan.delete()

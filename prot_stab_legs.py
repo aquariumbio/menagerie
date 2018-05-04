@@ -33,6 +33,10 @@ class ProtStabLeg(Leg):
     def get_innoculate_op(self):
         return self.select_op('Innoculate Yeast Library')
 
+    def set_uri(self, ot_name, obj):
+        op = self.select_op(ot_name)
+        obj.get('sample')
+
 
 class OvernightLeg(ProtStabLeg):
 
