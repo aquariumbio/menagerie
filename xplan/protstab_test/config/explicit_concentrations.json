@@ -137,7 +137,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R1390\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
+              }
             ]
           },
           {
@@ -145,7 +149,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R1443\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -153,7 +161,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R1496\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -161,7 +173,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844_R1545\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           }
         ],
@@ -298,7 +314,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R1952\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
+              }
             ]
           },
           {
@@ -306,7 +326,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R2013\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -314,7 +338,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R2074\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -322,7 +350,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844_R2131\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           }
         ],
@@ -459,7 +491,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R2538\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
+              }
             ]
           },
           {
@@ -467,7 +503,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R2599\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 250,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -475,7 +515,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875_R2660\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s875\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           },
           {
@@ -483,7 +527,11 @@
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844_R2717\/1"
             ],
             "source": [
-              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1"
+              "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s844\/1",
+              {
+                "concentration": 0,
+                "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s813\/1"
+              }
             ]
           }
         ],

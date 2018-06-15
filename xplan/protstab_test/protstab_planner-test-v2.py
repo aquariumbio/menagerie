@@ -85,10 +85,10 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
 
         if not prev_step_outputs.get(input_yeast):
             cursor.incr_y(2)
-            opt = 'library start' if is_library else 'control'
+            container_opt = 'library start' if is_library else 'control'
             overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
             overnight_leg.set_yeast(input_yeast)
-            overnight_leg.add(opt)
+            overnight_leg.add(container_opt)
             overnight_leg.set_start_date(start_date.date())
             print("Planning innoculation of %s on %s" % (input_yeast, str(start_date.date())))
             cursor.return_y()
@@ -119,10 +119,10 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
         cursor.return_y()
 
         cursor.incr_y(2)
-        opt = 'library' if is_library else 'control'
+        container_opt = 'library' if is_library else 'control'
         induction_leg = InductionLeg(plan_step, cursor, aq_defaults_path)
         induction_leg.set_yeast(input_yeast)
-        induction_leg.add(opt)
+        induction_leg.add(container_opt)
         cursor.return_y()
 
         dnstr_op = induction_leg.select_op('Dilute Yeast Library')
@@ -150,22 +150,30 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
             for txn in txns:
                 src = txn.source
                 for dst in txn.destination:
-                    # Measured samples is not a very good descriptor here
-                    # Better to have something that captures flow cytometry
-                    # what about transformations that don't meet this criteria?
-                    # if dst['sample'] in plan_step.measured_samples:
-
-                    if dst['sample'] in plan.ngs_samples:
+                    ngs_sample = dst['sample'] in plan.ngs_samples
+                    if ngs_sample:
                         this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
-
                     else:
                         this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
 
                     this_leg.set_yeast(input_yeast)
                     this_leg.set_protease(src)
-                    this_leg.set_uri(src, dst)
+                    # this_leg.set_uri(src, dst)
 
-                    this_leg.add(opt)
+                    # This is not a good way to set these variables
+                    if ngs_sample:
+                        this_leg.sample_io['Control?'] = 'no'
+                    else:
+                        yeast_name = this_leg.sample_io['Labeled Yeast Library'].name
+                        if yeast_name == 'EBY100 + pETcon3':
+                            this_leg.sample_io['Control?'] = 'autofluorescence'
+                        elif yeast_name == 'AMA1-best':
+                            if this_leg.sample_io['Protease Concentration'] == 0:
+                                this_leg.sample_io['Control?'] = 'high-fitc'
+                            else:
+                                this_leg.sample_io['Control?'] = 'protease'
+
+                    this_leg.add(container_opt)
 
                     upstr_op = induction_leg.select_op('Dilute Yeast Library')
                     dnstr_op = this_leg.select_op('Challenge and Label')
@@ -210,4 +218,7 @@ print("{} total wires.".format(len(plan.aq_plan.wires)))
 
 test_plan(plan, out_path, ref_path)
 
-plan.aq_plan.delete()
+print("Test passed!")
+delete = input("Do you want to delete this plan? (y/n) ")
+if delete == 'y' or delete == 'Y':
+    plan.aq_plan.delete()

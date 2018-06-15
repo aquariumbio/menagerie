@@ -34,16 +34,16 @@ class ExternalPlan:
         with open(config_path, 'r') as f:
             config = yaml.load(f)
 
-        nursery = config['aquarium']['nursery']
+        login = config['aquarium']['nursery']
 
         session = AqSession(
-                nursery['username'],
-                nursery['password'],
-                nursery['url']
-                )
+            login['username'],
+            login['password'],
+            login['url']
+        )
 
         # Test the session
-        me = session.User.where({'login': nursery['username']})[0]
+        me = session.User.where({'login': login['username']})[0]
         print('Logged in as %s\n' % me.name)
 
         self.session = session
