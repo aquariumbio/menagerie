@@ -34,7 +34,7 @@ class ExternalPlan:
         with open(config_path, 'r') as f:
             config = yaml.load(f)
 
-        login = config['aquarium']['nursery']
+        login = config['aquarium']['production']
 
         session = AqSession(
             login['username'],

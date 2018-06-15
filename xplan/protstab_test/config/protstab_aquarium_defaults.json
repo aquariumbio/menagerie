@@ -6,7 +6,7 @@
         "input_container_type": {
           "library start": "Yeast Library Glycerol Stock",
           "library": "Labeled Yeast Library Suspension",
-          "control": "Yeast Plate"
+          "control": "Divided Yeast Plate"
         },
         "output_container_type": {
           "library start": "Yeast Library Liquid Culture",

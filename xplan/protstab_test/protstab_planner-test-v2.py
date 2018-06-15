@@ -26,7 +26,7 @@ plan_test_path = os.path.join(ext_plan_path, 'xplan/protstab_test')
 path_stub = os.path.join(plan_test_path, 'config')
 plan_path = os.path.join(path_stub, 'explicit_concentrations.json')
 aq_defaults_path = os.path.join(path_stub, 'protstab_aquarium_defaults.json')
-plan_defaults_path = os.path.join(path_stub, 'protstab_plan_defaults_nursery.json')
+plan_defaults_path = os.path.join(path_stub, 'protstab_plan_defaults_production.json')
 
 # Paths for regression testing the output plan against a reference.
 out_path = os.path.join(plan_test_path, 'plan.json')

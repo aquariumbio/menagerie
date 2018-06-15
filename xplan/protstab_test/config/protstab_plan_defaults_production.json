@@ -1,33 +1,42 @@
 {
-  "concentrations": {
-    "default": 0,
-
-    "T1": 9.5,
-    "T2": 28,
-    "T3": 83,
-    "T4": 250,
-    "T5": 750,
-    "T6": 2250,
-
-    "C1": 9.5,
-    "C2": 28,
-    "C3": 83,
-    "C4": 250,
-    "C5": 750,
-    "C6": 2250
-  },
   "input_samples": {
-    "http://hub.sd2e.org/user/sd2e/protstab/Y/1": 22610,
-    "http://hub.sd2e.org/user/sd2e/design/55555/1": 17137,
-    "http://hub.sd2e.org/user/sd2e/design/66666/1": 17081,
-    "http://sd2e.org#Chymotrypsin":	22038,
-    "http://sd2e.org#Trypsin": 22037
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/Y\/1": 23872,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21535\/1": 21535,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21171\/1": 21171,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_2\/1": 22038,
+    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_1\/1": 22037
   },
   "defaults": [
-    {"name": "Innoculate Yeast Library", "defaults": {"Media": "SDO -His -Trp -Ura"} },
-    {"name": "Dilute Yeast Library", "defaults": {"Media": "SDO + 2% Galactose -His -Trp -Ura"} },
-    {"name": "Challenge and Label", "defaults": {"Antibody": "Anti-c-myc-FITC"} },
-    {"name": "Sort Yeast Display Library", "defaults": {"Control?": "no", "Sort?": "yes"} },
-    {"name": "Store Yeast Library Sample", "defaults": {} }
+    {
+      "name": "Innoculate Yeast Library",
+      "defaults": {
+        "Media": "SDO -His -Trp -Ura",
+        "Options": "{}"
+      }
+    },
+    {
+      "name": "Dilute Yeast Library",
+      "defaults": {
+        "Media": "SDO + 2% Galactose -His -Trp -Ura"
+      }
+    },
+    {
+      "name": "Challenge and Label",
+      "defaults": {
+        "Antibody":
+        "Anti-c-myc-FITC"
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "defaults": {
+        "Control?": "no",
+        "Sort?": "yes"
+      }
+    },
+    {
+      "name": "Store Yeast Library Sample",
+      "defaults": {}
+    }
   ]
 }
