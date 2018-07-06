@@ -91,7 +91,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906\/1",
               {
-                "concentration": 9.5,
+                "concentration": 28,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]
@@ -115,7 +115,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906\/1",
               {
-                "concentration": 28,
+                "concentration": 83,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]
@@ -268,7 +268,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906_R1256\/1",
               {
-                "concentration": 83,
+                "concentration": 250,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]
@@ -292,7 +292,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906_R1256\/1",
               {
-                "concentration": 250,
+                "concentration": 750,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]
@@ -445,7 +445,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906_R1256_R1843\/1",
               {
-                "concentration": 750,
+                "concentration": 2250,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]
@@ -469,7 +469,7 @@
             "source": [
               "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s906_R1256_R1843\/1",
               {
-                "concentration": 2250,
+                "concentration": 6750,
                 "sample": "https:\/\/hub.sd2e.org\/user\/sd2e\/biofab_protstab_Q2_1\/s760\/1"
               }
             ]

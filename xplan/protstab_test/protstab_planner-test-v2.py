@@ -32,7 +32,7 @@ plan_defaults_path = os.path.join(path_stub, 'protstab_plan_defaults_production.
 out_path = os.path.join(plan_test_path, 'plan.json')
 ref_path = os.path.join(plan_test_path, 'plan-ref.json')
 
-aq_plan_name = "ProtStab Test Plan 3"
+aq_plan_name = "SD2 Downselect 3 #1 with controls"
 plan = XPlan(aq_plan_name, plan_path, plan_defaults_path, config_path)
 
 # This keeps track of where to put the next operation in the GUI.
@@ -179,8 +179,8 @@ for step_id in plan.step_ids(plan.protstab_round_steps()):
                     dnstr_op = this_leg.select_op('Challenge and Label')
                     this_leg.wire_to_prev(upstr_op, dnstr_op)
 
-                    data_assoc = { 'destination': dst['sample'] }
-                    plan.update_temp_data_assoc(dnstr_op, data_assoc)
+                    # data_assoc = { 'destination': dst['sample'] }
+                    # plan.update_temp_data_assoc(dnstr_op, data_assoc)
 
                     output_op = this_leg.get_innoculate_op()
 
