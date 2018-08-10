@@ -32,7 +32,7 @@ plan_defaults_path = os.path.join(path_stub, 'protstab_plan_defaults_production.
 out_path = os.path.join(plan_test_path, 'plan.json')
 ref_path = os.path.join(plan_test_path, 'plan-ref.json')
 
-aq_plan_name = "SD2 Downselect 3 #1 with controls"
+aq_plan_name = "B1234 Trypsin Only with DHFBI #2 with controls"
 plan = XPlan(aq_plan_name, plan_path, plan_defaults_path, config_path)
 
 # This keeps track of where to put the next operation in the GUI.
