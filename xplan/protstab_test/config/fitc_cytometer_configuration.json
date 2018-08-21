@@ -1,0 +1,9 @@
+{
+    "template": "biofab_sort_yeast_v3",
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+}

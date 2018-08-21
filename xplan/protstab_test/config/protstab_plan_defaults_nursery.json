@@ -1,10 +1,10 @@
 {
   "input_samples": {
-    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/Y\/1": 17136,
-    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21535\/1": 17137,
-    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/UWBF_21171\/1": 17081,
-    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_2\/1":	17021,
-    "https:\/\/hub.sd2e.org\/user\/sd2e\/design\/protease_1\/1": 17020
+    "library": 17136,
+    "binding_negative": 17137,
+    "binding_positive": 17081,
+    "chymotrypsin":	17021,
+    "trypsin": 17020
   },
   "defaults": [
     {

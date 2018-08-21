@@ -49,9 +49,6 @@ class XPlan(ExternalPlan):
 
     ##### These are probably unique to protein stability #####
 
-    def protstab_round_steps(self):
-        return self.get_steps_by_type('protstab_round')
-
     def set_default_protease(self):
         def_prot_pat = re.compile(r'protease_1', re.IGNORECASE)
 
