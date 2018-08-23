@@ -43,6 +43,12 @@
           "library": "Labeled Yeast Library Suspension",
           "control": "Labeled Yeast Strain Suspension"
         }
+      },
+      "Protease": {
+        "input_container_type": "Protease Stock"
+      },
+      "Antibody": {
+        "input_container_type": "Antibody Stock"
       }
     },
     {
@@ -61,7 +67,12 @@
     {
       "name": "Store Yeast Library Sample",
       "Yeast Culture": {
-        "input_container_type": "Yeast Library Liquid Culture",
+        "input_container_type": "Yeast Library Liquid Culture"
+      },
+      "Stored sample rep 1": {
+        "output_container_type": "Yeast Library in Soln 1"
+      },
+      "Stored sample rep 2": {
         "output_container_type": "Yeast Library in Soln 1"
       }
     }

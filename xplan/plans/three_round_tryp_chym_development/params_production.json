@@ -4,9 +4,19 @@
     "binding_negative": 21535,
     "binding_positive": 21171,
     "chymotrypsin": 22038,
-    "trypsin": 22037
+    "trypsin": 22037,
+    "antibody": "Anti-c-myc-Alexa594"
   },
-  "defaults": [
+  "cytometer_configuration": {
+    "template": "biofab_sort_yeast_v3",
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  },
+  "operation_defaults": [
     {
       "name": "Innoculate Yeast Library",
       "defaults": {
@@ -22,10 +32,7 @@
     },
     {
       "name": "Challenge and Label",
-      "defaults": {
-        "Antibody":
-        "Anti-c-myc-Alexa594"
-      }
+      "defaults": {}
     },
     {
       "name": "Sort Yeast Display Library",

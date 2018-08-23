@@ -4,9 +4,19 @@
     "binding_negative": 17137,
     "binding_positive": 17081,
     "chymotrypsin":	17021,
-    "trypsin": 17020
+    "trypsin": 17020,
+    "antibody": 18883
   },
-  "defaults": [
+  "cytometer_configuration": {
+    "template": "biofab_sort_yeast_v3",
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  },
+  "operation_defaults": [
     {
       "name": "Innoculate Yeast Library",
       "defaults": {
@@ -22,10 +32,7 @@
     },
     {
       "name": "Challenge and Label",
-      "defaults": {
-        "Antibody":
-        "Anti-Myc-FITC"
-      }
+      "defaults": {}
     },
     {
       "name": "Sort Yeast Display Library",

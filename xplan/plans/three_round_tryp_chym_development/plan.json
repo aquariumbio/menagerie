@@ -1,14 +1,14 @@
 {
   "experimentLab": "biofab",
-  "experimentSet": "...",
+  "experimentSet": "",
   "experimentId": "1",
-  "name": "...",
-  "id": "...",
+  "name": "",
+  "id": "",
   "cost": 0,
   "steps": [
     {
       "operator": {
-        "instrument_configuration": "fitc_cytometer_configuration.json",
+        "instrument_configuration": "",
         "manifest": "",
         "measurements": [
           {
@@ -159,8 +159,8 @@
           }
         ],
         "id": 1,
-        "comment": "...",
-        "description": "...",
+        "comment": "",
+        "description": "",
         "type": "protstab_round",
         "name": "Protstab Round"
       },
@@ -169,7 +169,7 @@
     },
     {
       "operator": {
-        "instrument_configuration": "fitc_cytometer_configuration.json",
+        "instrument_configuration": "",
         "manifest": "",
         "measurements": [
           {
@@ -336,8 +336,8 @@
           }
         ],
         "id": 2,
-        "comment": "...",
-        "description": "...",
+        "comment": "",
+        "description": "",
         "type": "protstab_round",
         "name": "Protstab Round"
       },
@@ -346,7 +346,7 @@
     },
     {
       "operator": {
-        "instrument_configuration": "fitc_cytometer_configuration.json",
+        "instrument_configuration": "",
         "manifest": "",
         "measurements": [
           {
@@ -513,8 +513,8 @@
           }
         ],
         "id": 3,
-        "comment": "...",
-        "description": "...",
+        "comment": "",
+        "description": "",
         "type": "protstab_round",
         "name": "Protstab Round"
       },
@@ -708,10 +708,10 @@
             "source": "library"
           }
         ],
-        "manifest": "...",
+        "manifest": "",
         "id": 4,
-        "comment": "...",
-        "description": "...",
+        "comment": "",
+        "description": "",
         "type": "dna_seq",
         "name": "DNA Seq Operator"
       },

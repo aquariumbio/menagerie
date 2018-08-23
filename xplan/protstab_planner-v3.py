@@ -1,72 +1,28 @@
 import sys
+import os
 from datetime import datetime, timedelta
-from pympler import tracker
+import warnings
+warnings.filterwarnings('ignore')
 
-trident_path = '/Users/devin/work/trident'
-sys.path.append(trident_path)
-ext_plan_path = '/Users/devin/work/ext-plan-pydent'
+# trident_path = '/Users/devin/Documents/work/trident'
+# sys.path.append(trident_path)
+ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from aq_classes import Cursor, Leg
 from xplan.xplans import XPlan
 from prot_stab_legs import OvernightLeg, NaiveLeg, InductionLeg, SortLeg, FlowLeg, ProtStabLeg
 
-import os
-
 from plan_tests import test_plan
+from user_input import get_input
 
-import warnings
-warnings.filterwarnings('ignore')
+inputs = get_input()
 
-# Path for login credentials and whatnot.
-config_path = os.path.join(ext_plan_path, 'config.yml')
-
-# Paths for input configurations.
-plan_test_path = os.path.join(ext_plan_path, 'xplan/protstab_test')
-path_stub = os.path.join(plan_test_path, 'config')
-plan_path = os.path.join(path_stub, 'explicit_concentrations.json')
-aq_defaults_path = os.path.join(path_stub, 'protstab_aquarium_defaults.json')
-plan_defaults_path = os.path.join(path_stub, 'protstab_plan_defaults_production.json')
-
-# Paths for regression testing the output plan against a reference.
-out_path = os.path.join(plan_test_path, 'plan.json')
-ref_path = os.path.join(plan_test_path, 'plan-ref.json')
-
-aq_plan_name = "B1234 Trypsin Only with DHFBI #2 with controls"
-plan = XPlan(aq_plan_name, plan_path, plan_defaults_path, config_path)
+start_date = inputs['start_date']
+plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
 # This keeps track of where to put the next operation in the GUI.
-cursor = Cursor()
-
-while True:
-    print("Enter the day you want to start the experiment.")
-    print("The date must be on a Friday.")
-    print("If you don't enter anything, the plan will be scheduled as soon as possible.")
-    today = input("Start date (MM/DD/YY): ")
-
-    if not today:
-        today = datetime.today()
-        break
-
-    today = datetime.strptime(today, '%m/%d/%y')
-    if today.weekday() == 4:
-        break
-
-    else:
-        print()
-        print("You entered a value that is not on a Friday. Try again.")
-
-dow = today.weekday()
-
-if dow <= 4:
-    delay = timedelta(days=(4 - dow))
-else:
-    delay = timedelta(days=(11 - dow))
-
-start_date = today + delay
-
-print("\nPlanning experiment to start on " + start_date.strftime('%m/%d/%y'))
-print()
+cursor = Cursor(x=64, y=1168)
 
 for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
     plan_step = plan.step(step_id)
@@ -86,16 +42,17 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
         if not prev_step_outputs.get(input_yeast):
             cursor.incr_y(2)
             container_opt = 'library start' if is_library else 'control'
-            overnight_leg = OvernightLeg(plan_step, cursor, aq_defaults_path)
+            overnight_leg = OvernightLeg(plan_step, cursor)
             overnight_leg.set_yeast(input_yeast)
             overnight_leg.add(container_opt)
             overnight_leg.set_start_date(start_date.date())
-            print("Planning innoculation of %s on %s" % (input_yeast, str(start_date.date())))
+            subs = (input_yeast, str(start_date.date()))
+            print("Planning innoculation of %s on %s" % subs)
             cursor.return_y()
 
             if input_yeast in plan.ngs_samples:
                 cursor.decr_y(SortLeg.length() - NaiveLeg.length())
-                naive_leg = NaiveLeg(plan_step, cursor, aq_defaults_path)
+                naive_leg = NaiveLeg(plan_step, cursor)
                 naive_leg.set_yeast(input_yeast)
                 naive_leg.add('library')
                 cursor.return_y()
@@ -120,7 +77,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
 
         cursor.incr_y(2)
         container_opt = 'library' if is_library else 'control'
-        induction_leg = InductionLeg(plan_step, cursor, aq_defaults_path)
+        induction_leg = InductionLeg(plan_step, cursor)
         induction_leg.set_yeast(input_yeast)
         induction_leg.add(container_opt)
         cursor.return_y()
@@ -152,9 +109,9 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
                 for dst in txn.destination:
                     ngs_sample = dst['sample'] in plan.ngs_samples
                     if ngs_sample:
-                        this_leg = SortLeg(plan_step, cursor, aq_defaults_path)
+                        this_leg = SortLeg(plan_step, cursor)
                     else:
-                        this_leg = FlowLeg(plan_step, cursor, aq_defaults_path)
+                        this_leg = FlowLeg(plan_step, cursor)
 
                     this_leg.set_yeast(input_yeast)
                     this_leg.set_protease(src)
@@ -191,7 +148,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
                     cursor.incr_x()
                     cursor.return_y()
 
-            cursor.incr_x()
+            cursor.incr_x(0.25)
 
     cursor.update_max_x()
     # cursor.return_x()
@@ -216,9 +173,11 @@ print("Created Plan: {}".format(url))
 print("{} total operations.".format(len(plan.aq_plan.operations)))
 print("{} total wires.".format(len(plan.aq_plan.wires)))
 
+out_path = os.path.join(plan.plan_path, 'dump.json')
+ref_path = os.path.join(plan.plan_path, 'dump-ref.json')
 test_plan(plan, out_path, ref_path)
-
 print("Test passed!")
-delete = input("Do you want to delete this plan? (y/n) ")
-if delete == 'y' or delete == 'Y':
-    plan.aq_plan.delete()
+
+# delete = input("Do you want to delete this plan? (y/n) ")
+# if delete == 'y' or delete == 'Y':
+#     plan.aq_plan.delete()

@@ -11,8 +11,8 @@ class ProtStabLeg(Leg):
         'Stored sample rep 2'
     ]
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
     def set_yeast(self, input_sample_uri):
         input_sample = self.ext_plan.input_samples[input_sample_uri]
@@ -42,32 +42,32 @@ class OvernightLeg(ProtStabLeg):
 
     leg_order = ['Innoculate Yeast Library']
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
 
 class NaiveLeg(ProtStabLeg):
 
     leg_order = ['Store Yeast Library Sample']
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
 
 class InductionLeg(ProtStabLeg):
 
     leg_order = ['Dilute Yeast Library']
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
 
 class TreatmentLeg(ProtStabLeg):
 
     leg_order = []
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
     def set_protease(self, source):
         protease_inputs = self.plan_step.get_inputs('Protease')
@@ -96,8 +96,8 @@ class SortLeg(TreatmentLeg):
         'Store Yeast Library Sample'
     )
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
         self.sample_io['Sort?'] = 'yes'
 
@@ -109,7 +109,7 @@ class FlowLeg(TreatmentLeg):
         'Sort Yeast Display Library'
     )
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
-        super().__init__(plan_step, cursor, aq_defaults_path)
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
 
         self.sample_io['Sort?'] = 'no'

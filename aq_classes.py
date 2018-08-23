@@ -15,14 +15,14 @@ class Leg:
     leg_order = []
     primary_handles = []
 
-    def __init__(self, plan_step, cursor, aq_defaults_path):
+    def __init__(self, plan_step, cursor):
         self.plan_step = plan_step
         self.ext_plan = self.plan_step.plan
         self.aq_plan = self.ext_plan.aq_plan
         self.session = self.ext_plan.session
         self.cursor = cursor
         self.create_operations()
-        self.set_container_types(aq_defaults_path)
+        self.set_container_types()
 
         # This is no longer a good name for this variable.
         self.sample_io = {}
@@ -45,10 +45,10 @@ class Leg:
             self.op_data.append(od)
             self.cursor.decr_y()
 
-    def set_container_types(self, aq_defaults_path):
-        with open(aq_defaults_path, 'r') as f:
-            aq_defaults = json.load(f)
-            default_container_types = aq_defaults['container_types']
+    def set_container_types(self):
+        # with open(aq_defaults_path, 'r') as f:
+        #     aq_defaults = json.load(f)
+        default_container_types = self.ext_plan.aq_defaults['container_types']
 
         for od in self.op_data:
             name = od['name']
@@ -185,7 +185,7 @@ class Cursor:
         self.x = x or 64
         self.x_incr = 192
 
-        self.y = y or 1536
+        self.y = y or 1168
         self.y_incr = 64
 
         self.x_home = self.x

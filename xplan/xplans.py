@@ -1,5 +1,6 @@
 import json
 import re
+import os
 
 from plans import ExternalPlan, PlanStep, Transformation
 
@@ -8,31 +9,29 @@ from pydent import models
 from pydent.models import Sample
 
 class XPlan(ExternalPlan):
-    def __init__(self, aq_plan_name, plan_path, plan_defaults_path, config_path):
-        super().__init__(aq_plan_name, plan_path, plan_defaults_path, config_path)
+    def __init__(self, aq_plan_name, aq_instance):
+        super().__init__(aq_plan_name, aq_instance)
 
         self.steps = [XPlanStep(self, s) for s in self.plan['steps']]
 
-        with open(plan_defaults_path, 'r') as f:
-            plan_defaults = json.load(f)
+        self.input_samples = {}
+        for plan_id, aq_id in self.plan_params['input_samples'].items():
 
-            # This is unique to protein stability and should be moved
-            # self.concentrations = plan_defaults['concentrations']
+            if isinstance(aq_id, int):
+                attr = 'id'
+            else:
+                attr = 'name'
 
-            self.input_samples = {}
-            for txn in self.provision_steps()[0].transformations:
-                dst_uri = txn.destination[0]['sample']
-                src_uri = txn.source[0]['sample']
-                sample = self.session.Sample.find(plan_defaults['input_samples'][src_uri])
-                self.add_input_sample(dst_uri, sample)
+            sample = self.session.Sample.where({attr: aq_id})[0]
+            self.add_input_sample(plan_id, sample)
 
         # Assumes that there is only one source and only one dna_seq_step
         self.ngs_samples = self.dna_seq_steps()[0].measured_samples
 
-        self.set_default_protease()
+        # self.set_default_protease()
 
-    def add_input_sample(self, uri, sample):
-        self.input_samples[uri] = sample
+    def add_input_sample(self, plan_id, sample):
+        self.input_samples[plan_id] = sample
 
     def get_steps_by_type(self, type):
         return [s for s in self.steps if s.operator_type == type]
@@ -49,33 +48,34 @@ class XPlan(ExternalPlan):
 
     ##### These are probably unique to protein stability #####
 
-    def set_default_protease(self):
-        def_prot_pat = re.compile(r'protease_1', re.IGNORECASE)
+    # def set_default_protease(self):
+    #     def_prot_pat = re.compile(r'protease_1', re.IGNORECASE)
 
-        possible_defaults = self.raw_protease_inputs()
-        test = [s for s in possible_defaults if re.search(def_prot_pat, s)]
+    #     possible_defaults = self.raw_protease_inputs()
+    #     test = [s for s in possible_defaults if re.search(def_prot_pat, s)]
 
-        if test:
-            unprovisioned = test[0]
+    #     if test:
+    #         unprovisioned = test[0]
 
-        else:
-            unprovisioned = possible_defaults[0]
+    #     else:
+    #         unprovisioned = possible_defaults[0]
 
-        self.default_protease = self.get_provisioned(unprovisioned)
+    #     self.default_protease = self.get_provisioned(unprovisioned)
 
-    def raw_protease_inputs(self):
-        protease_inputs = []
-        prot_pat = re.compile(r'protease', re.IGNORECASE)
+    # def raw_protease_inputs(self):
+    #     protease_inputs = []
+    #     prot_pat = re.compile(r'protease', re.IGNORECASE)
 
-        for t in self.provision_steps()[0].transformations:
-            for s in t.source:
-                if re.search(prot_pat, s['sample']):
-                    protease_inputs.append(s['sample'])
+    #     for t in self.provision_steps()[0].transformations:
+    #         for s in t.source:
+    #             if re.search(prot_pat, s['sample']):
+    #                 protease_inputs.append(s['sample'])
 
-        return list(set(protease_inputs))
+    #     return list(set(protease_inputs))
 
     def prov_protease_inputs(self):
-        return [self.get_provisioned(i) for i in self.raw_protease_inputs()]
+        # return [self.get_provisioned(i) for i in self.raw_protease_inputs()]
+        return {k:s for (k,s) in self.input_samples.items() if s.sample_type.name == "Protease"}
 
     def get_provisioned(self, unprovisioned):
         txns = self.provision_steps()[0].transformations
@@ -140,7 +140,7 @@ class XPlanTransformation(Transformation):
 
     def protease(self):
         provisioned = self.plan.prov_protease_inputs()
-        proteases = [x for x in self.source if x['sample'] in provisioned]
+        proteases = [x for x in self.source if x['sample'] in provisioned.keys()]
 
         if proteases:
             return proteases[0]

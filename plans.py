@@ -7,17 +7,25 @@ from pydent import AqSession, models
 from pydent.models import Sample, Plan
 
 class ExternalPlan:
-    def __init__(self, aq_plan_name, plan_path, plan_defaults_path, config_path):
-        self.set_session(config_path)
+    def __init__(self, aq_plan_name, aq_instance):
+        self.set_session(aq_instance)
         self.aq_plan = Plan(name=aq_plan_name)
+        self.plan_path = "plans/%s" % aq_plan_name
 
-        with open(plan_path, 'r') as f:
+        plan_file = os.path.join(self.plan_path, 'plan.json')
+        with open(plan_file, 'r') as f:
             self.plan = json.load(f)
 
-        with open(plan_defaults_path, 'r') as f:
-            plan_defaults = json.load(f)
+        aq_defaults_file = os.path.join(self.plan_path, 'aquarium_defaults.json')
+        with open(aq_defaults_file, 'r') as f:
+            self.aq_defaults = json.load(f)
 
-            self.defaults = plan_defaults.get('defaults') or []
+        plan_params_file = "params_%s.json" % aq_instance
+        plan_params_file = os.path.join(self.plan_path, plan_params_file)
+        with open(plan_params_file, 'r') as f:
+            self.plan_params = json.load(f)
+
+            self.defaults = self.plan_params.get('operation_defaults', [])
 
             for op_default in self.defaults:
                 for key, value in op_default['defaults'].items():
@@ -25,16 +33,16 @@ class ExternalPlan:
                     if samples:
                         op_default['defaults'][key] = samples[0]
 
-            self.steps = []
-            self.input_samples = {}
+        self.steps = []
+        self.input_samples = {}
 
         self.temp_data_associations = []
 
-    def set_session(self, config_path):
-        with open(config_path, 'r') as f:
+    def set_session(self, aq_instance):
+        with open('config.yml', 'r') as f:
             config = yaml.load(f)
 
-        login = config['aquarium']['production']
+        login = config['aquarium'][aq_instance]
 
         session = AqSession(
             login['username'],
