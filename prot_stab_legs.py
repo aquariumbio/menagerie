@@ -16,7 +16,9 @@ class ProtStabLeg(Leg):
 
     def set_yeast(self, input_sample_uri):
         input_sample = self.ext_plan.input_samples[input_sample_uri]
+        self.set_yeast_from_sample(input_sample)
 
+    def set_yeast_from_sample(self, input_sample):
         for h in self.primary_handles:
             self.sample_io[h] = input_sample
 
@@ -44,6 +46,22 @@ class OvernightLeg(ProtStabLeg):
 
     def __init__(self, plan_step, cursor):
         super().__init__(plan_step, cursor)
+
+
+class MixCulturesLeg(ProtStabLeg):
+
+    leg_order = ['Mix Cultures']
+
+    def __init__(self, plan_step, cursor):
+        super().__init__(plan_step, cursor)
+
+    def set_components(self, library_composition):
+        self.sample_io["Component Yeast Culture"] = library_composition["components"]
+        self.sample_io["Proportions"] = str(library_composition["proportions"])
+
+    def wire_to_prev(self, upstr_fv, dnstr_fv):
+        wire_pair = [upstr_fv, dnstr_fv]
+        self.aq_plan.add_wires([wire_pair])
 
 
 class NaiveLeg(ProtStabLeg):

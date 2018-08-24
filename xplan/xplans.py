@@ -16,19 +16,33 @@ class XPlan(ExternalPlan):
 
         self.input_samples = {}
         for plan_id, aq_id in self.plan_params['input_samples'].items():
+            if plan_id == "library_composition":
+                aq_ids = aq_id["components"]
+                component_samples = []
 
-            if isinstance(aq_id, int):
-                attr = 'id'
+                for ai in aq_ids:
+                    component_samples.append(self.find_input_sample(ai))
+
+                aq_id["components"] = component_samples
+                found_input = aq_id
+
             else:
-                attr = 'name'
+                found_input = self.find_input_sample(aq_id)
 
-            sample = self.session.Sample.where({attr: aq_id})[0]
-            self.add_input_sample(plan_id, sample)
+            self.add_input_sample(plan_id, found_input)
 
         # Assumes that there is only one source and only one dna_seq_step
         self.ngs_samples = self.dna_seq_steps()[0].measured_samples
 
         # self.set_default_protease()
+
+    def find_input_sample(self, aq_id):
+        if isinstance(aq_id, int):
+            attr = 'id'
+        else:
+            attr = 'name'
+
+        return self.session.Sample.where({attr: aq_id})[0]
 
     def add_input_sample(self, plan_id, sample):
         self.input_samples[plan_id] = sample
@@ -73,9 +87,11 @@ class XPlan(ExternalPlan):
 
     #     return list(set(protease_inputs))
 
+    def protease_sample(self, s):
+        return isinstance(s, Sample) and s.sample_type.name == "Protease"
+
     def prov_protease_inputs(self):
-        # return [self.get_provisioned(i) for i in self.raw_protease_inputs()]
-        return {k:s for (k,s) in self.input_samples.items() if s.sample_type.name == "Protease"}
+        return {k:s for (k,s) in self.input_samples.items() if self.protease_sample(s)}
 
     def get_provisioned(self, unprovisioned):
         txns = self.provision_steps()[0].transformations

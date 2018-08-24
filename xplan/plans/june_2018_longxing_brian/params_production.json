@@ -1,15 +1,15 @@
 {
   "input_samples": {
     "library_composition": {
-      "components": [17136, 17483],
+      "components": [24481, 23687],
       "proportions": [97.5, 2.5]
     },
-    "library": 18917,
-    "binding_negative": 17137,
-    "binding_positive": 17081,
-    "chymotrypsin":	17021,
-    "trypsin": 17020,
-    "antibody": 18883
+    "library": 25416,
+    "binding_negative": 21535,
+    "binding_positive": 21171,
+    "chymotrypsin": 22038,
+    "trypsin": 22037,
+    "antibody": 22039
   },
   "cytometer_configuration": {
     "template": "biofab_sort_yeast_v3",
