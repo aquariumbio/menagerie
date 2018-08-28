@@ -7,7 +7,7 @@ sys.path.append(ext_plan_path)
 
 from aq_classes import Cursor
 from pup_plan.pup_plans import PupPlan
-from golden_gate_leg import GoldenGateLeg
+from plasmid_assembly_legs import GoldenGateLeg, SangerSeqLeg
 
 import os
 
@@ -15,7 +15,7 @@ from plan_tests import test_plan
 from user_input import get_input
 
 inputs = {
-    "aq_plan_name": "golden_gate_test",
+    "aq_plan_name": "gibson_test",
     "aq_instance": "nursery"
 }
 # inputs = get_input(start_date=False)
@@ -24,6 +24,8 @@ plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
 cursor = Cursor(x=64, y=512)
 
+n_seqs = 3
+
 for step_id in plan.step_ids():
     plan_step = plan.step(step_id)
 
@@ -31,11 +33,20 @@ for step_id in plan.step_ids():
     for txn in txns:
         src = txn['source']
         for dst in txn['destination']:
-            this_leg = GoldenGateLeg(plan_step, cursor)
-            this_leg.set_sample_io(src, dst)
-            aq_plan_objs = this_leg.add()
+            gg_leg = GoldenGateLeg(plan_step, cursor)
+            gg_leg.set_sample_io(src, dst)
+            aq_plan_objs = gg_leg.add()
+            upstr_op = gg_leg.get_output_op()
 
-            cursor.incr_x()
+            for i in range(n_seqs):
+                ss_leg = SangerSeqLeg(plan_step, cursor)
+                ss_leg.set_sample_io(src, dst)
+                aq_plan_objs = ss_leg.add()
+                dnstr_op = ss_leg.get_input_op()
+                ss_leg.wire_ops(upstr_op, dnstr_op)
+                cursor.incr_x()
+                cursor.incr_y(ss_leg.length())
+
             cursor.return_y()
 
 plan.launch_aq_plan()

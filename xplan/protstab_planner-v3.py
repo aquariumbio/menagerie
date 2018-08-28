@@ -83,7 +83,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
 
                 for culture in culture_inputs:
                     op = overnight_ops[culture.sample.name]
-                    mix_cultures_leg.wire_to_prev(op.output("Yeast Culture"), culture)
+                    mix_cultures_leg.wire_ops(op.output("Yeast Culture"), culture)
 
                 upstr_op = mix_cultures_op
 
@@ -100,7 +100,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
                 cursor.return_y()
 
                 dnstr_op = naive_leg.select_op('Store Yeast Library Sample')
-                naive_leg.wire_to_prev(upstr_op, dnstr_op)
+                naive_leg.wire_ops(upstr_op, dnstr_op)
 
             new_inputs[input_yeast] = upstr_op
 
@@ -124,7 +124,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
         cursor.return_y()
 
         dnstr_op = induction_leg.select_op('Dilute Yeast Library')
-        induction_leg.wire_to_prev(upstr_op, dnstr_op)
+        induction_leg.wire_ops(upstr_op, dnstr_op)
 
         txns = [t for t in plan_step.transformations if input_yeast in t.source_samples()]
 
@@ -175,7 +175,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
 
                     upstr_op = induction_leg.select_op('Dilute Yeast Library')
                     dnstr_op = this_leg.select_op('Challenge and Label')
-                    this_leg.wire_to_prev(upstr_op, dnstr_op)
+                    this_leg.wire_ops(upstr_op, dnstr_op)
 
                     # data_assoc = { 'destination': dst['sample'] }
                     # plan.update_temp_data_assoc(dnstr_op, data_assoc)

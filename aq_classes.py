@@ -136,6 +136,11 @@ class Leg:
         wire = self.get_wire_pair(upstr_op, dnstr_op)
         self.wires.append(wire)
 
+    def wire_ops(self, upstr_op, dnstr_op):
+        wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
+        self.aq_plan.add_wires([wire_pair])
+        self.propagate_sample(upstr_op, dnstr_op)
+
     # This method may be redundant
     def propagate_sample(self, upstr_op, dnstr_op):
         upstr_sample = None
@@ -178,6 +183,10 @@ class Leg:
         op = self.get_input_op()
         v = '{ "delay_until": "%s" }' % start_date
         op.set_field_value('Options', 'input', value=v)
+
+    @classmethod
+    def length(cls):
+         return len(cls.leg_order)
 
 
 class Cursor:

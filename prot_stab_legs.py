@@ -22,16 +22,6 @@ class ProtStabLeg(Leg):
         for h in self.primary_handles:
             self.sample_io[h] = input_sample
 
-    @classmethod
-    def length(cls):
-         return len(cls.leg_order)
-
-    # This should be renamed because it doesn't matter which Leg it is called on.
-    def wire_to_prev(self, upstr_op, dnstr_op):
-        wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
-        self.aq_plan.add_wires([wire_pair])
-        self.propagate_sample(upstr_op, dnstr_op)
-
     def get_innoculate_op(self):
         return self.select_op('Innoculate Yeast Library')
 
@@ -59,7 +49,7 @@ class MixCulturesLeg(ProtStabLeg):
         self.sample_io["Component Yeast Culture"] = library_composition["components"]
         self.sample_io["Proportions"] = str(library_composition["proportions"])
 
-    def wire_to_prev(self, upstr_fv, dnstr_fv):
+    def wire_ops(self, upstr_fv, dnstr_fv):
         wire_pair = [upstr_fv, dnstr_fv]
         self.aq_plan.add_wires([wire_pair])
 

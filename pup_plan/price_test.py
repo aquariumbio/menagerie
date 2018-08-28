@@ -8,7 +8,7 @@ from pydent.models import Plan, Sample
 
 # from aq_classes import Cursor, AqDefaults
 # from pup_plan.pup_plans import PupPlan
-# from golden_gate_leg import GoldenGateLeg
+# from plasmid_assembly_legs import GoldenGateLeg
 
 import json
 import copy
