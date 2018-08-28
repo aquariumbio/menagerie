@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta
 
-def get_input():
+def get_input(aq_plan_name=True, start_date=True, aq_instance=True):
     inputs = {}
 
-    inputs["aq_plan_name"] = get_aq_plan_name()
-    inputs["start_date"] = get_start_date()
-    inputs["aq_instance"] = get_aq_instance()
+    if aq_plan_name: inputs["aq_plan_name"] = get_aq_plan_name()
+    if start_date: inputs["start_date"] = get_start_date()
+    if aq_instance: inputs["aq_instance"] = get_aq_instance()
     print()
 
     return inputs

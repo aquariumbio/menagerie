@@ -12,8 +12,8 @@ class PupPlan(ExternalPlan):
     input_list_names = ['partSamples', 'vectorSamples']
     txn_list_names = ['designs']
 
-    def __init__(self, aq_plan_name, pup_plan_path, plan_defaults_path, config_path):
-        super().__init__(aq_plan_name, pup_plan_path, plan_defaults_path, config_path)
+    def __init__(self, aq_plan_name, aq_instance):
+        super().__init__(aq_plan_name, aq_instance)
 
         for list_name in PupPlan.input_list_names:
             for sample in self.plan[list_name]:

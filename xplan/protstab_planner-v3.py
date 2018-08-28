@@ -4,8 +4,6 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-# trident_path = '/Users/devin/Documents/work/trident'
-# sys.path.append(trident_path)
 ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
