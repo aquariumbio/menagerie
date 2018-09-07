@@ -1,0 +1,57 @@
+{
+  "input_samples": {
+    "library_composition": {
+      "components": [17136, 17483],
+      "proportions": [97.5, 2.5]
+    },
+    "library": 18917,
+    "binding_negative": 17137,
+    "binding_positive": 17081,
+    "chymotrypsin":	17021,
+    "trypsin": 17020,
+    "antibody": 18883
+  },
+  "cytometer_configuration": {
+    "template": "biofab_sort_yeast_v3",
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  },
+  "operation_defaults": [
+    {
+      "name": "Innoculate Yeast Library",
+      "defaults": {
+        "Media": "SDO -His -Trp -Ura",
+        "Options": "{}"
+      }
+    },
+    {
+      "name": "Dilute Yeast Library",
+      "defaults": {
+        "Media": "SDO + 2% Galactose -His -Trp -Ura"
+      }
+    },
+    {
+      "name": "Mix Cultures",
+      "defaults": {}
+    },
+    {
+      "name": "Challenge and Label",
+      "defaults": {}
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "defaults": {
+        "Control?": "no",
+        "Sort?": "yes"
+      }
+    },
+    {
+      "name": "Store Yeast Library Sample",
+      "defaults": {}
+    }
+  ]
+}
