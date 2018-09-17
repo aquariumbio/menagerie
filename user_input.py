@@ -14,9 +14,9 @@ def get_aq_instance():
     while True:
         print()
         print("Which Aquarium instance would you like to push to?")
-        instance = input("Enter nursery or production: ").lower()
+        instance = input("Enter laptop, nursery, or production: ").lower()
 
-        if instance in ["nursery", "production"]:
+        if instance in ["nursery", "production", "laptop"]:
             break
 
         else:
