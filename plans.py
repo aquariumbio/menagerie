@@ -3,11 +3,12 @@ import yaml
 import os
 
 import pydent
-from pydent import AqSession, models
+from pydent import AqSession, models, __version__
 from pydent.models import Sample, Plan
 
 class ExternalPlan:
     def __init__(self, aq_plan_name, aq_instance):
+        print("pydent version: " + str(__version__))
         self.set_session(aq_instance)
         self.aq_plan = Plan(name=aq_plan_name)
         self.plan_path = "plans/%s" % aq_plan_name
@@ -16,6 +17,7 @@ class ExternalPlan:
         with open(plan_file, 'r') as f:
             self.plan = json.load(f)
 
+        # TODO: Unify the structure of 'aquarium_defaults.json' and "params_%s.json"
         aq_defaults_file = os.path.join(self.plan_path, 'aquarium_defaults.json')
         with open(aq_defaults_file, 'r') as f:
             self.aq_defaults = json.load(f)
@@ -56,7 +58,7 @@ class ExternalPlan:
 
         self.session = session
 
-    def get_samples(self, sample_type_name, sample_name):
+    def get_samples(self, sample_type_name, sample_name, properties={}):
         st = self.session.SampleType.where({ 'name': sample_type_name })[0]
         aq_samples = self.session.Sample.where({
             'name': sample_name,
@@ -64,15 +66,25 @@ class ExternalPlan:
         })
 
         if not aq_samples:
-            s = Sample(
+            allowable_properties = {}
+
+            if properties:
+                for ft in st.field_types:
+                    prop = properties.get(ft.name)
+                    if prop:
+                        if ft.ftype == 'sample':
+                            prop = self.session.Sample.find_by_name(prop)
+
+                        allowable_properties[ft.name] = prop
+
+            s = self.session.Sample.new(
                 name=sample_name,
                 project='SD2',
-                sample_type_id=st.id
+                sample_type_id=st.id,
+                properties=allowable_properties
             )
 
-            s.connect_to_session(self.session)
             s.save()
-
             aq_samples = [s]
 
         return aq_samples

@@ -1,6 +1,15 @@
 {
   "container_types": [
     {
+      "name": "Assemble Plasmid",
+      "Fragment": {
+        "input_container_type": "Fragment Stock"
+      },
+      "Plasmid": {
+        "output_container_type": "Gibson Reaction Result"
+      }
+    },
+    {
       "name": "Assemble NEB Golden Gate",
       "Backbone": {
         "input_container_type": "Fragment Stock"
@@ -13,32 +22,215 @@
       }
     },
     {
+      "name": "Transform Cells from Stripwell",
+      "Plasmid": {
+        "input_container_type": "Golden Gate Stripwell"
+      },
+      "Transformed E Coli": {
+        "output_container_type": "Transformed E. coli Aliquot"
+      }
+    },
+    {
+      "name": "Transform Cells",
+      "Plasmid": {
+        "input_container_type": "Gibson Reaction Result"
+      },
+      "Transformed E Coli": {
+        "output_container_type": "Transformed E. coli Aliquot"
+      }
+    },
+    {
+      "name": "Plate Transformed Cells",
+      "Plasmid": {
+        "input_container_type": "Transformed E. coli Aliquot"
+      },
+      "Plate": {
+        "output_container_type": "E coli Plate of Plasmid"
+      }
+    },
+    {
+      "name": "Check Plate",
+      "Plasmid": {
+        "input_container_type": "E coli Plate of Plasmid",
+        "output_container_type": "Checked E coli Plate of Plasmid"
+      }
+    },
+    {
+      "name": "Make Overnight Suspension",
+      "Plasmid": {
+        "input_container_type": "Checked E coli Plate of Plasmid"
+      },
+      "Overnight": {
+        "output_container_type": "TB Overnight of Plasmid"
+      }
+    },
+    {
+      "name": "Make Miniprep",
+      "Plasmid": {
+        "input_container_type": "TB Overnight of Plasmid",
+        "output_container_type": "Plasmid Stock"
+      }
+    },
+    {
+      "name": "Send to Sequencing",
+      "Plasmid": {
+        "input_container_type": "Plasmid Stock"
+      },
+      "Sequencing Primer": {
+        "input_container_type": "Primer Aliquot"
+      },
+      "Plasmid for Sequencing": {
+        "output_container_type": "Sequencing Stripwell"
+      }
+    },
+    {
       "name": "Upload Sequencing Results",
       "Plasmid": {
         "input_container_type": "Sequencing Stripwell"
       }
-
     },
     {
-      "name": "Transform Cells from Stripwell"
+      "name": "Purify Gel Slice",
+      "Gel": {
+        "input_container_type": "Gel Slice"
+      },
+      "Fragment": {
+        "output_container_type": "Fragment Stock"
+      }
     },
     {
-      "name": "Plate Transformed Cells"
+      "name": "Extract Gel Slice",
+      "Fragment": {
+        "input_container_type": "50 mL 0.8 Percent Agarose Gel in Gel Box",
+        "output_container_type": "Gel Slice"
+      }
     },
     {
-      "name": "Check Plate"
+      "name": "Run Gel",
+      "Fragment": {
+        "input_container_type": "Stripwell",
+        "output_container_type": "50 mL 0.8 Percent Agarose Gel in Gel Box"
+      },
+      "Gel": {
+        "input_container_type": "50 mL 0.8 Percent Agarose Gel in Gel Box"
+      }
     },
     {
-      "name": "Make Overnight Suspension"
+      "name": "Make PCR Fragment",
+      "Template": {
+        "input_container_type": {
+          "plasmid_stock": "Plasmid Stock",
+          "dna_library": "50X PCR Template"
+        }
+      },
+      "Forward Primer": {
+        "input_container_type": "Primer Aliquot"
+      },
+      "Reverse Primer": {
+        "input_container_type": "Primer Aliquot"
+      },
+      "Fragment": {
+        "output_container_type": "Stripwell"
+      }
     },
     {
-      "name": "Make Miniprep"
+      "name": "Yeast Transformation",
+      "Genetic Material": {
+        "input_container_type": "0.6mL tube of Digested Plasmid"
+      },
+      "Parent": {
+        "input_container_type": "Yeast Competent Cell"
+      },
+      "Transformation": {
+        "output_container_type": "Yeast Plate"
+      }
     },
     {
-      "name": "Send to Sequencing"
+      "name": "Check Yeast Plate",
+      "Plate": {
+        "input_container_type": "Yeast Plate",
+        "output_container_type": "Yeast Plate"
+      }
     },
     {
-      "name": "Upload Sequencing Results"
+      "name": "Streak on Media Plate",
+      "Yeast Strain": {
+        "input_container_type": "Yeast Plate"
+      },
+      "Streak Plate": {
+        "output_container_type": "Divided Yeast Plate"
+      }
+    },
+    {
+      "name": "Check Divided Yeast Plate",
+      "Plate": {
+        "input_container_type": "Divided Yeast Plate",
+        "output_container_type": "Divided Yeast Plate"
+      }
+    },
+    {
+      "name": "Yeast Overnight Suspension from Collection",
+      "Yeast Strain": {
+        "input_container_type": "Divided Yeast Plate"
+      },
+      "Overnight": {
+        "output_container_type": "Yeast Overnight Suspension"
+      }
+    },
+    {
+      "name": "Yeast Glycerol Stock",
+      "Yeast": {
+        "input_container_type": "Yeast Overnight Suspension",
+        "output_container_type": "Yeast Glycerol Stock"
+      }
+    },
+    {
+      "name": "Yeast Lysate",
+      "Plate": {
+        "input_container_type": "Yeast Plate"
+      },
+      "Lysate": {
+        "output_container_type": "Stripwell"
+      }
+    },
+    {
+      "name": "Colony PCR",
+      "Template": {
+        "input_container_type": "Stripwell"
+      },
+      "QC Primer1": {
+        "input_container_type": "Primer Aliquot"
+      },
+      "QC Primer2": {
+        "input_container_type": "Primer Aliquot"
+      },
+      "PCR": {
+        "output_container_type": "Stripwell"
+      }
+    },
+    {
+      "name": "Fragment Analyzing",
+      "PCR": {
+        "input_container_type": "Stripwell"
+      }
+    },
+    {
+      "name": "Plasmid Digest",
+      "Integrant": {
+        "input_container_type": "Plasmid Stock"
+      },
+      "Digested Plasmid": {
+        "output_container_type": "0.6mL tube of Digested Plasmid"
+      }
+    },
+    {
+      "name": "Operation Type Name",
+      "Input Handle": {
+        "input_container_type": "Container Type for Input"
+      },
+      "Output Handle": {
+        "output_container_type": "Container Type for Output"
+      }
     }
   ]
 }
