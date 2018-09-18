@@ -18,26 +18,23 @@ from user_input import get_input
 
 start_time = time.time()
 
-inputs = {
-    "aq_plan_name": "gibson_test",
-    "aq_instance": "laptop"
-}
-# inputs = get_input(start_date=False)
+inputs = get_input(start_date=False)
 
 plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
-cursor = Cursor(x=64, y=1664)
+cursor = Cursor(x=64, y=832)
 
 plan_step = plan.step_by_build_method("PCR")
 step_outputs = plan_step.create_step(cursor)
 cursor.advance_to_next_step()
 
 plan_step = plan.step_by_build_method("Gibson Assembly")
-step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
-cursor.advance_to_next_step()
+step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
+# cursor.advance_to_next_step()
 
-plan_step = plan.step_by_build_method("Yeast Transformation")
-step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
+# These should be moved to another script
+# plan_step = plan.step_by_build_method("Yeast Transformation")
+# step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
 
 plan.launch_aq_plan()
 

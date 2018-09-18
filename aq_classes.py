@@ -242,6 +242,7 @@ class Leg:
          return len(cls.leg_order)
 
 
+# TODO: Change this so it always uses # of increments as arguments
 class Cursor:
     def __init__(self, x=None, y=None):
         self.x = x or 64

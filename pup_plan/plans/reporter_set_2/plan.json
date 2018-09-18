@@ -1,0 +1,327 @@
+{
+  "steps": [
+    {
+      "templateSamples" : [
+        {
+          "name" : "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "sample_type": "Plasmid"
+        },
+        {
+          "name" : "CEN.PK2alpha Genomic DNA",
+          "sample_type": "DNA Library"
+        }
+      ],
+      "primerSamples" : [
+        {
+          "name" : "EYFP-f"
+        },
+        {
+          "name" : "PP2_R"
+        },
+        {
+          "name": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YOR383C_promoter_rev"
+        },
+        {
+          "name" : "YOR383C_promoter_fwd"
+        },
+        {
+          "name" : "YOR192C_promoter_rev"
+        },
+        {
+          "name" : "YOR192C_promoter_fwd"
+        },
+        {
+          "name" : "YOR150W_promoter_rev"
+        },
+        {
+          "name" : "YOR150W_promoter_fwd"
+        },
+        {
+          "name" : "YML086C_promoter_rev"
+        },
+        {
+          "name" : "YML086C_promoter_fwd"
+        },
+        {
+          "name" : "YML009C_promoter_short_rev"
+        },
+        {
+          "name" : "YML009C_promoter_long_rev"
+        },
+        {
+          "name" : "YML009C_promoter_fwd"
+        },
+        {
+          "name" : "YLR066W_promoter_short_fwd"
+        },
+        {
+          "name" : "YLR066W_promoter_rev"
+        },
+        {
+          "name" : "YLR066W_promoter_long_fwd"
+        },
+        {
+          "name" : "YLL014W_promoter_rev"
+        },
+        {
+          "name" : "YLL014W_promoter_fwd"
+        },
+        {
+          "name" : "YKL167C_promoter_rev"
+        },
+        {
+          "name" : "YKL167C_promoter_fwd"
+        },
+        {
+          "name" : "YDR511W_promoter_short_fwd"
+        },
+        {
+          "name" : "YDR511W_promoter_rev"
+        },
+        {
+          "name" : "YDR511W_promoter_long_fwd"
+        },
+        {
+          "name" : "YDR115W_promoter_rev"
+        },
+        {
+          "name" : "YDR115W_promoter_fwd"
+        },
+        {
+          "name" : "YDR092W_promoter_short_rev"
+        },
+        {
+          "name" : "YDR092W_promoter_fwd"
+        }
+      ],
+      "parameters" : {
+        "buildMethod" : "Provision"
+      },
+      "name": "Provision Step",
+      "id": 1
+    },
+    {
+      "designs" : [
+        {
+          "name" : "EYFP-pMOD-HIS",
+          "Forward Primer" : "EYFP-f",
+          "Reverse Primer" : "PP2_R",
+          "Template" : "pCup1(FL)-sgZ41::eYFP pMOD HIS"
+        },
+        {
+          "name" : "YOR383C_promoter",
+          "Forward Primer" : "YOR383C_promoter_fwd",
+          "Reverse Primer" : "YOR383C_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YOR192C_promoter",
+          "Forward Primer" : "YOR192C_promoter_fwd",
+          "Reverse Primer" : "YOR192C_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YOR150W_promoter",
+          "Forward Primer" : "YOR150W_promoter_fwd",
+          "Reverse Primer" : "YOR150W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YML086C_promoter",
+          "Forward Primer" : "YML086C_promoter_fwd",
+          "Reverse Primer" : "YML086C_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YML009C_promoter_short",
+          "Forward Primer" : "YML009C_promoter_fwd",
+          "Reverse Primer" : "YML009C_promoter_short_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YML009C_promoter_long",
+          "Forward Primer" : "YML009C_promoter_fwd",
+          "Reverse Primer" : "YML009C_promoter_long_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YLR066W_promoter_short",
+          "Forward Primer" : "YLR066W_promoter_short_fwd",
+          "Reverse Primer" : "YLR066W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YLR066W_promoter_long",
+          "Forward Primer" : "YLR066W_promoter_long_fwd",
+          "Reverse Primer" : "YLR066W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YLL014W_promoter",
+          "Forward Primer" : "YLL014W_promoter_fwd",
+          "Reverse Primer" : "YLL014W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YKL167C_promoter",
+          "Forward Primer" : "YKL167C_promoter_fwd",
+          "Reverse Primer" : "YKL167C_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YDR511W_promoter_short",
+          "Forward Primer" : "YDR511W_promoter_short_fwd",
+          "Reverse Primer" : "YDR511W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YDR511W_promoter_long",
+          "Forward Primer" : "YDR511W_promoter_long_fwd",
+          "Reverse Primer" : "YDR511W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YDR115W_promoter",
+          "Forward Primer" : "YDR115W_promoter_fwd",
+          "Reverse Primer" : "YDR115W_promoter_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        },
+        {
+          "name" : "YDR092W_promoter",
+          "Forward Primer" : "YDR092W_promoter_fwd",
+          "Reverse Primer" : "YDR092W_promoter_short_rev",
+          "Template" : "CEN.PK2alpha Genomic DNA"
+        }
+      ],
+      "parameters" : {
+        "buildMethod" : "PCR"
+      },
+      "name": "PCR Step",
+      "id": 2
+    },
+    {
+      "designs" : [
+        {
+          "name" : "YOR383C_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YOR383C_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YOR192C_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YOR192C_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YOR150W_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YOR150W_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YML086C_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YML086C_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YML009C_promoter_short-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YML009C_promoter_short"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YML009C_promoter_long-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YML009C_promoter_long"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YLR066W_promoter_short-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YLR066W_promoter_short"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YLR066W_promoter_long-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YLR066W_promoter_long"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YLL014W_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YLL014W_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YKL167C_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YKL167C_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YDR511W_promoter_short-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YDR511W_promoter_short"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YDR511W_promoter_long-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YDR511W_promoter_long"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YDR115W_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YDR115W_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name" : "YDR092W_promoter-EYFP-pMOD-HIS",
+          "Fragment" : [
+            "EYFP-pMOD-HIS",
+            "YDR092W_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        }
+      ],
+      "parameters" : {
+        "buildMethod" : "Gibson Assembly"
+      },
+      "name": "Gibson Step",
+      "id": 3
+    }
+  ]
+}

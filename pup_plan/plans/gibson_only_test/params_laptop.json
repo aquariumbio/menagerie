@@ -7,10 +7,6 @@
     {
       "name": "Transform Cells",
       "defaults": { "Comp Cells": "DH5alpha" }
-    },
-    {
-      "name": "Send to Sequencing",
-      "defaults": { "Sequencing Primer": "PUPPETEER_TEST_PRIMER" }
     }
   ]
 }
