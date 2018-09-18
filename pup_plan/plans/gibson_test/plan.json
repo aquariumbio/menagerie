@@ -13,28 +13,10 @@
       ],
       "primerSamples" : [
         {
-          "name" : "EYFP-f",
-          "sequence" : "ATGGTGAGCAAGGGCGAGG"
+          "name" : "EYFP-f"
         },
         {
-          "name" : "PP2_R",
-          "sequence" : "gccgcttttcgaatctggttaagg"
-        },
-        {
-          "name" : "YBR122C_promoter_fwd",
-          "sequence" : "aaccagattcgaaaagcggcCTATCTTCTCCCATAGTGAAAAAGAATG"
-        },
-        {
-          "name" : "YBR122C_promoter_rev",
-          "sequence" : "tcctcgcccttgctcaccatTAGGAGTGAACAAAACGTGTG"
-        },
-        {
-          "name" : "YDR092W_promoter_fwd",
-          "sequence" : ""
-        },
-        {
-          "name" : "YDR092W_promoter_long_rev",
-          "sequence" : ""
+          "name" : "PP2_R"
         },
         {
           "name": "EYFP_promoter_seq_rev"
@@ -44,6 +26,18 @@
         },
         {
           "name": "TP_f"
+        },
+        {
+          "name" : "YBR122C_promoter_fwd"
+        },
+        {
+          "name" : "YBR122C_promoter_rev"
+        },
+        {
+          "name" : "YDR092W_promoter_fwd"
+        },
+        {
+          "name" : "YDR092W_promoter_long_rev"
         }
       ],
       "yeastSamples" : [

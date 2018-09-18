@@ -337,3 +337,8 @@ class Cursor:
 
     def get_xy(self):
         return [self.x, self.y]
+
+    def advance_to_next_step(self):
+        self.set_xy(self.min_x, self.min_y)
+        self.decr_y()
+        self.set_home()
