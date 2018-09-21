@@ -3,7 +3,7 @@ import copy
 
 import pydent
 from pydent import models
-from pydent.models import Sample
+from pydent.models import Sample, Item
 from pydent.exceptions import AquariumModelError
 
 def get_obj_by_name(leg, name):
@@ -28,17 +28,21 @@ class Leg:
         # This is no longer a good name for this variable.
         self.sample_io = {}
 
-
     # Does it make sense to populate this intermediate object?
     # Why not just build the array of operations?
     def create_operations(self):
         self.op_data = []
         self.wires = []
 
-        for ot_name in self.leg_order:
+        for ot_attr in self.leg_order:
+            if isinstance(ot_attr, dict):
+                ot_name = ot_attr["name"]
+            else:
+                ot_name = ot_attr
+
             od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_name))
             od = od or { "defaults": {} }
-            od["operation"] = self.initialize_op(ot_name)
+            od["operation"] = self.initialize_op(ot_attr)
             od["name"] = od["operation"].operation_type.name
 
             if self.op_data:
@@ -48,8 +52,6 @@ class Leg:
             self.cursor.decr_y()
 
     def set_container_types(self):
-        # with open(aq_defaults_path, "r") as f:
-        #     aq_defaults = json.load(f)
         default_container_types = self.ext_plan.aq_defaults["container_types"]
 
         for od in self.op_data:
@@ -97,6 +99,7 @@ class Leg:
                 io_object = this_io.get(ft.name)
 
                 is_sample = isinstance(io_object, Sample)
+                is_item = isinstance(io_object, Item)
                 is_array = isinstance(io_object, list)
 
                 if is_sample or is_array:
@@ -123,6 +126,12 @@ class Leg:
                                 op.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
                             except AquariumModelError as e:
                                 print("%s: %s" % (od["name"], e))
+
+                elif is_item:
+                    try:
+                        op.set_field_value(ft.name, ft.role, item=io_object)
+                    except AquariumModelError as e:
+                        print("%s: %s" % (od["name"], e))
 
                 else:
                     try:
@@ -225,10 +234,12 @@ class Leg:
 
     def get_op_by_index(self, i):
         if self.leg_order:
-            ot_name = self.leg_order[i]
+            ot_attr = self.leg_order[i]
 
-            if isinstance(ot_name, dict):
-                ot_name = ot_name["name"]
+            if isinstance(ot_attr, dict):
+                ot_name = ot_attr["name"]
+            else:
+                ot_name = ot_attr
 
             return self.select_op(ot_name)
 

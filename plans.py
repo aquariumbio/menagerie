@@ -4,7 +4,7 @@ import os
 
 import pydent
 from pydent import AqSession, models, __version__
-from pydent.models import Sample, Plan
+from pydent.models import Sample, Item, Plan
 
 class ExternalPlan:
     def __init__(self, aq_plan_name, aq_instance):
@@ -124,11 +124,6 @@ class PlanStep:
         self.plan_step = plan_step
         self.transformations = []
 
-    # Possibly dead code
-    def get_transformations_by_input(self, input):
-        txns = self.transformations
-        return [t for t in txns if input in t.source_samples()]
-
     def uniq_plan_inputs(self):
         plan_inputs = [t.source_samples() for t in self.transformations]
         plan_inputs = [i for i in self.flatten_list(plan_inputs)]
@@ -136,13 +131,18 @@ class PlanStep:
 
     def get_inputs(self, sample_type_name):
         sample_type_inputs = []
-        upis = self.uniq_plan_inputs()
 
-        for u in upis:
-            sample = self.plan.input_samples.get(u)
+        for upi in self.uniq_plan_inputs():
+            obj = self.plan.input_samples.get(upi)
 
-            if sample and sample.sample_type.name == sample_type_name:
-                sample_type_inputs.append(u)
+            if isinstance(obj, Sample):
+                this_st_name = obj.sample_type.name
+
+            elif isinstance(obj, Item):
+                this_st_name = obj.sample.sample_type.name
+
+            if this_st_name == sample_type_name:
+                    sample_type_inputs.append(upi)
 
         return sample_type_inputs
 

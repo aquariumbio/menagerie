@@ -9,29 +9,58 @@ from pydent.models import Sample
 from plans import ExternalPlan, PlanStep, Transformation
 from prot_stab_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
 from prot_stab_legs import SortLeg, FlowLeg, ProtStabLeg
+from dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
 
 class XPlan(ExternalPlan):
     def __init__(self, aq_plan_name, aq_instance):
         super().__init__(aq_plan_name, aq_instance)
 
-        self.steps = [YeastDisplayStep(self, s) for s in self.plan['steps']]
+        self.steps = []
+        for s in self.plan['steps']:
+            step_type = s["operator"]["type"]
+
+            if step_type == "protstab_round":
+                step = YeastDisplayStep(self, s)
+
+            elif step_type == "dna_seq":
+                step = DNASeqStep(self, s)
+
+            self.steps.append(step)
 
         self.input_samples = {}
-        for plan_id, aq_id in self.plan_params['input_samples'].items():
-            if plan_id == "library_composition":
-                aq_ids = aq_id["components"]
+        for key, sample_data in self.plan_params['input_samples'].items():
+            if key == "library_composition":
+                sample_ids = sample_data["components"]
                 component_samples = []
 
-                for ai in aq_ids:
-                    component_samples.append(self.find_input_sample(ai))
+                for sid in sample_ids:
+                    component_samples.append(self.find_input_sample(sid))
 
-                aq_id["components"] = component_samples
-                found_input = aq_id
+                sample_data["components"] = component_samples
+                self.add_input_sample(key, sample_data)
+
+            elif key == "plan_outputs":
+                plan = self.session.Plan.find(sample_data["plan_id"])
+                ops = plan.operations
+
+                ot_name = sample_data["operation_type"]
+                ops = [op for op in ops if op.operation_type.name == ot_name]
+
+                for op in ops:
+                    item = op.output(sample_data["output"]).item
+                    self.add_input_sample(op.id, item)
+
+            elif isinstance(sample_data, list):
+                found_input = []
+
+                for d in sample_data:
+                    found_input.append(self.find_input_sample(d))
+
+                self.add_input_sample(key, found_input)
 
             else:
-                found_input = self.find_input_sample(aq_id)
-
-            self.add_input_sample(plan_id, found_input)
+                found_input = self.find_input_sample(sample_data)
+                self.add_input_sample(key, found_input)
 
         # Assumes that there is only one source and only one dna_seq_step
         self.ngs_samples = self.dna_seq_steps()[0].measured_samples
@@ -44,8 +73,8 @@ class XPlan(ExternalPlan):
 
         return self.session.Sample.where({attr: aq_id})[0]
 
-    def add_input_sample(self, plan_id, sample):
-        self.input_samples[plan_id] = sample
+    def add_input_sample(self, key, sample):
+        self.input_samples[key] = sample
 
     def get_steps_by_type(self, type):
         return [s for s in self.steps if s.operator_type == type]
@@ -97,11 +126,11 @@ class XPlanStep(PlanStep):
 
 
     def yeast_inputs(self):
-        yeast_handles = ["DNA Library", "Yeast Strain"]
+        yeast_sample_types = ["DNA Library", "Yeast Strain", "Yeast Library in Soln 1"]
         yeast_inputs = []
 
-        for h in yeast_handles:
-            yeast_inputs.extend(self.get_inputs(h))
+        for st in yeast_sample_types:
+            yeast_inputs.extend(self.get_inputs(st))
 
         return yeast_inputs
 
@@ -114,11 +143,70 @@ class XPlanStep(PlanStep):
         return txns
 
 
+class DNASeqStep(XPlanStep):
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
+
+    def create_step(self, cursor):
+        n = 0
+
+        qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("forward primer")
+        qpcr_2_reverse_primers = self.plan.input_samples["qpcr_2_reverse_primers"]
+
+        # This is kinda hacky because it doesn't filter for yeast library items
+        for _, item in self.plan.input_samples.items():
+            if n > 2: break
+            extract_leg = ExtractDNALeg(self, cursor)
+            extract_leg.set_yeast_from_sample(item.sample)
+            extract_leg.add()
+            input_op = extract_leg.get_input_op()
+
+            print("Attempting to set fv for %d" % item.id)
+            try:
+                input_op.set_field_value("Yeast Library", "input", item=item)
+            except:
+                print("Failed to set fv for %d" % item.id)
+
+            item_id = input_op.input("Yeast Library").item.id
+            print("Set fv for %d" % item_id)
+            print()
+
+            upstr_op = extract_leg.get_output_op()
+
+            for opt in ["qPCR1", "qPCR2"]:
+                qpcr_leg = QPCRLeg(self, cursor)
+                qpcr_leg.set_yeast_from_sample(item.sample)
+                io_obj = { "Program": opt }
+
+                if opt == "qPCR2":
+                    io_obj["Forward/Universal Primer"] = qpcr_2_forward_primer
+                    io_obj["Reverse/Barcoded Primer"] = qpcr_2_reverse_primers.pop(0)
+
+                qpcr_leg.set_sample_io(io_obj)
+                qpcr_leg.add(opt)
+
+                dnstr_op = qpcr_leg.get_input_op()
+                qpcr_leg.wire_ops(upstr_op, dnstr_op)
+                upstr_op = qpcr_leg.get_output_op()
+
+            dilute_leg = DiluteLibraryLeg(self, cursor)
+            dilute_leg.set_yeast_from_sample(item.sample)
+            dilute_leg.add()
+
+            dnstr_op = dilute_leg.get_input_op()
+            dilute_leg.wire_ops(upstr_op, dnstr_op)
+
+            cursor.incr_x()
+            cursor.return_y()
+            n += 1
+
+
 class YeastDisplayStep(XPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
     def create_step(self, cursor, start_date):
+        # TODO: Do this in a way that doesn't depend on starting at 1.
         if int(self.step_id) > 1:
             prev_plan_step = self.plan.step(self.step_id - 1)
             prev_step_outputs = prev_plan_step.output_operations
