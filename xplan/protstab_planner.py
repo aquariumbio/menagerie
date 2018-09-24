@@ -40,7 +40,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
     print(plan_step.name + ' complete')
     print()
 
-plan.launch_aq_plan()
+plan.create_aq_plan()
 plan.add_data_associations()
 
 url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)

@@ -31,7 +31,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('dna_seq')):
     cursor.update_max_x()
 
 
-plan.launch_aq_plan()
+plan.create_aq_plan()
 # plan.add_data_associations()
 
 # url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)

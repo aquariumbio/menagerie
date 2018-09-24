@@ -36,7 +36,7 @@ step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 # plan_step = plan.step_by_build_method("Yeast Transformation")
 # step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
 
-plan.launch_aq_plan()
+plan.create_aq_plan()
 
 # url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
 # print("Created Plan: {}".format(url))

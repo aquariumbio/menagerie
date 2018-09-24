@@ -49,7 +49,7 @@ for step_id in plan.step_ids():
 
             cursor.return_y()
 
-plan.launch_aq_plan()
+plan.create_aq_plan()
 plan.add_data_associations()
 
 url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
