@@ -22,7 +22,7 @@ inputs = get_input(start_date=False)
 
 plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
-cursor = Cursor(x=64, y=832)
+cursor = Cursor(y=13)
 
 plan_step = plan.step_by_build_method("PCR")
 step_outputs = plan_step.create_step(cursor)

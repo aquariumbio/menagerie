@@ -22,7 +22,7 @@ inputs = {
 
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 session = plan.session
-cursor = Cursor(x=64, y=1168)
+cursor = Cursor(y=18)
 
 for step_id in plan.step_ids(plan.get_steps_by_type('dna_seq')):
     plan_step = plan.step(step_id)

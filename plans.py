@@ -258,24 +258,40 @@ class PlanStep:
 
 class Transformation:
     """
-    Contains specifications for converting one sample (the "primary sample")
-    into another. Generally does not allow any branching of the primary sample.
+    A container class for specifications for converting one sample (the "primary
+    sample") into another. Mostly handled by inheriting classes.
     """
     def __init__(self, plan_step, transformation):
         self.plan_step = plan_step
-        self.plan = self.plan_step.planclass Leg:
+        self.plan = self.plan_step.plan
 
+
+class Leg:
+    """
+    Aclass describing frequently-used chain of OperationTypes that converts one
+    sample into another (the "primary samples"). Generally does not allow any
+    branching of the primary samples.
+    """
+    # The oder of OperationTypes
     leg_order = []
+
+    # The list of I/O names that identify the primary sample
     primary_handles = []
 
     def __init__(self, plan_step, cursor):
+        """
+        :param plan_step: the PlanStep containing this Leg
+        :type plan_step: PlanStep
+        :param cursor: the Cursor
+        :type cursor: Cursor
+        """
         self.plan_step = plan_step
         self.ext_plan = self.plan_step.plan
         self.aq_plan = self.ext_plan.aq_plan
         self.session = self.ext_plan.session
         self.cursor = cursor
-        self.create_operations()
-        self.set_container_types()
+
+        self.op_data, self.wires = self.create_operations()
 
         # This is no longer a good name for this variable.
         self.sample_io = {}
@@ -283,8 +299,17 @@ class Transformation:
     # Does it make sense to populate this intermediate object?
     # Why not just build the array of operations?
     def create_operations(self):
-        self.op_data = []
-        self.wires = []
+        """
+        Instantiates operations and places them in a list along with data for
+        populating ContainerType fields. Also wires the operations together
+        based on primary sample. Returns the list of operation data and the list
+        of Wires
+
+        :return: list
+        """
+
+        op_data = []
+        wires = []
 
         for ot_attr in self.leg_order:
             if isinstance(ot_attr, dict):
@@ -296,29 +321,75 @@ class Transformation:
             od = od or { "defaults": {} }
             od["operation"] = self.initialize_op(ot_attr)
             od["name"] = od["operation"].operation_type.name
+            od["container_types"] = self.get_container_types(od["name"])
+            op_data.append(od)
 
-            if self.op_data:
-                self.wire_internal(self.op_data[-1]["operation"], od["operation"])
+            # Maybe this should happen in a different method?
+            # Could make more sense in Leg.add()
+            if len(op_data) > 1:
+                wire = self.get_wire_pair(op_data[-1]["operation"], od["operation"])
+                if not None in wire:
+                    wires.append(wire)
 
-            self.op_data.append(od)
-            self.cursor.decr_y()
+            cursor.decr_y()
 
-    def set_container_types(self):
+        return [op_data, wires]
+
+    def initialize_op(self, ot_name):
+
+        if isinstance(ot_name, str):
+            ot_attr = {"name": ot_name}
+        elif isinstance(ot_name, dict):
+            ot_attr = ot_name
+
+        ot_attr["deployed"] = True
+        op_types = self.session.OperationType.where(ot_attr)
+
+        if len(op_types) != 1:
+            msg = "Didn't find a unique Operation Type for %s: %s"
+            ots = [ot.category + " > " + ot.name for ot in op_types]
+            print(msg % (ot_attr["name"], ots))
+
+        op_type = op_types[0]
+        op = op_type.instance()
+        op.x = self.cursor.x
+        op.y = self.cursor.y
+
+        return op
+
+    def get_container_types(self, ot_name):
+        """
+        Returns the container types data for a specific OperationType.
+
+        :param ot_name: the name of the OperationType
+        :type ot_name: str
+        :return: dict
+        """
         default_container_types = self.ext_plan.aq_defaults["container_types"]
+        ct = copy.deepcopy(get_obj_by_name(default_container_types, ot_name))
 
-        for od in self.op_data:
-            name = od["name"]
-            ct = copy.deepcopy(get_obj_by_name(default_container_types, name))
+        if ct:
+            ct.pop("name")
+        else:
+            ct = {}
 
-            if ct:
-                ct.pop("name")
-            else:
-                ct = {}
+        return ct
 
-            od["container_types"] = ct
+    def get_container(self, ot_name, io_name, role, container_opt=None):
+        """
+        Gets a container (ObjectType) for an input or output.
 
-    def get_container(self, op_name, io_name, role, container_opt=None):
-        ctypes = get_obj_by_name(self.op_data, op_name)["container_types"].get(io_name)
+        :param ot_name: the name of the OperationType
+        :type ot_name: str
+        :param io_name: the name ("handle") of the input or output
+        :type io_name: str
+        :param role: the role ("input" or "output")
+        :type role: str
+        :param container_opt: an option for specifying one of several containers
+        :type container_opt: str
+        :return: ObjectType
+        """
+        ctypes = get_obj_by_name(self.op_data, ot_name)["container_types"].get(io_name)
 
         if ctypes:
             container_name = ctypes[role + "_container_type"]
@@ -332,7 +403,16 @@ class Transformation:
 
             return self.session.ObjectType.where({"name": container_name})[0]
 
+    # Is there any reason why this can't be done as the operations
+    # are being created?
     def add(self, container_opt=None):
+        """
+        Sets the input and output for the list of Operations, then adds the
+        operations and wires to the Aq Plan object.
+
+        :param container_opt: an option for specifying one of several containers
+        :type container_opt: str
+        """
         self.set_io(container_opt)
         self.aq_plan.add_operations([od["operation"] for od in self.op_data])
         self.aq_plan.add_wires(self.wires)
@@ -340,6 +420,13 @@ class Transformation:
         print()
 
     def set_io(self, container_opt):
+        """
+        Sets the input and output for the list of Operations. Propagates the
+        primary sample forward through the chain.
+
+        :param container_opt: an option for specifying one of several containers
+        :type container_opt: str
+        """
         for i in range(len(self.op_data)):
             od = self.op_data[i]
             op = od["operation"]
@@ -391,43 +478,35 @@ class Transformation:
                     except AquariumModelError as e:
                         print("%s: %s" % (od["name"], e))
 
+            # what if i == 0?
             self.propagate_sample(self.op_data[i - 1]["operation"], self.op_data[i]["operation"])
 
             print("Set IO for " + od["name"])
 
-    def initialize_op(self, ot_name):
-
-        if isinstance(ot_name, str):
-            ot_attr = {"name": ot_name}
-        elif isinstance(ot_name, dict):
-            ot_attr = ot_name
-
-        ot_attr["deployed"] = True
-        op_types = self.session.OperationType.where(ot_attr)
-
-        if len(op_types) != 1:
-            msg = "Didn't find a unique Operation Type for %s: %s"
-            ots = [ot.category + " > " + ot.name for ot in op_types]
-            print(msg % (ot_attr["name"], ots))
-
-        op_type = op_types[0]
-        op = op_type.instance()
-        op.x = self.cursor.x
-        op.y = self.cursor.y
-
-        return op
-
-    def wire_internal(self, upstr_op, dnstr_op):
-        wire = self.get_wire_pair(upstr_op, dnstr_op)
-        if not None in wire:
-            self.wires.append(wire)
-
     def wire_ops(self, upstr_op, dnstr_op):
+        """
+        Wires two operations together based on primary sample.
+        Propagates the sample from the upstream op to the downstream op.
+
+        :param upstr_op: the upstream (earlier) Operation
+        :type upstr_op: Operation
+        :param dnstr_op: the downstream (later) Operation
+        :type dnstr_op: Operation
+        """
         wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
         self.aq_plan.add_wires([wire_pair])
         self.propagate_sample(upstr_op, dnstr_op)
 
     def wire_input_array(self, upstr_ops, dnstr_op):
+        """
+        Takes a list of upstream Operations and wires them to an array input
+        of a downstream Operation.
+
+        :param upstr_ops: list of upstream (earlier) Operations
+        :type upstr_ops: list
+        :param dnstr_op: the downstream (later) Operation
+        :type dnstr_op: Operation
+        """
         dnstr_fvs = self.primary_io_array(dnstr_op, "input")
 
         for upstr_op in upstr_ops:
@@ -438,6 +517,15 @@ class Transformation:
 
     # This method may be redundant
     def propagate_sample(self, upstr_op, dnstr_op):
+        """
+        Gets the output Sample for the upstream Operation and sets the
+        primary input for the downstream Operation to have the same Sample.
+
+        :param upstr_op: the upstream (earlier) Operation
+        :type upstr_ops: Operation
+        :param dnstr_op: the downstream (later) Operation
+        :type dnstr_op: Operation
+        """
         upstr_sample = None
 
         for h in self.primary_handles:
@@ -460,31 +548,69 @@ class Transformation:
                         print("%s: %s" % (dnstr_op.operation_type.name, e))
 
     def get_wire_pair(self, upstr_op, dnstr_op):
+        """
+        Gets a pair of FieldValues correspondint to the primary input and output
+        of the downstream and upstream Operations, respectively.
+
+        :param upstr_op: the upstream (earlier) Operation
+        :type upstr_ops: Operation
+        :param dnstr_op: the downstream (later) Operation
+        :type dnstr_op: Operation
+        :return: list
+        """
         w0 = self.primary_io(upstr_op, "output")
         w1 = self.primary_io(dnstr_op, "input")
         return [w0, w1]
 
     def primary_io(self, op, role):
+        """
+        Gets the primary input or output FieldValue for an Operation.
+
+        :param op: the Operation
+        :type op: Operation
+        :param role: the role of the FieldValue
+        :type role: str
+        :return: FieldValue
+        """
         fvs = self.primary_io_array(op, role)
         if fvs: return fvs[0]
 
     def primary_io_array(self, op, role):
+        """
+        Gets the list of primary input or output FieldValues for an Operation.
+
+        :param op: the Operation
+        :type op: Operation
+        :param role: the role of the FieldValues
+        :type role: str
+        :return: list
+        """
         return [fv for fv in op.field_values if fv.role == role and fv.name in self.primary_handles]
 
     def select_op(self, ot_name):
+        """
+        Returns the operation of a given OperationType from the op_data attribute.
+
+        :param ot_name: the name of the OperationType of the Operation to return
+        :type ot_name: str
+        :return: Operation
+        """
         if isinstance(ot_name, dict):
             ot_name = ot_name["name"]
 
-        selected = [od for od in self.op_data if od["operation"].operation_type.name == ot_name]
+        selected = [od for od in self.op_data if od["name"] == ot_name]
         if selected: return selected[0]["operation"]
 
     def get_output_op(self):
+        """Gets the last Operation in the leg_order."""
         return self.get_op_by_index(-1)
 
     def get_input_op(self):
+        """Gets the first Operation in the leg_order."""
         return self.get_op_by_index(0)
 
     def get_op_by_index(self, i):
+        """Returns an Operation from the leg_order based on index."""
         if self.leg_order:
             ot_attr = self.leg_order[i]
 
@@ -496,23 +622,30 @@ class Transformation:
             return self.select_op(ot_name)
 
     def set_start_date(self, start_date):
+        """
+        Sets a start date for the Leg.
+
+        :param start_date: the date to move the Operation into "pending."
+        :type start_date: Date
+        """
         op = self.get_input_op()
         v = "{ \"delay_until\": \"%s\" }" % start_date
         op.set_field_value("Options", "input", value=v)
 
     @classmethod
     def length(cls):
+        """Returns the number of Operations in the Leg."""
          return len(cls.leg_order)
 
 
-# TODO: Change this so it always uses # of increments as arguments
 class Cursor:
+    """A class to keep track of where to put the next operation."""
     def __init__(self, x=None, y=None):
-        self.x = x or 64
         self.x_incr = 192
+        self.x = x or self.set_x(1/3)
 
-        self.y = y or 1168
         self.y_incr = 64
+        self.y = y or self.set_y(10)
 
         self.x_home = self.x
         self.max_x = self.x
@@ -523,11 +656,11 @@ class Cursor:
         self.min_y = self.y
 
     def set_x(self, x):
-        self.x = x
+        self.x = int(x * self.x_incr)
         self.update_max_min_x()
 
     def set_y(self, y):
-        self.y = y
+        self.y = int(y * self.y_incr)
         self.update_max_min_y()
 
     def set_xy(self, x, y):
@@ -536,29 +669,35 @@ class Cursor:
         self.update_max_min()
 
     def incr_x(self, mult=1):
-        self.x += mult * self.x_incr
+        self.x += int(mult * self.x_incr)
         self.update_max_x()
 
     def decr_x(self, mult=1):
-        self.x -= mult * self.x_incr
+        self.x -= int(mult * self.x_incr)
         self.update_min_x()
 
     def incr_y(self, mult=1):
-        self.y += mult * self.y_incr
+        self.y += int(mult * self.y_incr)
         self.update_max_y()
 
     def decr_y(self, mult=1):
-        self.y -= mult * self.y_incr
+        self.y -= int(mult * self.y_incr)
         self.update_min_y()
 
     def set_x_home(self, x=None):
-        self.x_home = x or self.x
+        if x:
+            self.x_home = int(x * self.x_incr)
+        else:
+            self.x_home = self.x
 
     def return_x(self):
         self.x = self.x_home
 
     def set_y_home(self, y=None):
-        self.y_home = y or self.y
+        if y:
+            self.y_home = int(y * self.y_incr)
+        else:
+            self.y_home = self.y
 
     def return_y(self):
         self.y = self.y_home

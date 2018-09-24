@@ -22,7 +22,7 @@ inputs = {
 
 plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
-cursor = Cursor(x=64, y=512)
+cursor = Cursor(y=8)
 
 n_seqs = 3
 
