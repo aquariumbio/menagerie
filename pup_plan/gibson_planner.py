@@ -6,7 +6,7 @@ import time
 ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
-from aq_classes import Cursor
+from plans import Cursor
 from pup_plan.pup_plans import PupPlan
 from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
 from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg

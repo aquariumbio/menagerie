@@ -1,4 +1,4 @@
-from aq_classes import Leg, get_obj_by_name
+from plans import Leg, get_obj_by_name
 
 class CloningLeg(Leg):
 

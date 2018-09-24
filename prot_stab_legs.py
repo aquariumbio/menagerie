@@ -1,4 +1,4 @@
-from aq_classes import Leg
+from plans import Leg
 
 class ProtStabLeg(Leg):
 

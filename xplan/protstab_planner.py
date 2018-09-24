@@ -7,7 +7,7 @@ warnings.filterwarnings('ignore')
 ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
-from aq_classes import Cursor, Leg
+from plans import Cursor, Leg
 from xplan.xplans import XPlan
 
 from prot_stab_legs import SortLeg
