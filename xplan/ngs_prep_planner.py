@@ -14,7 +14,7 @@ from plan_tests import test_plan
 from user_input import get_input
 
 inputs = {
-    'aq_plan_name': "ds_1234_combined_ngs",
+    'aq_plan_name': "ngs_test",
     'aq_instance': "laptop"
 }
 

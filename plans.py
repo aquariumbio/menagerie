@@ -43,9 +43,9 @@ class ExternalPlan:
         self.plan_path = "plans/%s" % aq_plan_name
 
         # TODO: Unify the structure of 'aquarium_defaults.json' and "params_%s.json"
-        self.plan = load_json_from_file(self, 'plan.json')
-        self.aq_defaults = load_json_from_file(self, 'aquarium_defaults.json')
-        self.plan_params = load_json_from_file(self, "params_%s.json" % aq_instance)
+        self.plan = self.load_json_from_file('plan.json')
+        self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')
+        self.plan_params = self.load_json_from_file("params_%s.json" % aq_instance)
 
         self.defaults = self.get_operation_defaults()
 
@@ -89,8 +89,7 @@ class ExternalPlan:
         """
         file_path = os.path.join(self.plan_path, file_name)
         with open(file_path, 'r') as f:
-            json = json.load(f)
-        return json
+            return json.load(f)
 
     # TODO: This should be harmonized with the plan_params['input_samples'] structure
     def get_operation_defaults(self):
@@ -380,11 +379,11 @@ class Leg:
             # Maybe this should happen in a different method?
             # Could make more sense in Leg.add()
             if len(op_data) > 1:
-                wire = self.get_wire_pair(op_data[-1]["operation"], od["operation"])
+                wire = self.get_wire_pair(op_data[-2]["operation"], od["operation"])
                 if not None in wire:
                     wires.append(wire)
 
-            cursor.decr_y()
+            self.cursor.decr_y()
 
         return [op_data, wires]
 
@@ -688,17 +687,20 @@ class Leg:
     @classmethod
     def length(cls):
         """Returns the number of Operations in the Leg."""
-         return len(cls.leg_order)
+        return len(cls.leg_order)
 
-
+# TODO: Fix this so that it can deal with fractional increments.
 class Cursor:
     """A class to keep track of where to put the next operation."""
     def __init__(self, x=None, y=None):
-        self.x_incr = 192
-        self.x = x or self.set_x(1/3)
+        x = x or 1
+        y = y or 10
 
+        self.x_incr = 192
         self.y_incr = 64
-        self.y = y or self.set_y(10)
+
+        self.set_x(x, update=False)
+        self.set_y(y, update=False)
 
         self.x_home = self.x
         self.max_x = self.x
@@ -708,38 +710,42 @@ class Cursor:
         self.max_y = self.y
         self.min_y = self.y
 
-    def set_x(self, x):
-        self.x = int(x * self.x_incr)
-        self.update_max_min_x()
+    def set_x(self, x, update=True):
+        self.x = round(x * self.x_incr)
+        if update: self.update_max_min_x()
 
-    def set_y(self, y):
-        self.y = int(y * self.y_incr)
-        self.update_max_min_y()
+    def set_y(self, y, update=True):
+        self.y = round(y * self.y_incr)
+        if update: self.update_max_min_y()
 
-    def set_xy(self, x, y):
-        self.set_x(x)
-        self.set_y(y)
-        self.update_max_min()
+    def set_xy(self, x, y, update=True):
+        self.set_x(x, update)
+        self.set_y(y, update)
+        if update: self.update_max_min()
 
     def incr_x(self, mult=1):
-        self.x += int(mult * self.x_incr)
+        self.x += round(mult * self.x_incr)
         self.update_max_x()
+        # print("x = %d" % self.x)
 
     def decr_x(self, mult=1):
-        self.x -= int(mult * self.x_incr)
+        self.x -= round(mult * self.x_incr)
         self.update_min_x()
+        # print("x = %d" % self.x)
 
     def incr_y(self, mult=1):
-        self.y += int(mult * self.y_incr)
+        self.y += round(mult * self.y_incr)
         self.update_max_y()
+        # print("y = %d" % self.y)
 
     def decr_y(self, mult=1):
-        self.y -= int(mult * self.y_incr)
+        self.y -= round(mult * self.y_incr)
         self.update_min_y()
+        # print("y = %d" % self.y)
 
     def set_x_home(self, x=None):
         if x:
-            self.x_home = int(x * self.x_incr)
+            self.x_home = round(x * self.x_incr)
         else:
             self.x_home = self.x
 
@@ -748,7 +754,7 @@ class Cursor:
 
     def set_y_home(self, y=None):
         if y:
-            self.y_home = int(y * self.y_incr)
+            self.y_home = round(y * self.y_incr)
         else:
             self.y_home = self.y
 
@@ -795,6 +801,6 @@ class Cursor:
         return [self.x, self.y]
 
     def advance_to_next_step(self):
-        self.set_xy(self.min_x, self.min_y)
+        self.set_xy(round(self.min_x / self.x_incr), round(self.min_y / self.y_incr))
         self.decr_y()
         self.set_home()

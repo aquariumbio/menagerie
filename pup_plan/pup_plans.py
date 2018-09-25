@@ -11,7 +11,12 @@ from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
 from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
 
 class PupPlan(ExternalPlan):
+    """
+    Interface for working with the Aquarium Session and Plan models.
+    Uses JSON schema derived from BU/SAIL Puppeteer schema.
+    """
 
+    # For matching Puppeteer sample types to Aq sample types
     input_list_names = {
         "partSamples": "Fragment",
         "vectorSamples": "Fragment",
@@ -21,10 +26,24 @@ class PupPlan(ExternalPlan):
     }
 
     def __init__(self, aq_plan_name, aq_instance):
+        """
+        In addition to super(), populates self.steps with new instances
+        of PlanStep (PCRStep, GibsonStep or YeastTransformationStep).
+
+        :param aq_plan_name: name of folder containing configuration files
+            Also used as the name of the Plan record in Aquarium
+        :type aq_plan_name: str
+        :param aq_instance: the instance of Aquarium to use
+            Corresponds to a key in the config.yml file
+        :type aq_instance: str
+        :return: new PupPlan
+        """
         super().__init__(aq_plan_name, aq_instance)
 
         self.provision_samples()
 
+        # TODO: This is very similar to the corresponding block in XPlan. Extract.
+        # Create PlanStep objects based on operator type
         for step in self.plan["steps"]:
             build_method = step["parameters"]["buildMethod"]
             step_id = step["id"]
@@ -43,6 +62,7 @@ class PupPlan(ExternalPlan):
 
             self.steps.append(step)
 
+            # Why is this block not also in XPlan?
             for txn in step.transformations:
                 for sample_name in txn["destination"]:
                     samples = self.get_samples(dst_sample_type, sample_name, txn["source"])
@@ -50,10 +70,22 @@ class PupPlan(ExternalPlan):
 
                     self.input_samples[sample_name] = sample
 
+    # TODO: Maybe make this return a list?
+    # This seems to correspond to operator type in XPlan. Harmonize?
     def step_by_build_method(self, build_method):
+        """
+        Returns the first step of the specified build_method.
+
+        :param build_method: the build method key
+        :type build_method: str
+        :return: PlanStep
+        """
         return next(s for s in self.steps if s.build_method == build_method)
 
+    # This seems structurally similar to what is going on in
+    # self.plan_params['input_samples'] for XPlan
     def provision_samples(self):
+        """Finds all the input samples for the PupPlan."""
         prov_step = [s for s in self.plan["steps"] if s["parameters"]["buildMethod"] == "Provision"][0]
 
         for list_name, sample_type in PupPlan.input_list_names.items():
@@ -62,6 +94,7 @@ class PupPlan(ExternalPlan):
                 sample["aqSamples"] = self.get_samples(sample_type, sample["name"])
                 self.input_samples[sample["name"]] = sample["aqSamples"][0]
 
+        # Is this wise or necessary?
         self.plan["steps"].remove(prov_step)
 
 

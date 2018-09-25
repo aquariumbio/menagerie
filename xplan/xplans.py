@@ -31,6 +31,7 @@ class XPlan(ExternalPlan):
         """
         super().__init__(aq_plan_name, aq_instance)
 
+        # TODO: This is very similar to the corresponding block in PupPlan. Extract.
         # Create PlanStep objects based on operator type
         for s in self.plan['steps']:
             step_type = s["operator"]["type"]
@@ -44,6 +45,8 @@ class XPlan(ExternalPlan):
             self.steps.append(step)
 
         # Find input samples that are likely to vary between operations.
+        # This seems structurally similar to what is going on in
+        # self.provision_samples() for PupPlan
         # TODO: This should be harmonized with the plan_params['operation_defaults'] structure
         for key, sample_data in self.plan_params['input_samples'].items():
             # Special case:
@@ -334,7 +337,7 @@ class YeastDisplayStep(XPlanStep):
 
             upstr_op = prev_step_outputs.get(input_yeast) or new_inputs.get(input_yeast)
 
-            cursor.set_x(upstr_op.x)
+            cursor.set_x(round(upstr_op.x/cursor.x_incr))
 
             if int(self.step_id) > 1 and is_library:
                 cursor.decr_x(2)
@@ -412,7 +415,7 @@ class YeastDisplayStep(XPlanStep):
                         cursor.incr_x()
                         cursor.return_y()
 
-                cursor.incr_x(0.25)
+                cursor.incr_x()
 
 
 class XPlanTransformation(Transformation):
