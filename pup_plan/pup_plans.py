@@ -64,12 +64,6 @@ class PupPlan(ExternalPlan):
 
         self.plan["steps"].remove(prov_step)
 
-    def add_input_sample(self, sample_name, sample):
-        self.input_samples[sample_name] = sample
-
-    def get_input_sample(self, sample_name):
-        return self.input_samples.get(sample_name, sample_name)
-
 
 class PupPlanStep(PlanStep):
     def __init__(self, plan, plan_step, step_id):

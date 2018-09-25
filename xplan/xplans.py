@@ -12,10 +12,26 @@ from prot_stab_legs import SortLeg, FlowLeg, ProtStabLeg
 from dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
 
 class XPlan(ExternalPlan):
+    """
+    Interface for working with the Aquarium Session and Plan models.
+    Uses JSON schema derived from SIFT's XPlan schema.
+    """
     def __init__(self, aq_plan_name, aq_instance):
+        """
+        In addition to super(), populates self.steps with new instances
+        of PlanStep (YeastDisplayStep or DNASeqStep).
+
+        :param aq_plan_name: name of folder containing configuration files
+            Also used as the name of the Plan record in Aquarium
+        :type aq_plan_name: str
+        :param aq_instance: the instance of Aquarium to use
+            Corresponds to a key in the config.yml file
+        :type aq_instance: str
+        :return: new XPlan
+        """
         super().__init__(aq_plan_name, aq_instance)
 
-        self.steps = []
+        # Create PlanStep objects based on operator type
         for s in self.plan['steps']:
             step_type = s["operator"]["type"]
 
@@ -27,8 +43,11 @@ class XPlan(ExternalPlan):
 
             self.steps.append(step)
 
-        self.input_samples = {}
+        # Find input samples that are likely to vary between operations.
+        # TODO: This should be harmonized with the plan_params['operation_defaults'] structure
         for key, sample_data in self.plan_params['input_samples'].items():
+            # Special case:
+            # Libraries that are combined at the beginning of the Plan.
             if key == "library_composition":
                 sample_ids = sample_data["components"]
                 component_samples = []
@@ -39,6 +58,8 @@ class XPlan(ExternalPlan):
                 sample_data["components"] = component_samples
                 self.add_input_sample(key, sample_data)
 
+            # Special case:
+            # Collect all of the outputs of an already-run Plan.
             elif key == "plan_outputs":
                 plan = self.session.Plan.find(sample_data["plan_id"])
                 ops = plan.operations
@@ -50,6 +71,7 @@ class XPlan(ExternalPlan):
                     item = op.output(sample_data["output"]).item
                     self.add_input_sample(op.id, item)
 
+            # A list of Samples.
             elif isinstance(sample_data, list):
                 found_input = []
 
@@ -58,47 +80,64 @@ class XPlan(ExternalPlan):
 
                 self.add_input_sample(key, found_input)
 
+            # A single Sample.
             else:
                 found_input = self.find_input_sample(sample_data)
                 self.add_input_sample(key, found_input)
 
+        # Get the list of samples for NGS
         # Assumes that there is only one source and only one dna_seq_step
         self.ngs_samples = self.dna_seq_steps()[0].measured_samples
 
-    def find_input_sample(self, aq_id):
-        if isinstance(aq_id, int):
-            attr = 'id'
-        else:
-            attr = 'name'
-
-        return self.session.Sample.where({attr: aq_id})[0]
-
-    def add_input_sample(self, key, sample):
-        self.input_samples[key] = sample
-
     def get_steps_by_type(self, type):
+        """
+        Return PlanStep objects based on operator type.
+
+        :param type: the operator type
+        :type type: str
+        :return: list
+        """
         return [s for s in self.steps if s.operator_type == type]
 
     def provision_steps(self):
+        """Get PlanSteps of operator type 'provision'."""
         return self.get_steps_by_type('provision')
 
     def dna_seq_steps(self):
+        """Get PlanSteps of operator type 'dna_seq'."""
         return self.get_steps_by_type('dna_seq')
 
     def step_ids(self, steps=None):
+        """
+        Get a sorted list of the step ids in the ExternalPlan.
+        Can be for a subset of steps if they are passed.
+        """
         steps = steps or self.steps
         return sorted([s.step_id for s in steps])
 
-    def protease_sample(self, s):
-        return isinstance(s, Sample) and s.sample_type.name == "Protease"
-
     def prov_protease_inputs(self):
+        """
+        Return a dup of self.input_samples with only the proteases.
+
+        :return: dict
+        """
         return {k:s for (k,s) in self.input_samples.items() if self.protease_sample(s)}
 
-    def get_provisioned(self, unprovisioned):
-        txns = self.provision_steps()[0].transformations
-        provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
-        return provisioned.destination[0]['sample']
+    def protease_sample(self, s):
+        """
+        Test whether an object is a Sample of SampleType "Protease."
+
+        :param s: the object to be tested
+        :type s: object
+        :return: boolean
+        """
+        return isinstance(s, Sample) and s.sample_type.name == "Protease"
+
+    # Appears dead.
+    # def get_provisioned(self, unprovisioned):
+    #     txns = self.provision_steps()[0].transformations
+    #     provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
+    #     return provisioned.destination[0]['sample']
 
 
 class XPlanStep(PlanStep):
@@ -126,6 +165,11 @@ class XPlanStep(PlanStep):
 
 
     def yeast_inputs(self):
+        """
+        Get all the inputs that are a type of yeast.
+
+        :return: list
+        """
         yeast_sample_types = ["DNA Library", "Yeast Strain", "Yeast Library in Soln 1"]
         yeast_inputs = []
 
@@ -134,13 +178,16 @@ class XPlanStep(PlanStep):
 
         return yeast_inputs
 
+    # TODO: Output Operations are handled differently in pup_plans. Harmonize.
     def add_output_operation(self, uri, op):
+        """Adds an Operation to the list of output operations for the PlanStep."""
         self.output_operations[uri] = op
 
+    # Appears dead.
     # TODO: Need to make this sort for the GUI layout.
-    def get_sorted_transformations(self):
-        txns = self.operator.get('transformations')
-        return txns
+    # def get_sorted_transformations(self):
+    #     txns = self.operator.get('transformations')
+    #     return txns
 
 
 class DNASeqStep(XPlanStep):

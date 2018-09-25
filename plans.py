@@ -26,7 +26,8 @@ class ExternalPlan:
         1. Creates a session from stored secrets
         2. Creates a new Plan in the session
         3. Reads in several JSON files for configuring the plan
-        4. Creates a few other fields to be populated by inheriting classes
+        4. Populates self.defaults with found samples
+        5. Creates a few other fields to be populated by inheriting classes
 
         :param aq_plan_name: name of folder containing configuration files
             Also used as the name of the Plan record in Aquarium
@@ -41,31 +42,15 @@ class ExternalPlan:
         self.aq_plan = Plan(name=aq_plan_name)
         self.plan_path = "plans/%s" % aq_plan_name
 
-        plan_file = os.path.join(self.plan_path, 'plan.json')
-        with open(plan_file, 'r') as f:
-            self.plan = json.load(f)
-
         # TODO: Unify the structure of 'aquarium_defaults.json' and "params_%s.json"
-        aq_defaults_file = os.path.join(self.plan_path, 'aquarium_defaults.json')
-        with open(aq_defaults_file, 'r') as f:
-            self.aq_defaults = json.load(f)
+        self.plan = load_json_from_file(self, 'plan.json')
+        self.aq_defaults = load_json_from_file(self, 'aquarium_defaults.json')
+        self.plan_params = load_json_from_file(self, "params_%s.json" % aq_instance)
 
-        plan_params_file = "params_%s.json" % aq_instance
-        plan_params_file = os.path.join(self.plan_path, plan_params_file)
-        with open(plan_params_file, 'r') as f:
-            self.plan_params = json.load(f)
-
-            self.defaults = self.plan_params.get('operation_defaults', [])
-
-            for op_default in self.defaults:
-                for key, value in op_default['defaults'].items():
-                    samples = self.session.Sample.where({ 'name': value })
-                    if samples:
-                        op_default['defaults'][key] = samples[0]
+        self.defaults = self.get_operation_defaults()
 
         self.steps = []
         self.input_samples = {}
-
         self.temp_data_associations = []
 
     @staticmethod
@@ -93,6 +78,37 @@ class ExternalPlan:
         print('Logged in as %s\n' % me.name)
 
         return session
+
+    def load_json_from_file(self, file_name):
+        """
+        Loads a file in the plan config path as a JSON object.
+
+        :param file_name: the name of the JSON file to load
+        :type file_name: str
+        :return: json object
+        """
+        file_path = os.path.join(self.plan_path, file_name)
+        with open(file_path, 'r') as f:
+            json = json.load(f)
+        return json
+
+    # TODO: This should be harmonized with the plan_params['input_samples'] structure
+    def get_operation_defaults(self):
+        """
+        Parses part of the plan params JSON and finds corresponding Samples in
+        Aq. Returns the data structure populated with the Sample objects.
+
+        :return: dict
+        """
+        defaults = self.plan_params.get('operation_defaults', [])
+
+        for op_default in defaults:
+            for key, value in op_default['defaults'].items():
+                samples = self.session.Sample.where({ 'name': value })
+                if samples:
+                    op_default['defaults'][key] = samples[0]
+
+        return defaults
 
     def get_samples(self, sample_type_name, sample_name, properties={}):
         """
@@ -187,6 +203,43 @@ class ExternalPlan:
             obj = tda.pop('object')
             for key, value in tda.items():
                 obj.associate(key, value)
+
+    def find_input_sample(self, aq_id):
+        """
+        Find a Sample when the attribute can be either id or name.
+
+        :param aq_id: the attribute
+        :type aq_id: int or str
+        :return: Sample
+        """
+        if isinstance(aq_id, int):
+            attr = 'id'
+        else:
+            attr = 'name'
+
+        return self.session.Sample.where({attr: aq_id})[0]
+
+    def add_input_sample(self, key, sample):
+        """
+        Add a sample to self.input_samples.
+        :param key: A unique identifer of the Sample
+        :type key: str
+        :param sample: The Sample to be added
+        :type sample: Sample
+        """
+        self.input_samples[key] = sample
+
+    # TODO: This method seems kind of dumb.
+    def get_input_sample(self, sample_name):
+        """
+        Return the input Sample based on the key. If not found, return the key
+        instead.
+
+        :param sample_name: The unique identifier of the Sample
+        :type sample_name: str
+        :return: Sample or str
+        """
+        return self.input_samples.get(sample_name, sample_name)
 
 
 class PlanStep:
