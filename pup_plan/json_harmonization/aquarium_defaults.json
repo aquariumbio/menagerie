@@ -1,0 +1,58 @@
+{
+  "_comment": "This file should be renamed, perhaps to 'container_types.json'",
+  "container_types": [
+    {
+      "_comment": "Specifies a container type for each input and output.",
+      "name": "Operation Type Name",
+      "First Handle": {
+        "input_container_type": "Container Type for Input",
+        "output_container_type": "Container Type for Output"
+      },
+      "Second Handle": {
+        "input_container_type": "Container Type for Input",
+        "output_container_type": "Container Type for Output"
+      },
+      "Third Handle": {
+        "input_container_type": {
+          "_comment": "Allows for different container types at different points in the plan.",
+          "first_option": "First Optional Container",
+          "second_option": "Second Optional Container"
+        }
+      }
+    },
+    {
+      "name": "Challenge and Label",
+      "Yeast Culture": {
+        "input_container_type": {
+          "library": "Yeast Library Liquid Culture",
+          "control": "Yeast 50ml culture"
+        }
+      },
+      "Labeled Yeast Library": {
+        "output_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        }
+      },
+      "Protease": {
+        "input_container_type": "Protease Stock"
+      },
+      "Antibody": {
+        "input_container_type": "Antibody Stock"
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "Labeled Yeast Library": {
+        "input_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        },
+        "output_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        }
+      }
+    }
+  ]
+}

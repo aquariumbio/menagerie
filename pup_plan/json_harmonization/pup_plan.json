@@ -1,0 +1,77 @@
+{
+  "steps": [
+    {
+      "templateSamples": [
+        {
+          "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "sample_type": "Plasmid"
+        },
+        {
+          "name": "CEN.PK2alpha Genomic DNA",
+          "sample_type": "DNA Library"
+        }
+      ],
+      "primerSamples": [
+        {
+          "name": "EYFP-f"
+        },
+        {
+          "name": "PP2_R"
+        },
+        {
+          "name": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name": "YOR383C_promoter_rev"
+        },
+        {
+          "name": "YOR383C_promoter_fwd"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "Provision"
+      },
+      "name": "Provision Step",
+      "id": 1
+    },
+    {
+      "designs": [
+        {
+          "name": "EYFP-pMOD-HIS",
+          "Forward Primer": "EYFP-f",
+          "Reverse Primer": "PP2_R",
+          "Template": "pCup1(FL)-sgZ41::eYFP pMOD HIS"
+        },
+        {
+          "name": "YOR383C_promoter",
+          "Forward Primer": "YOR383C_promoter_fwd",
+          "Reverse Primer": "YOR383C_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "Length": 1000
+        }
+      ],
+      "parameters": {
+        "buildMethod": "PCR"
+      },
+      "name": "PCR Step",
+      "id": 2
+    },
+    {
+      "designs": [
+        {
+          "name": "YOR383C_promoter-EYFP-pMOD-HIS",
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "YOR383C_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "Gibson Assembly"
+      },
+      "name": "Gibson Step",
+      "id": 3
+    }
+  ]
+}
