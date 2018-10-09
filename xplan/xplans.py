@@ -198,28 +198,25 @@ class DNASeqStep(XPlanStep):
         super().__init__(plan, plan_step)
 
     def create_step(self, cursor):
-        n = 0
-
         qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("forward primer")
-        qpcr_2_reverse_primers = self.plan.input_samples["qpcr_2_reverse_primers"]
+        qpcr_2_reverse_primers = self.plan.input_samples.pop("qpcr_2_reverse_primers")
 
         # This is kinda hacky because it doesn't filter for yeast library items
         for _, item in self.plan.input_samples.items():
-            if n > 2: break
             extract_leg = ExtractDNALeg(self, cursor)
             extract_leg.set_yeast_from_sample(item.sample)
             extract_leg.add()
             input_op = extract_leg.get_input_op()
 
-            print("Attempting to set fv for %d" % item.id)
+            # print("Attempting to set fv for %d" % item.id)
             try:
                 input_op.set_field_value("Yeast Library", "input", item=item)
             except:
                 print("Failed to set fv for %d" % item.id)
 
             item_id = input_op.input("Yeast Library").item.id
-            print("Set fv for %d" % item_id)
-            print()
+            # print("Set fv for %d" % item_id)
+            # print()
 
             upstr_op = extract_leg.get_output_op()
 
@@ -248,7 +245,6 @@ class DNASeqStep(XPlanStep):
 
             cursor.incr_x()
             cursor.return_y()
-            n += 1
 
 
 class YeastDisplayStep(XPlanStep):

@@ -48,8 +48,8 @@ class QPCRLeg(DNASeqLeg):
     leg_order = [
         {"name": "Make qPCR Fragment", "category": "Next Gen Prep"},
         {"name": "Run Pre-poured Gel", "category": "Next Gen Prep"},
-        {"name": "Extract Gel Slice (Advanced)", "category": "Next Gen Prep"},
-        {"name": "Purify Gel Slice (Advanced)", "category": "Library Cloning"}
+        {"name": "Extract Gel Slice (NGS)", "category": "Next Gen Prep"},
+        {"name": "Purify Gel Slice (NGS)", "category": "Next Gen Prep"}
     ]
 
     def __init__(self, plan_step, cursor):

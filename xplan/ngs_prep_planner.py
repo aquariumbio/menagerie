@@ -14,9 +14,14 @@ from plan_tests import test_plan
 from user_input import get_input
 
 inputs = {
-    'aq_plan_name': "ngs_test",
-    'aq_instance': "laptop"
+    'aq_plan_name': "ds1_hifi_ngs_prep",
+    'aq_instance': "production"
 }
+
+# inputs = {
+#     'aq_plan_name': "ngs_test",
+#     'aq_instance': "laptop"
+# }
 
 # inputs = get_input(start_date=False)
 
