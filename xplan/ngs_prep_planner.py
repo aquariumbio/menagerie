@@ -14,7 +14,7 @@ from plan_tests import test_plan
 from user_input import get_input
 
 inputs = {
-    'aq_plan_name': "ds1_hifi_ngs_prep",
+    'aq_plan_name': "GJR_EEHEE_miniSSM_1_ngs",
     'aq_instance': "production"
 }
 
