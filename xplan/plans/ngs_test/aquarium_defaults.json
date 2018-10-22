@@ -97,7 +97,7 @@
       }
     },
     {
-      "name": "Extract Plasmid",
+      "name": "Yeast Plasmid Extraction",
       "Yeast Library": {
         "input_container_type": "Zymolyased Yeast Library"
       },

@@ -35,7 +35,7 @@ class ExtractDNALeg(DNASeqLeg):
 
     leg_order = [
         {"name": "Treat With Zymolyase", "category": "Next Gen Prep"},
-        {"name": "Extract Plasmid", "category": "Next Gen Prep"},
+        {"name": "Yeast Plasmid Extraction", "category": "Next Gen Prep"},
         {"name": "Digest Genomic DNA", "category": "Next Gen Prep"}
     ]
 
