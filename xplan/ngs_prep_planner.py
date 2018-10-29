@@ -13,17 +13,17 @@ from xplan.xplans import XPlan
 from plan_tests import test_plan
 from user_input import get_input
 
-inputs = {
-    'aq_plan_name': "GJR_EEHEE_miniSSM_1_ngs",
-    'aq_instance': "production"
-}
+# inputs = {
+#     'aq_plan_name': "GJR_EEHEE_miniSSM_1_ngs",
+#     'aq_instance': "production"
+# }
 
 # inputs = {
 #     'aq_plan_name': "ngs_test",
 #     'aq_instance': "laptop"
 # }
 
-# inputs = get_input(start_date=False)
+inputs = get_input(start_date=False)
 
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 session = plan.session
