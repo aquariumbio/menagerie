@@ -62,7 +62,7 @@ class ExternalPlan:
         :type aq_instance: str
         :return: new Session
         """
-        with open('config.yml', 'r') as f:
+        with open('../config.yml', 'r') as f:
             config = yaml.load(f)
 
         login = config['aquarium'][aq_instance]

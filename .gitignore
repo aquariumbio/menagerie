@@ -103,6 +103,7 @@ ENV/
 #sd2e
 */secrets.json
 */config.yml
+config.yml
 
 .vscode/
 xplan/protstab_test/associations_test.py
