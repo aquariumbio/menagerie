@@ -62,7 +62,10 @@ class ExternalPlan:
         :type aq_instance: str
         :return: new Session
         """
-        with open('../config.yml', 'r') as f:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'config.yml')
+
+        with open(filename, 'r') as f:
             config = yaml.load(f)
 
         login = config['aquarium'][aq_instance]
