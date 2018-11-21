@@ -201,8 +201,11 @@ class DNASeqStep(XPlanStep):
         qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("forward primer")
         qpcr_2_reverse_primers = self.plan.input_samples.pop("qpcr_2_reverse_primers")
 
+        items = list(self.plan.input_samples.values())
+        items.sort(key=lambda i: i.id)
+
         # This is kinda hacky because it doesn't filter for yeast library items
-        for _, item in self.plan.input_samples.items():
+        for item in items:
             extract_leg = ExtractDNALeg(self, cursor)
             extract_leg.set_yeast_from_sample(item.sample)
             extract_leg.add()
