@@ -1,0 +1,685 @@
+{
+  "steps": [
+    {
+      "templateSamples": [
+        {
+          "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "sample_type": "Plasmid"
+        },
+        {
+          "name": "CEN.PK2alpha Genomic DNA",
+          "sample_type": "DNA Library"
+        }
+      ],
+      "primerSamples": [
+        {
+          "name": "EYFP-f"
+        },
+        {
+          "name": "PP2_R"
+        },
+        {
+          "name": "EYFP_promoter_seq_rev"
+        },
+        {
+          "name": "ColonyPCR_HIS3_R(pMOD)"
+        },
+        {
+          "name": "TP_f"
+        },
+        {
+          "name": "ADH2_promoter_fwd"
+        },
+        {
+          "name": "ADH2_promoter_rev"
+        },
+        {
+          "name": "BDH2_promoter_fwd"
+        },
+        {
+          "name": "BDH2_promoter_rev"
+        },
+        {
+          "name": "CIS1_promoter_fwd"
+        },
+        {
+          "name": "CIS1_promoter_rev"
+        },
+        {
+          "name": "GPM2_promoter_fwd"
+        },
+        {
+          "name": "GPM2_promoter_rev"
+        },
+        {
+          "name": "GSP2_promoter_fwd"
+        },
+        {
+          "name": "GSP2_promoter_rev"
+        },
+        {
+          "name": "HSP42_promoter_fwd"
+        },
+        {
+          "name": "HSP42_promoter_rev"
+        },
+        {
+          "name": "PCT1_promoter_fwd"
+        },
+        {
+          "name": "PCT1_promoter_rev"
+        },
+        {
+          "name": "RGI1_promoter_fwd"
+        },
+        {
+          "name": "RGI1_promoter_rev"
+        },
+        {
+          "name": "RPL41A_promoter_fwd"
+        },
+        {
+          "name": "RPL41A_promoter_rev"
+        },
+        {
+          "name": "RTC3_promoter_fwd"
+        },
+        {
+          "name": "RTC3_promoter_rev"
+        },
+        {
+          "name": "UBI4_promoter_fwd"
+        },
+        {
+          "name": "UBI4_promoter_rev"
+        },
+        {
+          "name": "PER33_promoter_fwd"
+        },
+        {
+          "name": "PER33_promoter_rev"
+        },
+        {
+          "name": "ALO1_promoter_fwd"
+        },
+        {
+          "name": "ALO1_promoter_rev"
+        },
+        {
+          "name": "SPC1_promoter_fwd"
+        },
+        {
+          "name": "SPC1_promoter_rev"
+        },
+        {
+          "name": "FIT3_promoter_fwd"
+        },
+        {
+          "name": "FIT3_promoter_rev"
+        },
+        {
+          "name": "MRX14_promoter_fwd"
+        },
+        {
+          "name": "MRX14_promoter_rev"
+        },
+        {
+          "name": "LYS9_promoter_fwd"
+        },
+        {
+          "name": "LYS9_promoter_rev"
+        },
+        {
+          "name": "HSP30_promoter_fwd"
+        },
+        {
+          "name": "HSP30_promoter_rev"
+        },
+        {
+          "name": "HRI1_promoter_fwd"
+        },
+        {
+          "name": "HRI1_promoter_rev"
+        },
+        {
+          "name": "BGL2_promoter_fwd"
+        },
+        {
+          "name": "BGL2_promoter_rev"
+        },
+        {
+          "name": "UBC13_promoter_fwd"
+        },
+        {
+          "name": "UBC13_promoter_rev"
+        }
+      ],
+      "yeastSamples": [
+        {
+          "name": "CEN.PK2 - MAT alpha"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "Provision"
+      },
+      "name": "Provision Step",
+      "id": 1
+    },
+    {
+      "designs": [
+        {
+          "Forward Primer": "EYFP-f",
+          "Reverse Primer": "PP2_R",
+          "Template": "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "name": "EYFP-pMOD-HIS"
+        },
+        {
+          "Forward Primer": "ADH2_promoter_fwd",
+          "Reverse Primer": "ADH2_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "ADH2_promoter"
+        },
+        {
+          "Forward Primer": "BDH2_promoter_fwd",
+          "Reverse Primer": "BDH2_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "BDH2_promoter"
+        },
+        {
+          "Forward Primer": "CIS1_promoter_fwd",
+          "Reverse Primer": "CIS1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "CIS1_promoter"
+        },
+        {
+          "Forward Primer": "GPM2_promoter_fwd",
+          "Reverse Primer": "GPM2_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "GPM2_promoter"
+        },
+        {
+          "Forward Primer": "GSP2_promoter_fwd",
+          "Reverse Primer": "GSP2_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "GSP2_promoter"
+        },
+        {
+          "Forward Primer": "HSP42_promoter_fwd",
+          "Reverse Primer": "HSP42_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "HSP42_promoter"
+        },
+        {
+          "Forward Primer": "PCT1_promoter_fwd",
+          "Reverse Primer": "PCT1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "PCT1_promoter"
+        },
+        {
+          "Forward Primer": "RGI1_promoter_fwd",
+          "Reverse Primer": "RGI1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "RGI1_promoter"
+        },
+        {
+          "Forward Primer": "RPL41A_promoter_fwd",
+          "Reverse Primer": "RPL41A_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "RPL41A_promoter"
+        },
+        {
+          "Forward Primer": "RTC3_promoter_fwd",
+          "Reverse Primer": "RTC3_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "RTC3_promoter"
+        },
+        {
+          "Forward Primer": "UBI4_promoter_fwd",
+          "Reverse Primer": "UBI4_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "UBI4_promoter"
+        },
+        {
+          "Forward Primer": "PER33_promoter_fwd",
+          "Reverse Primer": "PER33_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "PER33_promoter"
+        },
+        {
+          "Forward Primer": "ALO1_promoter_fwd",
+          "Reverse Primer": "ALO1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "ALO1_promoter"
+        },
+        {
+          "Forward Primer": "SPC1_promoter_fwd",
+          "Reverse Primer": "SPC1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "SPC1_promoter"
+        },
+        {
+          "Forward Primer": "FIT3_promoter_fwd",
+          "Reverse Primer": "FIT3_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "FIT3_promoter"
+        },
+        {
+          "Forward Primer": "MRX14_promoter_fwd",
+          "Reverse Primer": "MRX14_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "MRX14_promoter"
+        },
+        {
+          "Forward Primer": "LYS9_promoter_fwd",
+          "Reverse Primer": "LYS9_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "LYS9_promoter"
+        },
+        {
+          "Forward Primer": "HSP30_promoter_fwd",
+          "Reverse Primer": "HSP30_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "HSP30_promoter"
+        },
+        {
+          "Forward Primer": "HRI1_promoter_fwd",
+          "Reverse Primer": "HRI1_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "HRI1_promoter"
+        },
+        {
+          "Forward Primer": "BGL2_promoter_fwd",
+          "Reverse Primer": "BGL2_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "BGL2_promoter"
+        },
+        {
+          "Forward Primer": "UBC13_promoter_fwd",
+          "Reverse Primer": "UBC13_promoter_rev",
+          "Template": "CEN.PK2alpha Genomic DNA",
+          "name": "UBC13_promoter"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "PCR"
+      },
+      "name": "PCR Step",
+      "id": 2
+    },
+    {
+      "designs": [
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "ADH2_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "ADH2_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "BDH2_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "BDH2_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "CIS1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "CIS1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "GPM2_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "GPM2_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "GSP2_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "GSP2_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "HSP42_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "HSP42_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "PCT1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "PCT1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "RGI1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "RGI1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "RPL41A_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "RPL41A_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "RTC3_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "RTC3_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "UBI4_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "UBI4_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "PER33_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "PER33_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "ALO1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "ALO1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "SPC1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "SPC1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "FIT3_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "FIT3_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "MRX14_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "MRX14_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "LYS9_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "LYS9_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "HSP30_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "HSP30_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "HRI1_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "HRI1_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "BGL2_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "BGL2_promoter-EYFP-pMOD-HIS"
+        },
+        {
+          "Fragment": [
+            "EYFP-pMOD-HIS",
+            "UBC13_promoter"
+          ],
+          "Sequencing Primer": "EYFP_promoter_seq_rev",
+          "name": "UBC13_promoter-EYFP-pMOD-HIS"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "Gibson Assembly"
+      },
+      "name": "Gibson Step",
+      "id": 3
+    },
+    {
+      "designs": [
+        {
+          "Integrant": "ADH2_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 1"
+        },
+        {
+          "Integrant": "BDH2_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 2"
+        },
+        {
+          "Integrant": "CIS1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 3"
+        },
+        {
+          "Integrant": "GPM2_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 4"
+        },
+        {
+          "Integrant": "GSP2_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 5"
+        },
+        {
+          "Integrant": "HSP42_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 6"
+        },
+        {
+          "Integrant": "PCT1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 7"
+        },
+        {
+          "Integrant": "RGI1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 8"
+        },
+        {
+          "Integrant": "RPL41A_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 9"
+        },
+        {
+          "Integrant": "RTC3_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 10"
+        },
+        {
+          "Integrant": "UBI4_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 11"
+        },
+        {
+          "Integrant": "PER33_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 12"
+        },
+        {
+          "Integrant": "ALO1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 13"
+        },
+        {
+          "Integrant": "SPC1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 14"
+        },
+        {
+          "Integrant": "FIT3_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 15"
+        },
+        {
+          "Integrant": "MRX14_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 16"
+        },
+        {
+          "Integrant": "LYS9_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 17"
+        },
+        {
+          "Integrant": "HSP30_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 18"
+        },
+        {
+          "Integrant": "HRI1_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 19"
+        },
+        {
+          "Integrant": "BGL2_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 20"
+        },
+        {
+          "Integrant": "UBC13_promoter-EYFP-pMOD-HIS",
+          "Media": "SDO -His",
+          "Parent": "CEN.PK2 - MAT alpha",
+          "QC Primer1": "ColonyPCR_HIS3_R(pMOD)",
+          "QC Primer2": "TP_f",
+          "QC_length": 1313,
+          "name": "State Marker 21"
+        }
+      ],
+      "parameters": {
+        "buildMethod": "Yeast Transformation"
+      },
+      "name": "Yeast Transformation Step",
+      "id": 4
+    }
+  ]
+}
