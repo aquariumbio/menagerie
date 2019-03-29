@@ -16,11 +16,10 @@ import os
 from plan_tests import test_plan
 from user_input import get_input
 
-start_time = time.time()
+# inputs = get_input(start_date=False)
 
-inputs = get_input(start_date=False)
-
-plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+# plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = PupPlan('gibson_test', 'laptop')
 
 cursor = Cursor(y=13)
 
@@ -30,18 +29,18 @@ cursor.advance_to_next_step()
 
 plan_step = plan.step_by_build_method("Gibson Assembly")
 step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
-# cursor.advance_to_next_step()
+cursor.advance_to_next_step()
 
 # These should be moved to another script
-# plan_step = plan.step_by_build_method("Yeast Transformation")
-# step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
+plan_step = plan.step_by_build_method("Yeast Transformation")
+step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
 
 plan.create_aq_plan()
 
-# url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
-# print("Created Plan: {}".format(url))
-# print("{} total operations.".format(len(plan.aq_plan.operations)))
-# print("{} total wires.".format(len(plan.aq_plan.wires)))
+url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
+print("Created Plan: {}".format(url))
+print("{} total operations.".format(len(plan.aq_plan.operations)))
+print("{} total wires.".format(len(plan.aq_plan.wires)))
 
 # cost = pplan.aq_plan.estimate_cost()
 
@@ -50,5 +49,3 @@ plan.create_aq_plan()
 # ref_path = os.path.join(plan_test_path, 'plan-ref.json')
 
 # test_plan(plan, out_path, ref_path)
-
-print(time.time() - start_time)

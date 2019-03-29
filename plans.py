@@ -37,8 +37,8 @@ class ExternalPlan:
         :type aq_instance: str
         :return: new ExternalPlan
         """
-        print("Connecting to Aquarium using pydent version " + str(__version__))
         self.session = ExternalPlan.create_session(aq_instance)
+
         self.aq_plan = Plan(name=aq_plan_name)
         self.plan_path = "plans/%s" % aq_plan_name
 
@@ -77,8 +77,11 @@ class ExternalPlan:
         )
 
         # Test the session
+        msg = "Connected to Aquarium at {} using pydent version {}"
+        print(msg.format(session.url, str(__version__)))
+
         me = session.User.where({'login': login['username']})[0]
-        print('Logged in as %s\n' % me.name)
+        print('Logged in as {}\n'.format(me.name))
 
         return session
 
