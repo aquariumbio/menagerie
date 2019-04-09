@@ -137,7 +137,7 @@ class YeastTransformationLeg(CloningLeg):
     dna_handles = [
         "Genetic Material",
         "Integrant",
-        "Digested Material"
+        "Digested Plasmid"
     ]
 
     leg_order = [

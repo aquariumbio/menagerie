@@ -16,12 +16,12 @@ import os
 from plan_tests import test_plan
 from user_input import get_input
 
-# inputs = get_input(start_date=False)
+inputs = get_input(start_date=False)
 
-# plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
-plan = PupPlan('gibson_test', 'laptop')
+plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+# plan = PupPlan('gibson_test', 'laptop')
 
-cursor = Cursor(y=13)
+cursor = Cursor(y=26)
 
 plan_step = plan.step_by_build_method("PCR")
 step_outputs = plan_step.create_step(cursor)
@@ -33,7 +33,7 @@ cursor.advance_to_next_step()
 
 # These should be moved to another script
 plan_step = plan.step_by_build_method("Yeast Transformation")
-step_outputs = plan_step.create_step(cursor, n_qcs=3, step_outputs=step_outputs)
+step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 
 plan.create_aq_plan()
 
