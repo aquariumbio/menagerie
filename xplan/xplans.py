@@ -391,7 +391,7 @@ class YeastDisplayStep(XPlanStep):
                             this_leg.sample_io['Control?'] = 'no'
                         else:
                             yeast_name = this_leg.sample_io['Labeled Yeast Library'].name
-                            if yeast_name == 'EBY100 + pETcon3':
+                            if yeast_name in ['EBY100 + pETcon3', 'EBY100 + PETCONv3_baker']:
                                 this_leg.sample_io['Control?'] = 'autofluorescence'
                             elif yeast_name == 'AMA1-best':
                                 if this_leg.sample_io['Protease Concentration'] == 0:
