@@ -1,0 +1,722 @@
+{
+  "experimentLab": "biofab",
+  "experimentSet": "",
+  "experimentId": "1",
+  "name": "",
+  "id": "",
+  "cost": 0,
+  "steps": [
+    {
+      "operator": {
+        "instrument_configuration": "",
+        "manifest": "",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_1"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_1"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_2"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_2"
+          },
+          {
+            "file": "fcs",
+            "source": "chymotrypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "trypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "high_binding_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_expressing"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_1"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 28,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_1"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 28,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_2"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 83,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_2"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 83,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "chymotrypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "trypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_binding_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          }
+        ],
+        "id": 1,
+        "comment": "",
+        "description": "",
+        "type": "protstab_round",
+        "name": "Protstab Round"
+      },
+      "name": "Step 1",
+      "id": 1
+    },
+    {
+      "operator": {
+        "instrument_configuration": "",
+        "manifest": "",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_2_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_2_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_3"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_3"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_4"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_4"
+          },
+          {
+            "file": "fcs",
+            "source": "chymotrypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "trypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "high_binding_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_chymotrypsin_2_expressing"
+            ],
+            "source": [
+              "library_chymotrypsin_2",
+              {
+                "concentration": 0,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_2_expressing"
+            ],
+            "source": [
+              "library_trypsin_2",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_3"
+            ],
+            "source": [
+              "library_chymotrypsin_2",
+              {
+                "concentration": 250,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_3"
+            ],
+            "source": [
+              "library_trypsin_2",
+              {
+                "concentration": 250,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_4"
+            ],
+            "source": [
+              "library_chymotrypsin_2",
+              {
+                "concentration": 750,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_4"
+            ],
+            "source": [
+              "library_trypsin_2",
+              {
+                "concentration": 750,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "chymotrypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "trypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_binding_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          }
+        ],
+        "id": 2,
+        "comment": "",
+        "description": "",
+        "type": "protstab_round",
+        "name": "Protstab Round"
+      },
+      "name": "Step 2",
+      "id": 2
+    },
+    {
+      "operator": {
+        "instrument_configuration": "",
+        "manifest": "",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_4_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_4_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_5"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_5"
+          },
+          {
+            "file": "fcs",
+            "source": "library_chymotrypsin_6"
+          },
+          {
+            "file": "fcs",
+            "source": "library_trypsin_6"
+          },
+          {
+            "file": "fcs",
+            "source": "chymotrypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "trypsin_control"
+          },
+          {
+            "file": "fcs",
+            "source": "high_binding_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_chymotrypsin_4_expressing"
+            ],
+            "source": [
+              "library_chymotrypsin_4",
+              {
+                "concentration": 0,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_4_expressing"
+            ],
+            "source": [
+              "library_trypsin_4",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_5"
+            ],
+            "source": [
+              "library_chymotrypsin_4",
+              {
+                "concentration": 2250,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_5"
+            ],
+            "source": [
+              "library_trypsin_4",
+              {
+                "concentration": 2250,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_chymotrypsin_6"
+            ],
+            "source": [
+              "library_chymotrypsin_4",
+              {
+                "concentration": 6750,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_trypsin_6"
+            ],
+            "source": [
+              "library_trypsin_4",
+              {
+                "concentration": 6750,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "chymotrypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "chymotrypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "trypsin_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 250,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_binding_control"
+            ],
+            "source": [
+              "binding_positive",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "trypsin"
+              }
+            ]
+          }
+        ],
+        "id": 3,
+        "comment": "",
+        "description": "",
+        "type": "protstab_round",
+        "name": "Protstab Round"
+      },
+      "name": "Step 3",
+      "id": 3
+    },
+    {
+      "operator": {
+        "measurements": [
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_2"
+
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_2"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_1"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_1"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_expressing"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_6"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_6"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_5"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_5"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_4"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_4"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_trypsin_3"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library_chymotrypsin_3"
+          },
+          {
+            "file": [
+              "L0001_R1.fastq",
+              "L0001_R2.fastq",
+              "L0002_R1.fastq",
+              "L0002_R2.fastq",
+              "L0003_R1.fastq",
+              "L0003_R2.fastq",
+              "L0004_R1.fastq",
+              "L0004_R2.fastq"
+            ],
+            "source": "library"
+          }
+        ],
+        "manifest": "",
+        "id": 4,
+        "comment": "",
+        "description": "",
+        "type": "dna_seq",
+        "name": "DNA Seq Operator"
+      },
+      "name": "Step 4",
+      "id": 4
+    }
+  ]
+}
