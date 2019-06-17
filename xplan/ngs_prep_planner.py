@@ -19,7 +19,7 @@ from user_input import get_input
 # }
 
 # inputs = {
-#     'aq_plan_name': "ngs_test",
+#     'aq_plan_name': "ds1_hifi_ngs_prep_test",
 #     'aq_instance': "laptop"
 # }
 

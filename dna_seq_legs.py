@@ -46,13 +46,18 @@ class ExtractDNALeg(DNASeqLeg):
 class QPCRLeg(DNASeqLeg):
 
     leg_order = [
-        {"name": "Make qPCR Fragment", "category": "Next Gen Prep"},
+        {"name": None, "category": "Preparative qPCR"},
         {"name": "Run Pre-poured Gel", "category": "Next Gen Prep"},
         {"name": "Extract Gel Slice (NGS)", "category": "Next Gen Prep"},
         {"name": "Purify Gel Slice (NGS)", "category": "Next Gen Prep"}
     ]
 
-    def __init__(self, plan_step, cursor):
+    def __init__(self, plan_step, cursor, plates=False):
+        qpcr_operation_type = "Make qPCR Fragment"
+        if plates: qpcr_operation_type +=  " WITH PLATES"
+
+        self.leg_order[0]["name"] =  qpcr_operation_type
+
         super().__init__(plan_step, cursor)
 
 

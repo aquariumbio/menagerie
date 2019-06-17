@@ -224,13 +224,18 @@ class DNASeqStep(XPlanStep):
             upstr_op = extract_leg.get_output_op()
 
             for opt in ["qPCR1", "qPCR2"]:
-                qpcr_leg = QPCRLeg(self, cursor)
-                qpcr_leg.set_yeast_from_sample(item.sample)
                 io_obj = { "Program": opt }
 
-                if opt == "qPCR2":
-                    io_obj["Forward/Universal Primer"] = qpcr_2_forward_primer
-                    io_obj["Reverse/Barcoded Primer"] = qpcr_2_reverse_primers.pop(0)
+                if opt == "qPCR1":
+                    plates = False
+
+                elif opt == "qPCR2":
+                    plates = True
+                    io_obj["Forward Primer"] = qpcr_2_forward_primer
+                    io_obj["Reverse Primer"] = qpcr_2_reverse_primers.pop(0)
+
+                qpcr_leg = QPCRLeg(self, cursor, plates)
+                qpcr_leg.set_yeast_from_sample(item.sample)
 
                 qpcr_leg.set_sample_io(io_obj)
                 qpcr_leg.add(opt)
