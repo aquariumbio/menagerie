@@ -72,7 +72,12 @@ class XPlan(ExternalPlan):
 
                 for op in ops:
                     item = op.output(sample_data["output"]).item
-                    self.add_input_sample(op.id, item)
+                    if item:
+                        self.add_input_sample(op.id, item)
+                    else:
+                        msg = "Could not find {} Item for {} Operation {}"
+                        print(msg.format(sample_data["output"], ot_name, op.id))
+                        print()
 
             # A list of Samples.
             elif isinstance(sample_data, list):
