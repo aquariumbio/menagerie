@@ -1,0 +1,54 @@
+{
+  "input_samples": {
+    "library": 30227,
+    "binding_negative": 21535,
+    "binding_positive": 21171,
+    "chymotrypsin": 22038,
+    "trypsin": 22037,
+    "antibody": 22039
+  },
+  "cytometer_configuration": {
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  },
+  "operation_defaults": [
+    {
+      "name": "Innoculate Yeast Library",
+      "defaults": {
+        "Media": "SDO -His -Trp -Ura",
+        "Options": "{}"
+      }
+    },
+    {
+      "name": "Dilute Yeast Library",
+      "defaults": {
+        "Media": "SDO + 2% Galactose -His -Trp -Ura"
+      }
+    },
+    {
+      "name": "Mix Cultures",
+      "defaults": {}
+    },
+    {
+      "name": "Challenge and Label",
+      "defaults": {
+        "Antibody": "Anti-c-myc-FITC"
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "defaults": {
+        "Control?": "no",
+        "Sort?": "yes"
+      }
+    },
+    {
+      "name": "Store Yeast Library Sample",
+      "defaults": {}
+    }
+  ]
+}

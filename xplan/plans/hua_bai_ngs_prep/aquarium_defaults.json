@@ -1,0 +1,219 @@
+{
+  "container_types": [
+    {
+      "name": "Innoculate Yeast Library",
+      "Yeast Culture": {
+        "input_container_type": {
+          "library start": "Yeast Library Glycerol Stock",
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Divided Yeast Plate"
+        },
+        "output_container_type": {
+          "library start": "Yeast Library Liquid Culture",
+          "library": "Yeast Library Liquid Culture",
+          "control": "Yeast 5ml culture"
+        }
+      }
+    },
+    {
+      "name": "Dilute Yeast Library",
+      "Yeast Culture": {
+        "input_container_type": {
+          "library start": "Yeast Library Liquid Culture",
+          "library": "Yeast Library Liquid Culture",
+          "control": "Yeast 5ml culture"
+        },
+        "output_container_type": {
+          "library start": "Yeast Library Liquid Culture",
+          "library": "Yeast Library Liquid Culture",
+          "control": "Yeast 50ml culture"
+        }
+      }
+    },
+    {
+      "name": "Mix Cultures",
+      "Yeast Culture": {
+        "input_container_type": {
+          "library start": "Yeast Library Liquid Culture",
+          "library": "Yeast Library Liquid Culture"
+        },
+        "output_container_type": {
+          "library start": "Yeast Library Liquid Culture",
+          "library": "Yeast Library Liquid Culture"
+        }
+      }
+    },
+    {
+      "name": "Challenge and Label",
+      "Yeast Culture": {
+        "input_container_type": {
+          "library": "Yeast Library Liquid Culture",
+          "control": "Yeast 50ml culture"
+        }
+      },
+      "Labeled Yeast Library": {
+        "output_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        }
+      },
+      "Protease": {
+        "input_container_type": "Protease Stock"
+      },
+      "Antibody": {
+        "input_container_type": "Antibody Stock"
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "Labeled Yeast Library": {
+        "input_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        },
+        "output_container_type": {
+          "library": "Labeled Yeast Library Suspension",
+          "control": "Labeled Yeast Strain Suspension"
+        }
+      }
+    },
+    {
+      "name": "Store Yeast Library Sample",
+      "Yeast Culture": {
+        "input_container_type": "Yeast Library Liquid Culture"
+      },
+      "Stored sample rep 1": {
+        "output_container_type": "Yeast Library in Soln 1"
+      },
+      "Stored sample rep 2": {
+        "output_container_type": "Yeast Library in Soln 1"
+      }
+    },
+    {
+      "name": "Treat With Zymolyase",
+      "Yeast Library": {
+        "input_container_type": "Yeast Library in Soln 1",
+        "output_container_type": "Zymolyased Yeast Library"
+      }
+    },
+    {
+      "name": "Yeast Plasmid Extraction",
+      "Yeast Library": {
+        "input_container_type": "Zymolyased Yeast Library"
+      },
+      "Plasmid Library": {
+        "output_container_type": "Plasmid Library"
+      }
+    },
+    {
+      "name": "Digest Genomic DNA",
+      "Zymoprepped sample": {
+        "input_container_type": "Plasmid Library"
+      },
+      "Exonucleased sample": {
+        "output_container_type": "Post-exonuclease"
+      }
+    },
+    {
+      "name": "Make qPCR Fragment",
+      "Template": {
+        "input_container_type": {
+          "qPCR1": "Post-exonuclease",
+          "qPCR2": "Amplified Fragment Library"
+        }
+      },
+      "Forward Primer": {
+        "input_container_type":  {
+          "qPCR1": "Primer Mix Stock",
+          "qPCR2": "Primer Aliquot"
+        }
+      },
+      "Reverse Primer": {
+        "input_container_type": {
+          "qPCR1": "Primer Mix Stock",
+          "qPCR2": "Primer Aliquot"
+        }
+      },
+      "Fragment": {
+        "output_container_type": "96 qPCR collection"
+      }
+    },
+    {
+      "name": "Make qPCR Fragment WITH PLATES",
+      "Template": {
+        "input_container_type": {
+          "qPCR1": "Post-exonuclease",
+          "qPCR2": "Amplified Fragment Library"
+        }
+      },
+      "Forward Primer": {
+        "input_container_type":  {
+          "qPCR1": "Primer Mix Stock",
+          "qPCR2": "Primer Aliquot"
+        }
+      },
+      "Reverse Primer": {
+        "input_container_type": {
+          "qPCR1": "96-Well Primer Aliquot Plate",
+          "qPCR2": "96-Well Primer Aliquot Plate"
+        }
+      },
+      "Fragment": {
+        "output_container_type": "96 qPCR collection"
+      }
+    },
+    {
+      "name": "Run Pre-poured Gel",
+      "Fragment": {
+        "input_container_type": "96 qPCR collection",
+        "output_container_type": "50 mL Agarose Gel in Gel Box"
+      }
+    },
+    {
+      "name": "Extract Gel Slice (NGS)",
+      "Fragment": {
+        "input_container_type": "50 mL Agarose Gel in Gel Box",
+        "output_container_type": "Library Gel Slice"
+      }
+    },
+    {
+      "name": "Purify Gel Slice (NGS)",
+      "Gel": {
+        "input_container_type": "Library Gel Slice"
+      },
+      "Fragment": {
+        "output_container_type": {
+          "qPCR1": "Amplified Fragment Library",
+          "qPCR2": "Illuminated Fragment Library"
+        }
+      }
+    },
+    {
+      "name": "Qubit concentration",
+      "qPCR sample in": {
+        "input_container_type": "Illuminated Fragment Library"
+      },
+      "qPCR sample out": {
+        "output_container_type": "Illuminated Fragment Library"
+      },
+      "qPCR sample": {
+        "input_container_type": "Illuminated Fragment Library",
+        "output_container_type": "Illuminated Fragment Library"
+      }
+    },
+    {
+      "name": "Dilute to 4nM",
+      "DNA library in": {
+        "input_container_type": "Illuminated Fragment Library"
+      },
+      "DNA library out": {
+        "output_container_type": "Illuminated Fragment Library"
+      },
+      "DNA library": {
+        "input_container_type": "Illuminated Fragment Library",
+        "output_container_type": "Illuminated Fragment Library"
+      }
+    }
+
+  ]
+}
