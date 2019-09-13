@@ -15,14 +15,19 @@ from prot_stab_legs import SortLeg
 from plan_tests import test_plan
 from user_input import get_input
 
-inputs = get_input()
+# inputs = get_input()
+inputs = {
+    'start_date': datetime.today(),
+    'aq_plan_name': 'test_binding',
+    'aq_instance': 'laptop'
+}
 
 start_date = inputs['start_date']
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
-cursor = Cursor(y=18)
+cursor = Cursor(y=26)
 
-for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
+for step_id in plan.step_ids(plan.get_steps_by_type('yeast_display_round')):
     plan_step = plan.step(step_id)
     plan_step.create_step(cursor, start_date)
 
@@ -40,6 +45,8 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
     print(plan_step.name + ' complete')
     print()
 
+    # if step_id == 3: break
+
 plan.create_aq_plan()
 plan.add_data_associations()
 
@@ -53,6 +60,6 @@ print("{} total wires.".format(len(plan.aq_plan.wires)))
 # test_plan(plan, out_path, ref_path)
 # print("Test passed!")
 
-delete = input("Do you want to delete this plan? (y/n) ")
-if delete == 'y' or delete == 'Y':
-    plan.aq_plan.delete()
+# delete = input("Do you want to delete this plan? (y/n) ")
+# if delete == 'y' or delete == 'Y':
+#     plan.aq_plan.delete()

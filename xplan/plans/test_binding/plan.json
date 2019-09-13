@@ -1,0 +1,500 @@
+{
+  "name": "protein_binding_template",
+  "steps": [
+    {
+      "id": 1,
+      "name": "Step 1",
+      "operator": {
+        "id": 1,
+        "description": "Sort 0: expressors",
+        "type": "yeast_display_round",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_expressing"
+          },
+          {
+            "file": "fcs",
+            "source": "high_fitc_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_expressing"
+            ],
+            "source": [
+              "library",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_fitc_control"
+            ],
+            "source": [
+              "fitc_binding_positive",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Step 2",
+      "operator": {
+        "id": 1,
+        "description": "Sort 1: high concentration",
+        "type": "yeast_display_round",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_sort_1A"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_1B"
+          },
+          {
+            "file": "fcs",
+            "source": "high_fitc_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_sort_1A"
+            ],
+            "source": [
+              "library_expressing",
+              {
+                "concentration": 1,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_1B"
+            ],
+            "source": [
+              "library_expressing",
+              {
+                "concentration": 2,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_fitc_control"
+            ],
+            "source": [
+              "fitc_binding_positive",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Step 3",
+      "operator": {
+        "id": 1,
+        "description": "Sort 2: medium concentration",
+        "type": "yeast_display_round",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_sort_2A"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_2B"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_2C"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_2D"
+          },
+          {
+            "file": "fcs",
+            "source": "high_fitc_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_sort_2A"
+            ],
+            "source": [
+              "library_sort_1A",
+              {
+                "concentration": 2,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_2B"
+            ],
+            "source": [
+              "library_sort_1A",
+              {
+                "concentration": 4,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_2C"
+            ],
+            "source": [
+              "library_sort_1B",
+              {
+                "concentration": 6,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_2D"
+            ],
+            "source": [
+              "library_sort_1B",
+              {
+                "concentration": 8,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_fitc_control"
+            ],
+            "source": [
+              "fitc_binding_positive",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Step 4",
+      "operator": {
+        "id": 1,
+        "description": "Sort 3: low concentration",
+        "type": "yeast_display_round",
+        "measurements": [
+          {
+            "file": "fcs",
+            "source": "library_sort_3A"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3B"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3C"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3D"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3E"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3F"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3G"
+          },
+          {
+            "file": "fcs",
+            "source": "library_sort_3H"
+          },
+          {
+            "file": "fcs",
+            "source": "high_fitc_control"
+          },
+          {
+            "file": "fcs",
+            "source": "autofluorescence_control"
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              "library_sort_3A"
+            ],
+            "source": [
+              "library_sort_2A",
+              {
+                "concentration": 3,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3B"
+            ],
+            "source": [
+              "library_sort_2A",
+              {
+                "concentration": 6,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3C"
+            ],
+            "source": [
+              "library_sort_2B",
+              {
+                "concentration": 9,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3D"
+            ],
+            "source": [
+              "library_sort_2B",
+              {
+                "concentration": 12,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3E"
+            ],
+            "source": [
+              "library_sort_2C",
+              {
+                "concentration": 15,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3F"
+            ],
+            "source": [
+              "library_sort_2C",
+              {
+                "concentration": 18,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3G"
+            ],
+            "source": [
+              "library_sort_2D",
+              {
+                "concentration": 21,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "library_sort_3H"
+            ],
+            "source": [
+              "library_sort_2D",
+              {
+                "concentration": 24,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "high_fitc_control"
+            ],
+            "source": [
+              "fitc_binding_positive",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          },
+          {
+            "destination": [
+              "autofluorescence_control"
+            ],
+            "source": [
+              "binding_negative",
+              {
+                "concentration": 0,
+                "sample": "treatment"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Step 5",
+      "operator": {
+        "id": 1,
+        "description": "DNA Seq",
+        "type": "dna_seq",
+        "measurements": [
+          {
+            "file": "fastq",
+            "source": "library"
+          },
+          {
+            "file": "fastq",
+            "source": "library_expressing"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_1A"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_1B"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_2A"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_2B"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_2C"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_2D"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3A"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3B"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3C"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3D"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3E"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3F"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3G"
+          },
+          {
+            "file": "fastq",
+            "source": "library_sort_3H"
+          }
+        ]
+      }
+    }
+  ]
+}

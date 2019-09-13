@@ -36,7 +36,7 @@ class XPlan(ExternalPlan):
         for s in self.plan['steps']:
             step_type = s["operator"]["type"]
 
-            if step_type == "protstab_round":
+            if step_type == "protstab_round" or step_type == "yeast_display_round":
                 step = YeastDisplayStep(self, s)
 
             elif step_type == "dna_seq":
@@ -334,9 +334,11 @@ class YeastDisplayStep(XPlanStep):
 
                 if input_yeast in self.plan.ngs_samples:
                     cursor.decr_y(SortLeg.length() - NaiveLeg.length())
+                    cursor.decr_x()
                     naive_leg = NaiveLeg(self, cursor)
                     naive_leg.set_yeast(input_yeast)
                     naive_leg.add('library')
+                    cursor.incr_x()
                     cursor.return_y()
 
                     dnstr_op = naive_leg.select_op('Store Yeast Library Sample')
@@ -346,12 +348,17 @@ class YeastDisplayStep(XPlanStep):
 
             upstr_op = prev_step_outputs.get(input_yeast) or new_inputs.get(input_yeast)
 
-            cursor.set_x(round(upstr_op.x/cursor.x_incr))
+            # cursor.set_x(round(upstr_op.x/cursor.x_incr))
 
             if int(self.step_id) > 1 and is_library:
-                cursor.decr_x(2)
+                # cursor.decr_x(2)
+                temp_ops = [op for op in self.plan.aq_plan.operations if op.y <= cursor.y]
+                current_x = max([op.x for op in temp_ops] or [cursor.x_home])
             else:
-                cursor.incr_x()
+                current_x = upstr_op.x
+
+            cursor.set_x(round(current_x/cursor.x_incr))
+            cursor.incr_x()
 
             cursor.return_y()
 
