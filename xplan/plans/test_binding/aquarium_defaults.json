@@ -58,7 +58,7 @@
         }
       },
       "Protease": {
-        "input_container_type": "Protease Stock"
+        "input_container_type": "Biotinylated Binding Target Stock"
       },
       "Antibody": {
         "input_container_type": "Antibody Stock"

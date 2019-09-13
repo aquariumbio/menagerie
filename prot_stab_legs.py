@@ -74,20 +74,25 @@ class TreatmentLeg(ProtStabLeg):
 
     leg_order = []
 
+    treatment_sample_types = ['Protease', 'Biotinylated Binding Target']
+
     def __init__(self, plan_step, cursor):
         super().__init__(plan_step, cursor)
 
     def set_protease(self, source):
-        protease_inputs = self.plan_step.get_inputs('Protease')
+        for st in self.treatment_sample_types:
+            protease_inputs = self.plan_step.get_inputs(st)
+            if protease_inputs: break
+
         p = [s for s in source if s.get('sample') in protease_inputs]
 
         if p:
             prot_samp =  self.ext_plan.input_samples[p[0]['sample']]
             prot_conc = p[0]['concentration']
 
-        else:
-            prot_samp =  self.ext_plan.input_samples[self.ext_plan.default_protease]
-            prot_conc = 0
+        # else:
+        #     prot_samp =  self.ext_plan.input_samples[self.ext_plan.default_protease]
+        #     prot_conc = 0
 
         self.sample_io['Protease'] = prot_samp
         self.sample_io['Protease Concentration'] = prot_conc
