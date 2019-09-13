@@ -45,7 +45,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('yeast_display_round')):
     print(plan_step.name + ' complete')
     print()
 
-    if step_id == 1: break
+    if step_id == 2: break
 
 plan.create_aq_plan()
 plan.add_data_associations()

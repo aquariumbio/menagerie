@@ -95,7 +95,7 @@
             "source": [
               "library_expressing",
               {
-                "concentration": 1,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -107,7 +107,7 @@
             "source": [
               "library_expressing",
               {
-                "concentration": 2,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -180,7 +180,7 @@
             "source": [
               "library_sort_1A",
               {
-                "concentration": 2,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -192,7 +192,7 @@
             "source": [
               "library_sort_1A",
               {
-                "concentration": 4,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -204,7 +204,7 @@
             "source": [
               "library_sort_1B",
               {
-                "concentration": 6,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -216,7 +216,7 @@
             "source": [
               "library_sort_1B",
               {
-                "concentration": 8,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -305,7 +305,7 @@
             "source": [
               "library_sort_2A",
               {
-                "concentration": 3,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -317,7 +317,7 @@
             "source": [
               "library_sort_2A",
               {
-                "concentration": 6,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -329,7 +329,7 @@
             "source": [
               "library_sort_2B",
               {
-                "concentration": 9,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -341,7 +341,7 @@
             "source": [
               "library_sort_2B",
               {
-                "concentration": 12,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -353,7 +353,7 @@
             "source": [
               "library_sort_2C",
               {
-                "concentration": 15,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -365,7 +365,7 @@
             "source": [
               "library_sort_2C",
               {
-                "concentration": 18,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -377,7 +377,7 @@
             "source": [
               "library_sort_2D",
               {
-                "concentration": 21,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
@@ -389,7 +389,7 @@
             "source": [
               "library_sort_2D",
               {
-                "concentration": 24,
+                "concentration": -1,
                 "sample": "treatment"
               }
             ]
