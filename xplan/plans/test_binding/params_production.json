@@ -1,14 +1,9 @@
 {
   "input_samples": {
-    "library_composition": {
-      "components": [XXX, XXX],
-      "proportions": [97.5, 2.5]
-    },
-    "library": XXX,
+    "library": 30656,
     "binding_negative": 21535,
-    "binding_positive": 21171,
-    "chymotrypsin": 22038,
-    "trypsin": 22037,
+    "fitc_binding_positive": 21171,
+    "treatment": 31433,
     "antibody": 22039
   },
   "cytometer_configuration": {

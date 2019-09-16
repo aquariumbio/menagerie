@@ -15,12 +15,12 @@ from prot_stab_legs import SortLeg
 from plan_tests import test_plan
 from user_input import get_input
 
-# inputs = get_input()
-inputs = {
-    'start_date': datetime.today(),
-    'aq_plan_name': 'test_binding',
-    'aq_instance': 'laptop'
-}
+inputs = get_input()
+# inputs = {
+#     'start_date': datetime.today(),
+#     'aq_plan_name': 'test_binding',
+#     'aq_instance': 'laptop'
+# }
 
 start_date = inputs['start_date']
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
@@ -45,7 +45,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('yeast_display_round')):
     print(plan_step.name + ' complete')
     print()
 
-    if step_id == 2: break
+    # if step_id == 2: break
 
 plan.create_aq_plan()
 plan.add_data_associations()
