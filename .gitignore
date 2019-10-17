@@ -110,4 +110,5 @@ xplan/protstab_test/associations_test.py
 xplan/protstab_test/delete_plans.py
 xplan/protstab_test/plan-ref-old.json
 
-**/.DS_Store
+*.DS_Store
+git_setup.sh
