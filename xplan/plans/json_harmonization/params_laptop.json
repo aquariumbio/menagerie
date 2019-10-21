@@ -1,0 +1,22 @@
+{
+  "input_samples": {
+    "library_composition": {
+      "components": [1, 2],
+      "proportions": [97.5, 2.5]
+    },
+    "library": 3,
+    "binding_negative": 13,
+    "binding_positive": 14,
+    "chymotrypsin": 9,
+    "trypsin": 8,
+    "antibody": 10
+  },
+  "cytometer_configuration": {
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  }
+}
