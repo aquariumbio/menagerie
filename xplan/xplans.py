@@ -79,6 +79,12 @@ class XPlan(ExternalPlan):
                         print(msg.format(sample_data["output"], ot_name, op.id))
                         print()
 
+            # A list of items
+            elif key == "items":
+                items = self.session.Item.find(sample_data)
+                for item in items:
+                    self.add_input_sample(item.id, item)
+
             # A list of Samples.
             elif isinstance(sample_data, list):
                 found_input = []
