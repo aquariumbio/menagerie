@@ -42,12 +42,13 @@ class ExternalPlan:
         self.aq_plan = Plan(name=aq_plan_name)
         self.plan_path = "plans/%s" % aq_plan_name
 
-        # TODO: Unify the structure of 'aquarium_defaults.json' and "params_%s.json"
         self.plan = self.load_json_from_file('plan.json')
         self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')
         self.plan_params = self.load_json_from_file("params_%s.json" % aq_instance)
 
-        self.defaults = self.get_operation_defaults()
+        self.operation_defaults = self.aq_defaults.get("operation_defaults", [])
+        self.defaults = self.operation_defaults
+        self.populate_from_database()
 
         self.steps = []
         self.input_samples = {}
@@ -97,23 +98,38 @@ class ExternalPlan:
         with open(file_path, 'r') as f:
             return json.load(f)
 
-    # TODO: This should be harmonized with the plan_params['input_samples'] structure
-    def get_operation_defaults(self):
+    def populate_from_database(self):
         """
-        Parses part of the plan params JSON and finds corresponding Samples in
-        Aq. Returns the data structure populated with the Sample objects.
-
-        :return: dict
+        Parses part of aquarium_defaults.json and finds corresponding 
+        records in Aq. Populates the data structure populated with 
+        the records.
         """
-        defaults = self.plan_params.get('operation_defaults', [])
+        for d in self.operation_defaults:
+            for role in ["inputs", "outputs"]:
+                for io_data in d.get(role, {}).values():
+                    sample_name = io_data.get("sample")
+                    if sample_name:
+                        sample = self.session.Sample.find_by_name(sample_name)
+                        if sample:
+                            io_data["sample"] = sample
+                        else:
+                            raise "Input error: {}".format(sample_name)
 
-        for op_default in defaults:
-            for key, value in op_default['defaults'].items():
-                samples = self.session.Sample.where({ 'name': value })
-                if samples:
-                    op_default['defaults'][key] = samples[0]
+                    ot_data = io_data.get("object_type")
+                    if isinstance(ot_data, str):
+                        object_type = self.session.ObjectType.find_by_name(ot_data)
+                        if object_type:
+                            io_data["object_type"] = object_type
+                        else:
+                            raise "Input error: {}".format(ot_data)
 
-        return defaults
+                    elif isinstance(ot_data, dict):
+                        for option, ot_name in ot_data.items():
+                            object_type = self.session.ObjectType.find_by_name(ot_name)
+                            if object_type:
+                                ot_data[option] = object_type
+                            else:
+                                raise "Input error: {}".format(ot_name)
 
     def get_samples(self, sample_type_name, sample_name, properties={}):
         """

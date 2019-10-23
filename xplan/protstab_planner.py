@@ -15,16 +15,20 @@ from prot_stab_legs import SortLeg
 from plan_tests import test_plan
 from user_input import get_input
 
-inputs = get_input()
+# inputs = get_input()
 
-# inputs = {
-#     'aq_plan_name': 'test_stability', 
-#     'start_date': datetime(2019, 10, 18, 22, 37, 14, 525441), 
-#     'aq_instance': 'laptop'
-# }
+inputs = {
+    'aq_plan_name': 'json_harmonization', 
+    'start_date': datetime(2019, 10, 21, 22, 37, 14, 525441), 
+    'aq_instance': 'laptop'
+}
 
 start_date = inputs['start_date']
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+
+print(plan.operation_defaults)
+
+raise "done"
 
 cursor = Cursor(y=18)
 
