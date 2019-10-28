@@ -280,7 +280,7 @@ class YeastDisplayStep(XPlanStep):
 
             if not prev_step_outputs.get(input_yeast):
                 cursor.incr_y(2)
-                container_opt = 'library start' if is_library else 'control'
+                container_opt = 'library_start' if is_library else 'control'
 
                 overnight_samples = []
                 library_composition = self.plan.input_samples.get("library_composition")

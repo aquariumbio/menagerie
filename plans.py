@@ -105,7 +105,7 @@ class ExternalPlan:
         the records.
         """
         for d in self.operation_defaults:
-            for role in ["inputs", "outputs"]:
+            for role in ["input", "output"]:
                 for io_data in d.get(role, {}).values():
                     sample_name = io_data.get("sample")
                     if sample_name:
@@ -468,7 +468,7 @@ class Leg:
         role_data = get_obj_by_name(self.op_data, ot_name).get(role)
 
         if role_data:
-            io_data = ctypes.get(io_name)
+            io_data = role_data.get(io_name)
             ot_data = io_data.get("object_type")
             if isinstance(ot_data, dict):
                 if container_opt:
@@ -515,13 +515,14 @@ class Leg:
             # print(self.sample_io)
             # raise
 
-            this_io = self.replace_defaults(od, self.sample_io)
+            this_io = self.replace_defaults(od)
             # print(this_io)
             # print()
             # raise
 
             for ft in op.operation_type.field_types:
-                io_object = this_io.get(ft.name, {}).get(ft.role, {}).get("sample")
+                ft_io = this_io.get(ft.role, {}).get(ft.name, {})
+                io_object = ft_io.get("sample") or ft_io.get("value")
 
                 is_sample = isinstance(io_object, Sample)
                 is_item = isinstance(io_object, Item)
@@ -569,13 +570,18 @@ class Leg:
 
             print("Set IO for " + od["name"])
 
-    def replace_defaults(self, od, sample_io):
-        for role in ["inputs", "outputs"]:
-            for name, data in od.get(role, {}).items():
-                replacement = sample_io.get(name)
-                if replacement:
-                    data["sample"] = replacement
+    def replace_defaults(self, od):
+        for role in ["input", "output"]:
+            for name, replacement in self.sample_io.items():
+                role_defaults = od.get(role, {})
+                if not role_defaults.get(name):
+                    role_defaults[name] = {}
 
+                if isinstance(replacement, Sample):
+                    role_defaults[name]["sample"] = replacement
+                else:
+                    role_defaults[name]["value"] = replacement
+                    
         return od
 
     def wire_ops(self, upstr_op, dnstr_op):

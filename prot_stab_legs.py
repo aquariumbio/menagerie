@@ -89,6 +89,9 @@ class TreatmentLeg(ProtStabLeg):
         if p:
             prot_samp =  self.ext_plan.input_samples[p[0]['sample']]
             prot_conc = p[0]['concentration']
+        
+        else:
+            raise "protease not found"
 
         # else:
         #     prot_samp =  self.ext_plan.input_samples[self.ext_plan.default_protease]

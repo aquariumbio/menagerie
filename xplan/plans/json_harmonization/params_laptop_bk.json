@@ -1,6 +1,10 @@
 {
   "input_samples": {
-    "library": 1,
+    "library_composition": {
+      "components": [1, 2],
+      "proportions": [97.5, 2.5]
+    },
+    "library": 3,
     "binding_negative": 13,
     "binding_positive": 14,
     "chymotrypsin": 9,

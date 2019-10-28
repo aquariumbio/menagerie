@@ -63,6 +63,6 @@ print("{} total wires.".format(len(plan.aq_plan.wires)))
 # test_plan(plan, out_path, ref_path)
 # print("Test passed!")
 
-delete = input("Do you want to delete this plan? (y/n) ")
-if delete == 'y' or delete == 'Y':
-    plan.aq_plan.delete()
+# delete = input("Do you want to delete this plan? (y/n) ")
+# if delete == 'y' or delete == 'Y':
+#     plan.aq_plan.delete()
