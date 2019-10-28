@@ -26,9 +26,9 @@ inputs = {
 start_date = inputs['start_date']
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
-print(plan.operation_defaults)
+# print(plan.operation_defaults)
 
-raise "done"
+# raise "done"
 
 cursor = Cursor(y=18)
 

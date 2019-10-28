@@ -392,10 +392,11 @@ class Leg:
                 ot_name = ot_attr
 
             od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_name))
-            od = od or { "defaults": {} }
+            od = od or {}
+            # od = { operation_defaults": od }
             od["operation"] = self.initialize_op(ot_attr)
-            od["name"] = od["operation"].operation_type.name
-            od["container_types"] = self.get_container_types(od["name"])
+            # od["name"] = od["operation"].operation_type.name
+            # od["container_types"] = self.get_container_types(od["name"])
             op_data.append(od)
 
             # Maybe this should happen in a different method?
@@ -431,23 +432,23 @@ class Leg:
 
         return op
 
-    def get_container_types(self, ot_name):
-        """
-        Returns the container types data for a specific OperationType.
+    # def get_container_types(self, ot_name):
+    #     """
+    #     Returns the container types data for a specific OperationType.
 
-        :param ot_name: the name of the OperationType
-        :type ot_name: str
-        :return: dict
-        """
-        default_container_types = self.ext_plan.aq_defaults["container_types"]
-        ct = copy.deepcopy(get_obj_by_name(default_container_types, ot_name))
+    #     :param ot_name: the name of the OperationType
+    #     :type ot_name: str
+    #     :return: dict
+    #     """
+    #     default_container_types = self.ext_plan.aq_defaults["container_types"]
+    #     ct = copy.deepcopy(get_obj_by_name(default_container_types, ot_name))
 
-        if ct:
-            ct.pop("name")
-        else:
-            ct = {}
+    #     if ct:
+    #         ct.pop("name")
+    #     else:
+    #         ct = {}
 
-        return ct
+    #     return ct
 
     def get_container(self, ot_name, io_name, role, container_opt=None):
         """
@@ -463,19 +464,23 @@ class Leg:
         :type container_opt: str
         :return: ObjectType
         """
-        ctypes = get_obj_by_name(self.op_data, ot_name)["container_types"].get(io_name)
+        # op_defaults = self.op_data["operation_defaults"]
+        role_data = get_obj_by_name(self.op_data, ot_name).get(role)
 
-        if ctypes:
-            container_name = ctypes[role + "_container_type"]
-
-            if isinstance(container_name, dict):
+        if role_data:
+            io_data = ctypes.get(io_name)
+            ot_data = io_data.get("object_type")
+            if isinstance(ot_data, dict):
                 if container_opt:
-                    container_name = container_name[container_opt]
+                    object_type = ot_data[container_opt]
 
                 else:
-                    raise Exception("Option required to specify container: " + container_name)
+                    raise Exception("Option required to specify container: " + ot_data)
+            
+            else:
+                object_type = ot_data
 
-            return self.session.ObjectType.where({"name": container_name})[0]
+            return object_type
 
     # Is there any reason why this can't be done as the operations
     # are being created?
@@ -505,11 +510,18 @@ class Leg:
             od = self.op_data[i]
             op = od["operation"]
 
-            step_defaults = od["defaults"]
-            this_io = { **step_defaults, **self.sample_io }
+            # io_defaults = od["operation_defaults"]
+            # print(od)
+            # print(self.sample_io)
+            # raise
+
+            this_io = self.replace_defaults(od, self.sample_io)
+            # print(this_io)
+            # print()
+            # raise
 
             for ft in op.operation_type.field_types:
-                io_object = this_io.get(ft.name)
+                io_object = this_io.get(ft.name, {}).get(ft.role, {}).get("sample")
 
                 is_sample = isinstance(io_object, Sample)
                 is_item = isinstance(io_object, Item)
@@ -556,6 +568,15 @@ class Leg:
             self.propagate_sample(self.op_data[i - 1]["operation"], self.op_data[i]["operation"])
 
             print("Set IO for " + od["name"])
+
+    def replace_defaults(self, od, sample_io):
+        for role in ["inputs", "outputs"]:
+            for name, data in od.get(role, {}).items():
+                replacement = sample_io.get(name)
+                if replacement:
+                    data["sample"] = replacement
+
+        return od
 
     def wire_ops(self, upstr_op, dnstr_op):
         """
