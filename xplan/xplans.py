@@ -155,7 +155,7 @@ class XPlanStep(PlanStep):
         self.plan_step = plan_step
 
         self.step_id = self.plan_step['id']
-        self.name = self.plan_step['name']
+        self.name = self.plan_step.get('name')
         self.operator = self.plan_step['operator']
         self.operator_type = self.operator['type']
 
@@ -478,4 +478,4 @@ class XPlanMeasurement():
         self.plan_step = plan_step
         self.plan = self.plan_step.plan
         self.source = measurement['source']
-        self.file = measurement['file']
+        self.file = measurement.get('file')

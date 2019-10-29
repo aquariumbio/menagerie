@@ -65,8 +65,7 @@
       "id": 2,
       "operator": {
         "id": 1,
-        "comment": "",
-        "description": "Sort 1: high concentration",
+        "description": "Sort 1: high binder concentration",
         "type": "yeast_display_round",
         "measurements": [
           {
@@ -158,8 +157,7 @@
       "id": 3,
       "operator": {
         "id": 1,
-        "comment": "",
-        "description": "Sort 2: medium concentration",
+        "description": "Sort 2: medium binder concentration",
         "type": "yeast_display_round",
         "measurements": [
           {
@@ -296,7 +294,11 @@
       }
     },
     {
+      "id": 4,
       "operator": {
+        "id": 1,
+        "description": "Sort 3: low binder concentration",
+        "type": "yeast_display_round",
         "measurements": [
           {
             "file": "fcs",
@@ -524,16 +526,15 @@
               }
             ]
           }
-        ],
-        "id": 1,
-        "comment": "",
-        "description": "Sort 3: low concentration",
-        "type": "yeast_display_round"
-      },
-      "id": 4
+        ]
+      }
     },
     {
+      "id": 5,
       "operator": {
+        "id": 1,
+        "description": "DNA Sequencing",
+        "type": "dna_seq",
         "measurements": [
           {
             "source": "library"
@@ -583,13 +584,8 @@
           {
             "source": "library_sort_3H"
           }
-        ],
-        "id": 1,
-        "comment": "",
-        "description": "",
-        "type": "dna_seq"
-      },
-      "id": 5
+        ]
+      }
     }
   ]
 }

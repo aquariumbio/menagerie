@@ -32,7 +32,7 @@ plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
 cursor = Cursor(y=18)
 
-for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
+for step_id in plan.step_ids(plan.get_steps_by_type('yeast_display_round')):
     plan_step = plan.step(step_id)
     plan_step.create_step(cursor, start_date)
 
@@ -47,7 +47,8 @@ for step_id in plan.step_ids(plan.get_steps_by_type('protstab_round')):
 
     start_date += timedelta(days=incr)
 
-    print(plan_step.name + ' complete')
+    step_info = (plan_step.step_id, plan_step.operator.get("description"))
+    print("Step {} ({}) complete".format(step_info[0], step_info[1]))
     print()
 
 plan.create_aq_plan()
