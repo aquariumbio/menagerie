@@ -234,11 +234,10 @@ class ExternalPlan:
         :return: Sample
         """
         if isinstance(aq_id, int):
-            attr = 'id'
+            return self.session.Sample.find(aq_id)
         else:
-            attr = 'name'
-
-        return self.session.Sample.where({attr: aq_id})[0]
+            return self.session.Sample.find_by_name(aq_id)
+        
 
     def add_input_sample(self, key, sample):
         """
