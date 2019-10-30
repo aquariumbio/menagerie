@@ -1,0 +1,121 @@
+{
+  "name": "gibson_assembly_template",
+  "steps": [
+    {
+      "id": 1,
+      "description": "Provision Samples",
+      "type": "provision",
+      "samples": [
+        {
+          "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "sample_type": "Plasmid"
+        },
+        {
+          "name": "CEN.PK2alpha Genomic DNA",
+          "sample_type": "DNA Library"
+        },
+        {
+          "name": "EYFP-f",
+          "sample_type": "Primer"
+        },
+        {
+          "name": "PP2_R",
+          "sample_type": "Primer"
+        },
+        {
+          "name": "EYFP_promoter_seq_rev",
+          "sample_type": "Primer"
+        },
+        {
+          "name": "YOR383C_promoter_rev",
+          "sample_type": "Primer"
+        },
+        {
+          "name": "YOR383C_promoter_fwd",
+          "sample_type": "Primer"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "description": "PCR",
+      "type": "pcr",
+      "transformations": [
+        {
+          "destination:": [
+            {
+              "name": "EYFP-pMOD-HIS",
+              "sample_type": "Fragment"
+            }
+          ],
+          "source": [
+            {
+              "input_name": "Forward Primer",
+              "name": "EYFP-f"
+            },
+            {
+              "input_name": "Reverse Primer",
+              "name": "PP2_R"
+            },
+            {
+              "input_name": "Template",
+              "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS"
+            }
+          ]
+        },
+        {
+          "destination:": [
+            {
+              "name": "YOR383C_promoter",
+              "sample_type": "Fragment",
+              "Length": 1000
+            }
+          ],
+          "source": [
+            {
+              "input_name": "Forward Primer",
+              "name": "YOR383C_promoter_fwd"
+            },
+            {
+              "input_name": "Reverse Primer",
+              "name": "YOR383C_promoter_rev"
+            },
+            {
+              "input_name": "Template",
+              "name": "CEN.PK2alpha Genomic DNA"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "description": "Gibson Assembly",
+      "type": "gibson",
+      "transformations": [
+        {
+          "destination:": [
+            {
+              "name": "YOR383C_promoter-EYFP-pMOD-HIS",
+              "sample_type": "Plasmid"
+            }
+          ],
+          "source": [
+            {
+              "input_name": "Fragment",
+              "name": "EYFP-pMOD-HIS"
+            },
+            {
+              "input_name": "Fragment",
+              "name": "YOR383C_promoter"
+            },
+            {
+              "input_name": "Sequencing Primer",
+              "name": "EYFP_promoter_seq_rev"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

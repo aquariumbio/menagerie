@@ -1,0 +1,82 @@
+{
+  "_comment": "General schema followed by two examples.",
+  "operation_defaults": [
+    {
+      "_comment": "Specifies a container type for each input and output.",
+      "name": "Operation Type Name",
+      "input": {
+        "First Handle": {
+          "object_type": {
+              "_comment": "Allows for different container types at different points in the plan.",
+              "first_option": "First Optional Container",
+              "second_option": "Second Optional Container"
+          }
+        },
+        "Second Handle": {
+          "object_type": "Container Type for Input",
+          "sample": "Anti-c-myc-FITC"
+        },
+        "Third Handle": {
+          "_comment": "Parameter Input.",
+          "value": "no"
+        }
+      },
+      "output": {
+        "Fourth Handle": {
+          "object_type": "Container Type for Output"
+        }
+      }
+    },
+    {
+      "name": "Challenge and Label",
+      "input": {
+        "Yeast Culture": {
+          "object_type": {
+            "library": "Yeast Library Liquid Culture",
+            "control": "Yeast 50ml culture"
+          }
+        },
+        "Protease": {
+          "object_type": "Protease Stock"
+        },
+        "Antibody": {
+          "object_type": "Antibody Stock",
+          "sample": "Anti-c-myc-FITC"
+        }
+      },
+      "output": {
+        "Labeled Yeast Library": {
+          "object_type": {
+            "library": "Labeled Yeast Library Suspension",
+            "control": "Labeled Yeast Strain Suspension"
+          }
+        }
+      }
+    },
+    {
+      "name": "Sort Yeast Display Library",
+      "input": {
+        "Labeled Yeast Library": {
+          "object_type": {
+            "library": "Labeled Yeast Library Suspension",
+            "control": "Labeled Yeast Strain Suspension"
+          }
+        },
+        "Control?": {
+          "value": "no"
+        },
+        "Sort?": {
+          "value": "yes"
+        }
+      },
+      "output": {
+        "Labeled Yeast Library": {
+          "object_type": {
+            "library": "Labeled Yeast Library Suspension",
+            "control": "Labeled Yeast Strain Suspension"
+          }
+        }
+      }
+    }
+  ]
+}
