@@ -7,31 +7,31 @@
       "type": "provision",
       "samples": [
         {
-          "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS",
+          "name": "Test Plasmid 1",
           "sample_type": "Plasmid"
         },
         {
-          "name": "CEN.PK2alpha Genomic DNA",
+          "name": "Test Library 1",
           "sample_type": "DNA Library"
         },
         {
-          "name": "EYFP-f",
+          "name": "Test Primer 1",
           "sample_type": "Primer"
         },
         {
-          "name": "PP2_R",
+          "name": "Test Primer 2",
           "sample_type": "Primer"
         },
         {
-          "name": "EYFP_promoter_seq_rev",
+          "name": "Test Primer 3",
           "sample_type": "Primer"
         },
         {
-          "name": "YOR383C_promoter_rev",
+          "name": "Test Primer 4",
           "sample_type": "Primer"
         },
         {
-          "name": "YOR383C_promoter_fwd",
+          "name": "Test Primer 5",
           "sample_type": "Primer"
         }
       ]
@@ -44,45 +44,44 @@
         {
           "destination:": [
             {
-              "name": "EYFP-pMOD-HIS",
+              "name": "Test Fragment 1",
               "sample_type": "Fragment"
             }
           ],
           "source": [
             {
               "input_name": "Forward Primer",
-              "name": "EYFP-f"
+              "name": "Test Primer 1"
             },
             {
               "input_name": "Reverse Primer",
-              "name": "PP2_R"
+              "name": "Test Primer 2"
             },
             {
               "input_name": "Template",
-              "name": "pCup1(FL)-sgZ41::eYFP pMOD HIS"
+              "name": "Test Plasmid 1"
             }
           ]
         },
         {
           "destination:": [
             {
-              "name": "YOR383C_promoter",
-              "sample_type": "Fragment",
-              "Length": 1000
+              "name": "Test Fragment 2",
+              "sample_type": "Fragment"
             }
           ],
           "source": [
             {
               "input_name": "Forward Primer",
-              "name": "YOR383C_promoter_fwd"
+              "name": "Test Primer 3"
             },
             {
               "input_name": "Reverse Primer",
-              "name": "YOR383C_promoter_rev"
+              "name": "Test Primer 4"
             },
             {
               "input_name": "Template",
-              "name": "CEN.PK2alpha Genomic DNA"
+              "name": "Test Library 1"
             }
           ]
         }
@@ -96,22 +95,22 @@
         {
           "destination:": [
             {
-              "name": "YOR383C_promoter-EYFP-pMOD-HIS",
+              "name": "Test Plasmid 2",
               "sample_type": "Plasmid"
             }
           ],
           "source": [
             {
               "input_name": "Fragment",
-              "name": "EYFP-pMOD-HIS"
+              "name": "Test Fragment 1"
             },
             {
               "input_name": "Fragment",
-              "name": "YOR383C_promoter"
+              "name": "Test Fragment 2"
             },
             {
               "input_name": "Sequencing Primer",
-              "name": "EYFP_promoter_seq_rev"
+              "name": "Test Primer 5"
             }
           ]
         }

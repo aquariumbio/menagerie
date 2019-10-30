@@ -5,7 +5,7 @@ from pydent import models
 from pydent.models import Sample
 
 import plans
-from plans import ExternalPlan, PlanStep
+from plans import ExternalPlan, PlanStep, Transformation
 import plasmid_assembly_legs
 from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
 from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
@@ -15,15 +15,6 @@ class PupPlan(ExternalPlan):
     Interface for working with the Aquarium Session and Plan models.
     Uses JSON schema derived from BU/SAIL Puppeteer schema.
     """
-
-    # For matching Puppeteer sample types to Aq sample types
-    input_list_names = {
-        "partSamples": "Fragment",
-        "vectorSamples": "Fragment",
-        "templateSamples": "Plasmid",
-        "primerSamples": "Primer",
-        "yeastSamples" : "Yeast Strain"
-    }
 
     def __init__(self, aq_plan_name, aq_instance):
         """
@@ -45,20 +36,20 @@ class PupPlan(ExternalPlan):
         # TODO: This is very similar to the corresponding block in XPlan. Extract.
         # Create PlanStep objects based on operator type
         for step in self.plan["steps"]:
-            build_method = step["parameters"]["buildMethod"]
+            build_method = step["type"]
             step_id = step["id"]
 
-            if build_method == "PCR":
+            if build_method == "pcr":
                 dst_sample_type = "Fragment"
-                step = PCRStep(self, step, step_id)
+                step = PCRStep(self, step)
 
-            elif build_method == "Gibson Assembly":
+            elif build_method == "gibson":
                 dst_sample_type = "Plasmid"
-                step = GibsonStep(self, step, step_id)
+                step = GibsonStep(self, step)
 
-            elif build_method == "Yeast Transformation":
+            elif build_method == "yeast_transformation":
                 dst_sample_type = "Yeast Strain"
-                step = YeastTransformationStep(self, step, step_id)
+                step = YeastTransformationStep(self, step)
 
             self.steps.append(step)
 
@@ -86,49 +77,54 @@ class PupPlan(ExternalPlan):
     # self.plan_params['input_samples'] for XPlan
     def provision_samples(self):
         """Finds all the input samples for the PupPlan."""
-        prov_step = [s for s in self.plan["steps"] if s["parameters"]["buildMethod"] == "Provision"][0]
+        prov_step = [s for s in self.plan["steps"] if s["type"] == "provision"][0]
 
-        for list_name, sample_type in PupPlan.input_list_names.items():
-            for sample in prov_step.get(list_name, []):
-                sample_type = sample.get("sample_type") or sample_type
-                sample["aqSamples"] = self.get_samples(sample_type, sample["name"])
-                self.input_samples[sample["name"]] = sample["aqSamples"][0]
+        for sample in prov_step.get("samples", []):
+            print(sample)
+            sample_type = sample.get("sample_type") or sample_type
+            aq_samples = self.get_samples(sample_type, sample["name"])
+            self.input_samples[sample["name"]] = aq_samples[0]
 
         # Is this wise or necessary?
-        self.plan["steps"].remove(prov_step)
+        # self.plan["steps"].remove(prov_step)
 
 
 class PupPlanStep(PlanStep):
-    def __init__(self, plan, plan_step, step_id):
+    def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
         self.plan = plan
         self.plan_step = plan_step
-        self.step_id = step_id
-        self.operator_type = plan_step["parameters"]["buildMethod"]
-        self.build_method = self.operator_type
+
+        self.step_id = self.plan_step['id']
+        self.name = self.plan_step.get('name')
+        self.operator_type = plan_step["type"]
+        
+        # It would be good to harmonize this with the XPlan schema
+        self.operator = self.plan_step
+
         self.transformations = []
+        for txn in self.operator.get('transformations', []):
+            self.transformations.append(PupPlanTransformation(self, txn))
+
+        # self.measurements = []
+        # for msmt in self.operator.get('measurements', []):
+        #     self.measurements.append(XPlanMeasurement(self, msmt))
+
+        # self.measured_samples = [m.source for m in self.measurements]
+
+        self.output_operations = {}
+
+        self.build_method = self.operator_type
 
 
 class GoldenGateStep(PupPlanStep):
-    def __init__(self, plan, plan_step, step_id):
-        super().__init__(plan, plan_step, step_id)
-
-        for d in plan_step["designs"]:
-            txn = {"destination": [d["name"]]}
-            src = list(d["partPositionMap"].values())
-            src.append(d["vectorName"])
-            txn["source"] = src
-            self.transformations.append(txn)
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
 
 
 class GibsonStep(PupPlanStep):
-    def __init__(self, plan, plan_step, step_id):
-        super().__init__(plan, plan_step, step_id)
-
-        for design in plan_step["designs"]:
-            txn = {"destination": [design.pop("name")]}
-            txn["source"] = design
-            self.transformations.append(txn)
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
 
     def create_step(self, cursor, n_qcs=1, step_outputs={}):
         for txn in self.transformations:
@@ -172,13 +168,8 @@ class GibsonStep(PupPlanStep):
 
 
 class PCRStep(PupPlanStep):
-    def __init__(self, plan, plan_step, step_id):
-        super().__init__(plan, plan_step, step_id)
-
-        for design in plan_step["designs"]:
-            txn = {"destination": [design.pop("name")]}
-            txn["source"] = design
-            self.transformations.append(txn)
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
 
     def create_step(self, cursor, step_outputs={}):
         for txn in self.transformations:
@@ -203,13 +194,8 @@ class PCRStep(PupPlanStep):
         return step_outputs
 
 class YeastTransformationStep(PupPlanStep):
-    def __init__(self, plan, plan_step, step_id):
-        super().__init__(plan, plan_step, step_id)
-
-        for design in plan_step["designs"]:
-            txn = {"destination": [design.pop("name")]}
-            txn["source"] = design
-            self.transformations.append(txn)
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
 
     def create_step(self, cursor, n_qcs=1, step_outputs={}):
         for txn in self.transformations:
@@ -243,3 +229,29 @@ class YeastTransformationStep(PupPlanStep):
                 cursor.return_y()
 
         return step_outputs
+
+class PupPlanTransformation(Transformation):
+    def __init__(self, plan_step, transformation):
+        super().__init__(plan_step, transformation)
+        self.source = self.format(transformation['source'])
+        self.destination = self.format(transformation['destination'])
+
+    def source_samples(self):
+        return [x['sample'] for x in self.source]
+
+    def destination_samples(self):
+        return [x['sample'] for x in self.destination]
+
+    @staticmethod
+    def format(element):
+        if isinstance(element, list):
+            return [{ 'sample': e } if isinstance(e, str) else e for e in element]
+
+        elif isinstance(element, dict):
+            return [element]
+
+        elif isinstance(element, str):
+            return [{ 'sample': element }]
+
+        else:
+            raise Exception('Format of %s not recognized' % str(element))

@@ -3,7 +3,7 @@ import warnings
 warnings.filterwarnings('ignore')
 import time
 
-ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
+ext_plan_path = '/workspaces/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor
@@ -16,24 +16,27 @@ import os
 from plan_tests import test_plan
 from user_input import get_input
 
-inputs = get_input(start_date=False)
+# inputs = get_input(start_date=False)
+inputs = {
+    'aq_plan_name': 'json_harmonization',
+    'aq_instance': 'laptop'
+}
 
 plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
-# plan = PupPlan('gibson_test', 'laptop')
 
 cursor = Cursor(y=26)
 
-plan_step = plan.step_by_build_method("PCR")
+plan_step = plan.step_by_build_method("pcr")
 step_outputs = plan_step.create_step(cursor)
 cursor.advance_to_next_step()
 
-plan_step = plan.step_by_build_method("Gibson Assembly")
+plan_step = plan.step_by_build_method("gibson")
 step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 cursor.advance_to_next_step()
 
 # These should be moved to another script
-plan_step = plan.step_by_build_method("Yeast Transformation")
-step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
+# plan_step = plan.step_by_build_method("Yeast Transformation")
+# step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 
 plan.create_aq_plan()
 
