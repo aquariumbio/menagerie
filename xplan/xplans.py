@@ -209,7 +209,7 @@ class DNASeqStep(XPlanStep):
         super().__init__(plan, plan_step)
 
     def create_step(self, cursor):
-        qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("forward primer")
+        qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("Petcon NGS prep forward primer")
         qpcr_2_reverse_primers = self.plan.input_samples.pop("qpcr_2_reverse_primers")
 
         items = list(self.plan.input_samples.values())
