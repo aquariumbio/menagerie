@@ -1,0 +1,22 @@
+{
+  "input_samples": {
+    "library_composition": {
+      "components": ["Test Library 1", "Test Library 2"],
+      "proportions": [97.5, 2.5]
+    },
+    "library": "Test Library 3",
+    "binding_negative": "EBY100",
+    "binding_positive": "AMA1-best",
+    "chymotrypsin": "Chymotrypsin",
+    "trypsin": "Trypsin",
+    "antibody": "Anti-c-myc-FITC"
+  },
+  "cytometer_configuration": {
+    "voltages": [
+        ["Parameter", "Voltage"],
+        ["FSC", 250],
+        ["SSC", 260],
+        ["FITC", 475]
+    ]
+  }
+}
