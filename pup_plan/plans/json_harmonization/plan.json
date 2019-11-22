@@ -5,116 +5,122 @@
       "id": 1,
       "description": "Provision Samples",
       "type": "provision",
-      "samples": [
-        {
-          "name": "Test Plasmid 1",
-          "sample_type": "Plasmid"
-        },
-        {
-          "name": "Test Library 1",
-          "sample_type": "DNA Library"
-        },
-        {
-          "name": "Test Primer 1",
-          "sample_type": "Primer"
-        },
-        {
-          "name": "Test Primer 2",
-          "sample_type": "Primer"
-        },
-        {
-          "name": "Test Primer 3",
-          "sample_type": "Primer"
-        },
-        {
-          "name": "Test Primer 4",
-          "sample_type": "Primer"
-        },
-        {
-          "name": "Test Primer 5",
-          "sample_type": "Primer"
-        }
-      ]
+      "operator": {
+        "samples": [
+          {
+            "name": "Test Plasmid 1",
+            "sample_type": "Plasmid"
+          },
+          {
+            "name": "Test Library 1",
+            "sample_type": "DNA Library"
+          },
+          {
+            "name": "Test Primer 1",
+            "sample_type": "Primer"
+          },
+          {
+            "name": "Test Primer 2",
+            "sample_type": "Primer"
+          },
+          {
+            "name": "Test Primer 3",
+            "sample_type": "Primer"
+          },
+          {
+            "name": "Test Primer 4",
+            "sample_type": "Primer"
+          },
+          {
+            "name": "Test Primer 5",
+            "sample_type": "Primer"
+          }
+        ]
+      }
     },
     {
       "id": 2,
       "description": "PCR",
       "type": "pcr",
-      "transformations": [
-        {
-          "destination:": [
-            {
-              "name": "Test Fragment 1",
-              "sample_type": "Fragment"
-            }
-          ],
-          "source": [
-            {
-              "input_name": "Forward Primer",
-              "name": "Test Primer 1"
-            },
-            {
-              "input_name": "Reverse Primer",
-              "name": "Test Primer 2"
-            },
-            {
-              "input_name": "Template",
-              "name": "Test Plasmid 1"
-            }
-          ]
-        },
-        {
-          "destination:": [
-            {
-              "name": "Test Fragment 2",
-              "sample_type": "Fragment"
-            }
-          ],
-          "source": [
-            {
-              "input_name": "Forward Primer",
-              "name": "Test Primer 3"
-            },
-            {
-              "input_name": "Reverse Primer",
-              "name": "Test Primer 4"
-            },
-            {
-              "input_name": "Template",
-              "name": "Test Library 1"
-            }
-          ]
-        }
-      ]
+      "operator": {
+        "transformations": [
+          {
+            "destination:": [
+              {
+                "name": "Test Fragment 1",
+                "sample_type": "Fragment"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Forward Primer",
+                "name": "Test Primer 1"
+              },
+              {
+                "input_name": "Reverse Primer",
+                "name": "Test Primer 2"
+              },
+              {
+                "input_name": "Template",
+                "name": "Test Plasmid 1"
+              }
+            ]
+          },
+          {
+            "destination:": [
+              {
+                "name": "Test Fragment 2",
+                "sample_type": "Fragment"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Forward Primer",
+                "name": "Test Primer 3"
+              },
+              {
+                "input_name": "Reverse Primer",
+                "name": "Test Primer 4"
+              },
+              {
+                "input_name": "Template",
+                "name": "Test Library 1"
+              }
+            ]
+          }
+        ]
+      }
     },
     {
       "id": 3,
       "description": "Gibson Assembly",
       "type": "gibson",
-      "transformations": [
-        {
-          "destination:": [
-            {
-              "name": "Test Plasmid 2",
-              "sample_type": "Plasmid"
-            }
-          ],
-          "source": [
-            {
-              "input_name": "Fragment",
-              "name": "Test Fragment 1"
-            },
-            {
-              "input_name": "Fragment",
-              "name": "Test Fragment 2"
-            },
-            {
-              "input_name": "Sequencing Primer",
-              "name": "Test Primer 5"
-            }
-          ]
-        }
-      ]
+      "operator": {
+        "transformations": [
+          {
+            "destination:": [
+              {
+                "name": "Test Plasmid 2",
+                "sample_type": "Plasmid"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Fragment",
+                "name": "Test Fragment 1"
+              },
+              {
+                "input_name": "Fragment",
+                "name": "Test Fragment 2"
+              },
+              {
+                "input_name": "Sequencing Primer",
+                "name": "Test Primer 5"
+              }
+            ]
+          }
+        ]
+      }
     }
   ]
 }

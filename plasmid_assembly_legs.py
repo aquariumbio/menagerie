@@ -19,14 +19,14 @@ class CloningLeg(Leg):
     def set_sample_inputs(self, source):
         for handle, name in source.items():
             if isinstance(name, str):
-                self.sample_io[handle] = self.ext_plan.get_input_sample(name)
+                self.sample_io[handle] = self.ext_plan.input_sample(name)
             elif isinstance(name, list):
-                samples = [self.ext_plan.get_input_sample(n) for n in name]
+                samples = [self.ext_plan.input_sample(n) for n in name]
                 self.sample_io[handle] = samples
 
     def set_sample_outputs(self, destination):
         for handle in self.primary_handles:
-            self.sample_io[handle] = self.ext_plan.get_input_sample(destination)
+            self.sample_io[handle] = self.ext_plan.input_sample(destination)
 
     def set_sample_io(self, source, destination):
         self.set_sample_outputs(destination)
@@ -46,13 +46,13 @@ class GoldenGateLeg(CloningLeg):
         super().__init__(plan_step, cursor)
 
     def set_sample_io(self, source, destination):
-        self.sample_io["Plasmid"] = self.ext_plan.input_samples.get(destination)
+        self.sample_io["Plasmid"] = self.ext_plan.input_sample(destination)
 
         backbones = [s for s in source if s.startswith("Vector")] or [None]
-        self.sample_io["Backbone"] = self.ext_plan.input_samples.get(backbones[0])
+        self.sample_io["Backbone"] = self.ext_plan.input_sample(backbones[0])
 
         inserts = [s for s in source if not s.startswith("Vector")]
-        self.sample_io["Inserts"] = [self.ext_plan.input_samples.get(i) for i in inserts]
+        self.sample_io["Inserts"] = [self.ext_plan.input_sample(i) for i in inserts]
 
 
 class GibsonLeg(CloningLeg):
@@ -157,9 +157,9 @@ class YeastTransformationLeg(CloningLeg):
         super().set_sample_io(source, destination)
 
         for h in self.dna_handles:
-            self.sample_io[h] = self.ext_plan.input_samples.get(source["Integrant"])
+            self.sample_io[h] = self.ext_plan.input_sample(source["Integrant"])
 
-        self.sample_io["Parent"] = self.ext_plan.input_samples.get(source["Parent"])
+        self.sample_io["Parent"] = self.ext_plan.input_sample(source["Parent"])
 
     def get_output_op(self):
         return get_obj_by_name(self.op_data, "Check Yeast Plate")["operation"]
@@ -190,4 +190,4 @@ class YeastGenotypingLeg(CloningLeg):
 
     # def set_sample_io(self, source, destination):
     #     for h in self.primary_handles:
-    #         self.sample_io[h] = self.ext_plan.input_samples.get(destination)
+    #         self.sample_io[h] = self.ext_plan.input_sample(destination)

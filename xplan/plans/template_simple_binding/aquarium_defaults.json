@@ -80,7 +80,7 @@
           }
         },
         "Protease": {
-          "object_type": "Protease Stock"
+          "object_type": "Biotinylated Binding Target Stock"
         },
         "Antibody": {
           "object_type": "Antibody Stock",

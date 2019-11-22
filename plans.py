@@ -9,6 +9,7 @@ import json
 import yaml
 import os
 import copy
+from abc import ABCMeta, abstractmethod
 
 import pydent
 from pydent import AqSession, models, __version__
@@ -19,7 +20,7 @@ def get_obj_by_name(leg, name):
     ops = [x for x in leg if x["name"] == name]
     if ops: return ops[0]
 
-class ExternalPlan:
+class ExternalPlan(metaclass=ABCMeta):
     """Interface for working with the Aquarium Session and Plan models."""
     def __init__(self, aq_plan_name, aq_instance):
         """
@@ -52,7 +53,19 @@ class ExternalPlan:
 
         self.steps = []
         self.input_samples = {}
-        self.temp_data_associations = []
+        self.temp_data_associations = [] 
+        
+        # Create PlanStep objects based on step type
+        for step_data in self.plan["steps"]:
+            step = self.initialize_step(step_data)
+            self.steps.append(step)
+
+    @abstractmethod
+    def initialize_step(self, step_data):
+        step_type = step_data["type"]
+
+        if step_type == "provision":
+            return ProvisionStep(self, step_data)
 
     @staticmethod
     def create_session(aq_instance):
@@ -66,6 +79,7 @@ class ExternalPlan:
         dirname = os.path.dirname(__file__)
         filename = os.path.join(dirname, 'config.yml')
 
+        # TODO: Update this to use secrets.json convention
         with open(filename, 'r') as f:
             config = yaml.load(f)
 
@@ -77,7 +91,6 @@ class ExternalPlan:
             login['url']
         )
 
-        # Test the session
         msg = "Connected to Aquarium at {} using pydent version {}"
         print(msg.format(session.url, str(__version__)))
 
@@ -174,9 +187,27 @@ class ExternalPlan:
 
         return aq_samples
 
-    def step_ids(self):
-        """Returns a sorted list of the step_ids found in the plan.json file."""
-        return sorted([s.step_id for s in self.steps])
+    def get_steps_by_type(self, type):
+        """
+        Return PlanStep objects based on operator type.
+
+        :param type: the operator type
+        :type type: str
+        :return: list
+        """
+        return [s for s in self.steps if s.operator_type == type]
+
+    def provision_steps(self):
+        """Get PlanSteps of operator type 'provision'."""
+        return self.get_steps_by_type('provision')
+
+    def step_ids(self, steps=None):
+        """
+        Get a sorted list of the step ids in the ExternalPlan.
+        Can be for a subset of steps if they are passed.
+        """
+        steps = steps or self.steps
+        return sorted([s.step_id for s in steps])
 
     def step(self, step_id):
         """
@@ -237,7 +268,6 @@ class ExternalPlan:
             return self.session.Sample.find(aq_id)
         else:
             return self.session.Sample.find_by_name(aq_id)
-        
 
     def add_input_sample(self, key, sample):
         """
@@ -249,17 +279,16 @@ class ExternalPlan:
         """
         self.input_samples[key] = sample
 
-    # TODO: This method seems kind of dumb.
-    def get_input_sample(self, sample_name):
+    def input_sample(self, sample_key):
         """
         Return the input Sample based on the key. If not found, return the key
         instead.
 
-        :param sample_name: The unique identifier of the Sample
-        :type sample_name: str
+        :param sample_key: The unique identifier of the Sample
+        :type sample_key: str
         :return: Sample or str
         """
-        return self.input_samples.get(sample_name, sample_name)
+        return self.input_samples.get(sample_key)
 
 
 class PlanStep:
@@ -276,6 +305,8 @@ class PlanStep:
         """
         self.plan = plan
         self.plan_step = plan_step
+        self.operator = plan_step.get("operator", {})
+        self.type = plan_step["type"]
         self.transformations = []
 
     def get_inputs(self, sample_type_name):
@@ -289,7 +320,7 @@ class PlanStep:
         sample_type_inputs = []
 
         for upi in self.uniq_plan_inputs():
-            obj = self.plan.input_samples.get(upi)
+            obj = self.plan.input_sample(upi)
 
             if isinstance(obj, Sample):
                 this_st_name = obj.sample_type.name
@@ -327,6 +358,40 @@ class PlanStep:
                 flattened.append(element)
 
         return flattened
+
+
+class ProvisionStep(PlanStep):
+
+    def __init__(self, plan, plan_step):
+        super().__init__(plan, plan_step)
+        self.provision_samples()
+
+    def provision_samples(self):
+        """Finds all the input samples for the Plan."""
+        samples = self.operator.get("samples", [])
+
+        for sample in samples:
+            sample_name = sample["name"]
+            sample_type = sample.get("sample_type")
+            sample_key = sample.get("sample_key", sample_name)
+            aq_samples = self.plan.get_samples(sample_type, sample_name)
+
+            if aq_samples:
+                self.plan.add_input_sample(sample_key, aq_samples[0])
+            else:
+                raise "Unable to find or add sample {}".format(sample_name)
+
+    # This seems structurally similar to what is going on in
+    # self.plan_params['input_samples'] for XPlan
+    # def provision_samples(self):
+    #     """Finds all the input samples for the PupPlan."""
+    #     prov_step = [s for s in self.plan["steps"] if s["type"] == "provision"][0]
+
+    #     for sample in prov_step.get("samples", []):
+    #         print(sample)
+    #         sample_type = sample.get("sample_type") or sample_type
+    #         aq_samples = self.get_samples(sample_type, sample["name"])
+    #         self.input_samples[sample["name"]] = aq_samples[0]
 
 
 class Transformation:

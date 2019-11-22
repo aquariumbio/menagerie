@@ -33,60 +33,46 @@ class PupPlan(ExternalPlan):
 
         self.provision_samples()
 
-        # TODO: This is very similar to the corresponding block in XPlan. Extract.
-        # Create PlanStep objects based on operator type
-        for step in self.plan["steps"]:
-            build_method = step["type"]
-            step_id = step["id"]
-
-            if build_method == "pcr":
-                dst_sample_type = "Fragment"
-                step = PCRStep(self, step)
-
-            elif build_method == "gibson":
-                dst_sample_type = "Plasmid"
-                step = GibsonStep(self, step)
-
-            elif build_method == "yeast_transformation":
-                dst_sample_type = "Yeast Strain"
-                step = YeastTransformationStep(self, step)
-
-            self.steps.append(step)
-
+        for step in self.steps:
+            dst_sample_type = self.destination_sample_type(step["type"])
             # Why is this block not also in XPlan?
             for txn in step.transformations:
                 for sample_name in txn["destination"]:
                     samples = self.get_samples(dst_sample_type, sample_name, txn["source"])
                     sample = samples[0]
 
-                    self.input_samples[sample_name] = sample
+                    self.add_input_sample(sample_name, sample)
 
-    # TODO: Maybe make this return a list?
-    # This seems to correspond to operator type in XPlan. Harmonize?
-    def step_by_build_method(self, build_method):
-        """
-        Returns the first step of the specified build_method.
+    def initialize_step(self, step_data):
+        super().initialize_step(step_data)
 
-        :param build_method: the build method key
-        :type build_method: str
-        :return: PlanStep
-        """
-        return next(s for s in self.steps if s.build_method == build_method)
+        step_type = step_data["type"]
 
-    # This seems structurally similar to what is going on in
-    # self.plan_params['input_samples'] for XPlan
-    def provision_samples(self):
-        """Finds all the input samples for the PupPlan."""
-        prov_step = [s for s in self.plan["steps"] if s["type"] == "provision"][0]
+        if step_type == "pcr":
+            step = PCRStep(self, step_data)
 
-        for sample in prov_step.get("samples", []):
-            print(sample)
-            sample_type = sample.get("sample_type") or sample_type
-            aq_samples = self.get_samples(sample_type, sample["name"])
-            self.input_samples[sample["name"]] = aq_samples[0]
+        elif step_type == "gibson":
+            step = GibsonStep(self, step_data)
 
-        # Is this wise or necessary?
-        # self.plan["steps"].remove(prov_step)
+        elif step_type == "yeast_transformation":
+            step = YeastTransformationStep(self, step_data)
+
+        else:
+            step = PupPlanStep(self, step_data)
+
+        return step
+
+    def destination_sample_type(self, step_type):
+        if step_type == "pcr":
+            dst_sample_type = "Fragment"
+
+        elif step_type == "gibson":
+            dst_sample_type = "Plasmid"
+
+        elif step_type == "yeast_transformation":
+            dst_sample_type = "Yeast Strain"
+
+        return dst_sample_type
 
 
 class PupPlanStep(PlanStep):
@@ -114,7 +100,7 @@ class PupPlanStep(PlanStep):
 
         self.output_operations = {}
 
-        self.build_method = self.operator_type
+        self.step_type = self.operator_type
 
 
 class GoldenGateStep(PupPlanStep):
@@ -176,7 +162,7 @@ class PCRStep(PupPlanStep):
             src = txn['source']
 
             for dst in txn['destination']:
-                sample_type = self.plan.input_samples.get(src['Template']).sample_type.name
+                sample_type = self.plan.input_sample(src['Template']).sample_type.name
 
                 if sample_type == "DNA Library":
                     container_opt = "dna_library"

@@ -30,98 +30,85 @@ class XPlan(ExternalPlan):
         :return: new XPlan
         """
         super().__init__(aq_plan_name, aq_instance)
-
-        # TODO: This is very similar to the corresponding block in PupPlan. Extract.
-        # Create PlanStep objects based on operator type
-        for s in self.plan['steps']:
-            step_type = s["operator"]["type"]
-
-            if step_type == "protstab_round" or step_type == "yeast_display_round":
-                step = YeastDisplayStep(self, s)
-
-            elif step_type == "dna_seq":
-                step = DNASeqStep(self, s)
-
-            self.steps.append(step)
-
-        # Find input samples that are likely to vary between operations.
-        # This seems structurally similar to what is going on in
-        # self.provision_samples() for PupPlan
-        # TODO: This should be harmonized with the plan_params['operation_defaults'] structure
-        for key, sample_data in self.plan_params['input_samples'].items():
-            # Special case:
-            # Libraries that are combined at the beginning of the Plan.
-            if key == "library_composition":
-                sample_ids = sample_data["components"]
-                component_samples = []
-
-                for sid in sample_ids:
-                    component_samples.append(self.find_input_sample(sid))
-
-                sample_data["components"] = component_samples
-                self.add_input_sample(key, sample_data)
-
-            # Special case:
-            # Collect all of the outputs of an already-run Plan.
-            elif key == "plan_outputs":
-                plan = self.session.Plan.find(sample_data["plan_id"])
-                ops = plan.operations
-
-                ot_name = sample_data["operation_type"]
-                ops = [op for op in ops if op.operation_type.name == ot_name]
-
-                for op in ops:
-                    item = op.output(sample_data["output"]).item
-                    if item:
-                        self.add_input_sample(op.id, item)
-                    else:
-                        msg = "Could not find {} Item for {} Operation {}"
-                        print(msg.format(sample_data["output"], ot_name, op.id))
-                        print()
-
-            # A list of Samples.
-            elif isinstance(sample_data, list):
-                found_input = []
-
-                for d in sample_data:
-                    found_input.append(self.find_input_sample(d))
-
-                self.add_input_sample(key, found_input)
-
-            # A single Sample.
-            else:
-                found_input = self.find_input_sample(sample_data)
-                self.add_input_sample(key, found_input)
+        # self.provision_from_plan_params()
 
         # Get the list of samples for NGS
         # Assumes that there is only one source and only one dna_seq_step
-        self.ngs_samples = self.dna_seq_steps()[0].measured_samples
+        # TODO: This method is not great.
+        self.ngs_sample_keys = []
+        for step in self.dna_seq_steps():
+            for source in step.measured_samples:
+                self.ngs_sample_keys.append(source["sample_key"])
 
-    def get_steps_by_type(self, type):
-        """
-        Return PlanStep objects based on operator type.
+    def initialize_step(self, step_data):
+        super().initialize_step(step_data)
 
-        :param type: the operator type
-        :type type: str
-        :return: list
-        """
-        return [s for s in self.steps if s.operator_type == type]
+        step_type = step_data["type"]
 
-    def provision_steps(self):
-        """Get PlanSteps of operator type 'provision'."""
-        return self.get_steps_by_type('provision')
+        if step_type == "protstab_round" or step_type == "yeast_display_round":
+            step = YeastDisplayStep(self, step_data)
+
+        elif step_type == "dna_seq":
+            step = DNASeqStep(self, step_data)
+        
+        else:
+            step = XPlanStep(self, step_data)
+
+        return step
+
+    # def provision_from_plan_params(self):
+    #     # Find input samples that are likely to vary between operations.
+    #     # This seems structurally similar to what is going on in
+    #     # self.provision_samples() for PupPlan
+    #     # TODO: This should be harmonized with the plan_params['operation_defaults'] structure
+    #     for key, sample_data in self.plan_params.get('input_samples', {}).items():
+    #         # Special case:
+    #         # Libraries that are combined at the beginning of the Plan.
+    #         if key == "library_composition":
+    #             sample_ids = sample_data["components"]
+    #             component_samples = []
+
+    #             for sid in sample_ids:
+    #                 component_samples.append(self.find_input_sample(sid))
+
+    #             sample_data["components"] = component_samples
+    #             self.add_input_sample(key, sample_data)
+
+    #         # Special case:
+    #         # Collect all of the outputs of an already-run Plan.
+    #         elif key == "plan_outputs":
+    #             plan = self.session.Plan.find(sample_data["plan_id"])
+    #             ops = plan.operations
+
+    #             ot_name = sample_data["operation_type"]
+    #             ops = [op for op in ops if op.operation_type.name == ot_name]
+
+    #             for op in ops:
+    #                 item = op.output(sample_data["output"]).item
+    #                 if item:
+    #                     self.add_input_sample(op.id, item)
+    #                 else:
+    #                     msg = "Could not find {} Item for {} Operation {}"
+    #                     print(msg.format(sample_data["output"], ot_name, op.id))
+    #                     print()
+
+    #         # A list of Samples.
+    #         elif isinstance(sample_data, list):
+    #             found_input = []
+
+    #             for d in sample_data:
+    #                 found_input.append(self.find_input_sample(d))
+
+    #             self.add_input_sample(key, found_input)
+
+    #         # A single Sample.
+    #         else:
+    #             found_input = self.find_input_sample(sample_data)
+    #             self.add_input_sample(key, found_input)
 
     def dna_seq_steps(self):
         """Get PlanSteps of operator type 'dna_seq'."""
         return self.get_steps_by_type('dna_seq')
-
-    def step_ids(self, steps=None):
-        """
-        Get a sorted list of the step ids in the ExternalPlan.
-        Can be for a subset of steps if they are passed.
-        """
-        steps = steps or self.steps
-        return sorted([s.step_id for s in steps])
 
     def prov_protease_inputs(self):
         """
@@ -141,12 +128,6 @@ class XPlan(ExternalPlan):
         """
         return isinstance(s, Sample) and s.sample_type.name == "Protease"
 
-    # Appears dead.
-    # def get_provisioned(self, unprovisioned):
-    #     txns = self.provision_steps()[0].transformations
-    #     provisioned = [t for t in txns if t.source[0]['sample'] == unprovisioned][0]
-    #     return provisioned.destination[0]['sample']
-
 
 class XPlanStep(PlanStep):
     def __init__(self, plan, plan_step):
@@ -155,9 +136,9 @@ class XPlanStep(PlanStep):
         self.plan_step = plan_step
 
         self.step_id = self.plan_step['id']
-        self.name = self.plan_step.get('name')
         self.operator = self.plan_step['operator']
-        self.operator_type = self.operator['type']
+        self.operator_type = self.type
+        self.name = self.plan_step['name']
 
         self.transformations = []
         for txn in self.operator.get('transformations', []):
@@ -191,11 +172,9 @@ class XPlanStep(PlanStep):
         """Adds an Operation to the list of output operations for the PlanStep."""
         self.output_operations[uri] = op
 
-    # Appears dead.
-    # TODO: Need to make this sort for the GUI layout.
-    # def get_sorted_transformations(self):
-    #     txns = self.operator.get('transformations')
-    #     return txns
+    @staticmethod
+    def sample_key(element):
+        return element.get('sample') or element.get('sample_key')
 
 
 class DNASeqStep(XPlanStep):
@@ -221,10 +200,6 @@ class DNASeqStep(XPlanStep):
                 input_op.set_field_value("Yeast Library", "input", item=item)
             except:
                 print("Failed to set fv for %d" % item.id)
-
-            item_id = input_op.input("Yeast Library").item.id
-            # print("Set fv for %d" % item_id)
-            # print()
 
             upstr_op = extract_leg.get_output_op()
 
@@ -275,7 +250,7 @@ class YeastDisplayStep(XPlanStep):
         new_inputs = {}
 
         for input_yeast in self.yeast_inputs():
-            st_name = self.plan.input_samples[input_yeast].sample_type.name
+            st_name = self.plan.input_sample(input_yeast).sample_type.name
             is_library = st_name == 'DNA Library'
 
             if not prev_step_outputs.get(input_yeast):
@@ -283,7 +258,7 @@ class YeastDisplayStep(XPlanStep):
                 container_opt = 'library_start' if is_library else 'control'
 
                 overnight_samples = []
-                library_composition = self.plan.input_samples.get("library_composition")
+                library_composition = self.plan.input_sample("library_composition")
                 mix_cultures = is_library and library_composition
 
                 if mix_cultures:
@@ -292,7 +267,7 @@ class YeastDisplayStep(XPlanStep):
                         overnight_samples.append(comp)
 
                 else:
-                    overnight_samples.append(self.plan.input_samples[input_yeast])
+                    overnight_samples.append(self.plan.input_sample(input_yeast))
 
                 overnight_ops = {}
 
@@ -332,7 +307,7 @@ class YeastDisplayStep(XPlanStep):
 
                 cursor.return_y()
 
-                if input_yeast in self.plan.ngs_samples:
+                if input_yeast in self.plan.ngs_sample_keys:
                     cursor.decr_y(SortLeg.length() - NaiveLeg.length())
                     cursor.decr_x()
                     naive_leg = NaiveLeg(self, cursor)
@@ -393,8 +368,8 @@ class YeastDisplayStep(XPlanStep):
 
                 for txn in txns:
                     src = txn.source
-                    for dst in txn.destination:
-                        ngs_sample = dst['sample'] in self.plan.ngs_samples
+                    for dst in txn.destination_samples():
+                        ngs_sample = dst in self.plan.ngs_sample_keys
                         if ngs_sample:
                             this_leg = SortLeg(self, cursor)
                         else:
@@ -425,8 +400,8 @@ class YeastDisplayStep(XPlanStep):
                         output_op = this_leg.get_innoculate_op()
 
                         if output_op:
-                            self.add_output_operation(dst['sample'], output_op)
-                            self.plan.add_input_sample(dst['sample'], output_op.output('Yeast Culture').sample)
+                            self.add_output_operation(dst, output_op)
+                            self.plan.add_input_sample(dst, output_op.output('Yeast Culture').sample)
 
                         cursor.incr_x()
                         cursor.return_y()
@@ -441,14 +416,14 @@ class XPlanTransformation(Transformation):
         self.destination = self.format(transformation['destination'])
 
     def source_samples(self):
-        return [x['sample'] for x in self.source]
+        return [self.sample_key(x) for x in self.source]
 
     def destination_samples(self):
-        return [x['sample'] for x in self.destination]
+        return [self.sample_key(x) for x in self.destination]
 
     def protease(self):
         provisioned = self.plan.prov_protease_inputs()
-        proteases = [x for x in self.source if x['sample'] in provisioned.keys()]
+        proteases = [x for x in self.source if self.sample_key(x) in provisioned.keys()]
 
         if proteases:
             return proteases[0]
@@ -471,6 +446,10 @@ class XPlanTransformation(Transformation):
 
         else:
             raise Exception('Format of %s not recognized' % str(element))
+
+    @staticmethod
+    def sample_key(element):
+        return XPlanStep.sample_key(element)
 
 
 class XPlanMeasurement():

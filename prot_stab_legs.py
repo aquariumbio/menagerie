@@ -15,7 +15,7 @@ class ProtStabLeg(Leg):
         super().__init__(plan_step, cursor)
 
     def set_yeast(self, input_sample_uri):
-        input_sample = self.ext_plan.input_samples[input_sample_uri]
+        input_sample = self.ext_plan.input_sample(input_sample_uri)
         self.set_yeast_from_sample(input_sample)
 
     def set_yeast_from_sample(self, input_sample):
@@ -25,9 +25,9 @@ class ProtStabLeg(Leg):
     def get_innoculate_op(self):
         return self.select_op('Innoculate Yeast Library')
 
-    def set_uri(self, ot_name, obj):
-        op = self.select_op(ot_name)
-        obj.get('sample')
+    # def set_uri(self, ot_name, obj):
+    #     op = self.select_op(ot_name)
+    #     obj.get('sample')
 
 
 class OvernightLeg(ProtStabLeg):
@@ -84,17 +84,18 @@ class TreatmentLeg(ProtStabLeg):
             protease_inputs = self.plan_step.get_inputs(st)
             if protease_inputs: break
 
-        p = [s for s in source if s.get('sample') in protease_inputs]
+        p = [s for s in source if self.plan_step.sample_key(s) in protease_inputs]
 
         if p:
-            prot_samp =  self.ext_plan.input_samples[p[0]['sample']]
-            prot_conc = p[0]['concentration']
+            s = p[0]
+            prot_samp =  self.ext_plan.input_sample(self.plan_step.sample_key(s))
+            prot_conc = s['concentration']
         
         else:
             raise "protease not found"
 
         # else:
-        #     prot_samp =  self.ext_plan.input_samples[self.ext_plan.default_protease]
+        #     prot_samp =  self.ext_plan.input_sample(self.ext_plan.default_protease)
         #     prot_conc = 0
 
         self.sample_io['Protease'] = prot_samp

@@ -20,7 +20,7 @@ class DNASeqLeg(Leg):
         super().__init__(plan_step, cursor)
 
     def set_yeast(self, input_sample_uri):
-        input_sample = self.ext_plan.input_samples[input_sample_uri]
+        input_sample = self.ext_plan.input_sample(input_sample_uri)
         self.set_yeast_from_sample(input_sample)
 
     def set_yeast_from_sample(self, input_sample):

@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
+ext_plan_path = '/workspaces/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor, Leg
@@ -15,12 +15,12 @@ from prot_stab_legs import SortLeg
 from plan_tests import test_plan
 from user_input import get_input
 
-inputs = get_input()
-# inputs = {
-#     'start_date': datetime.today(),
-#     'aq_plan_name': 'test_binding',
-#     'aq_instance': 'laptop'
-# }
+# inputs = get_input()
+inputs = {
+    'start_date': datetime.today(),
+    'aq_plan_name': 'template_simple_binding',
+    'aq_instance': 'laptop'
+}
 
 start_date = inputs['start_date']
 plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
