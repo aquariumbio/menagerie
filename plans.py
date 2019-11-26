@@ -120,29 +120,26 @@ class ExternalPlan(metaclass=ABCMeta):
         for d in self.operation_defaults:
             for role in ["input", "output"]:
                 for io_data in d.get(role, {}).values():
-                    sample_name = io_data.get("sample")
-                    if sample_name:
-                        sample = self.session.Sample.find_by_name(sample_name)
-                        if sample:
-                            io_data["sample"] = sample
-                        else:
-                            raise "Input error: {}".format(sample_name)
-
-                    ot_data = io_data.get("object_type")
-                    if isinstance(ot_data, str):
-                        object_type = self.session.ObjectType.find_by_name(ot_data)
-                        if object_type:
-                            io_data["object_type"] = object_type
-                        else:
-                            raise "Input error: {}".format(ot_data)
-
-                    elif isinstance(ot_data, dict):
-                        for option, ot_name in ot_data.items():
+                    sample_data = io_data.get("sample", [])
+                    for s in sample_data:
+                        sample_name = s.get("name")
+                        if sample_name:
+                            sample = self.session.Sample.find_by_name(sample_name)
+                            if sample:
+                                s["sample"] = sample
+                            else:
+                                raise "Input error: {}".format(sample_name)
+                                
+                    ot_data = io_data.get("object_type", [])
+                    for o in ot_data:
+                        ot_name = o.get("name")
+                        if ot_name:
                             object_type = self.session.ObjectType.find_by_name(ot_name)
                             if object_type:
-                                ot_data[option] = object_type
+                                o["object_type"] = object_type
                             else:
-                                raise "Input error: {}".format(ot_name)
+                                raise "Input error: {}".format(ot_data)
+
 
     def get_samples(self, sample_type_name, sample_name, properties={}):
         """
@@ -528,23 +525,20 @@ class Leg:
         :type container_opt: str
         :return: ObjectType
         """
-        # op_defaults = self.op_data["operation_defaults"]
         role_data = get_obj_by_name(self.op_data, ot_name).get(role)
 
         if role_data:
             io_data = role_data.get(io_name)
-            ot_data = io_data.get("object_type")
-            if isinstance(ot_data, dict):
+            ot_data = io_data.get("object_type", [])
+            if len(ot_data) > 1:
                 if container_opt:
-                    object_type = ot_data[container_opt]
+                    return [o["object_type"] for o in ot_data if o["option_key"] == container_opt][0]
 
                 else:
                     raise Exception("Option required to specify container: " + ot_data)
             
-            else:
-                object_type = ot_data
-
-            return object_type
+            elif len(ot_data) == 1:
+                return ot_data[0]["object_type"]
 
     # Is there any reason why this can't be done as the operations
     # are being created?
@@ -585,49 +579,63 @@ class Leg:
             # raise
 
             for ft in op.operation_type.field_types:
+                # print(ft)
                 ft_io = this_io.get(ft.role, {}).get(ft.name, {})
-                io_object = ft_io.get("sample") or ft_io.get("value")
+                # io_object = ft_io.get("sample") or ft_io.get("value")
 
-                is_sample = isinstance(io_object, Sample)
-                is_item = isinstance(io_object, Item)
-                is_array = isinstance(io_object, list)
+                # is_sample = ft.ftype == 'sample' #isinstance(io_object, Sample)
+                # is_item = isinstance(io_object, Item)
+                # is_array = ft.array #isinstance(io_object, list)
 
-                if is_sample or is_array:
-                    container = self.get_container(op.operation_type.name, ft.name, ft.role, container_opt)
-                    if is_sample:
-                        try:
-                            op.set_field_value(ft.name, ft.role, sample=io_object, container=container)
-                        except AquariumModelError as e:
-                            print("%s: %s" % (od["name"], e))
+                if ft.ftype == 'sample':
+                    io_list = ft_io.get("sample")
+                    if io_list:
+                        io_object = io_list[0].get("sample")
+                        container = self.get_container(op.operation_type.name, ft.name, ft.role, container_opt)
+                        if ft.array and isinstance(io_object, list):
+                            values = [{
+                                "sample": io_object.pop(0),
+                                "container": container
+                            }]
 
-                    else:
-                        values = [{
-                            "sample": io_object.pop(0),
-                            "container": container
-                        }]
-
-                        try:
-                            op.set_field_value_array(ft.name, ft.role, values)
-                        except AquariumModelError as e:
-                            print("%s: %s" % (od["name"], e))
-
-                        for obj in io_object:
                             try:
-                                op.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
+                                op.set_field_value_array(ft.name, ft.role, values)
                             except AquariumModelError as e:
                                 print("%s: %s" % (od["name"], e))
 
-                elif is_item:
-                    try:
-                        op.set_field_value(ft.name, ft.role, item=io_object)
-                    except AquariumModelError as e:
-                        print("%s: %s" % (od["name"], e))
+                            for obj in io_object:
+                                try:
+                                    op.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
+                                except AquariumModelError as e:
+                                    print("%s: %s" % (od["name"], e))
+                        else:
+                            if isinstance(io_object, Item):
+                                sample = None
+                                item = io_object
+                            else:
+                                sample = io_object
+                                item = None
+
+                            try:
+                                op.set_field_value(ft.name, ft.role, sample=sample, item=item, container=container)
+                            except AquariumModelError as e:
+                                print("%s: %s" % (od["name"], e))
+
+
+                # elif is_item:
+                #     try:
+                #         op.set_field_value(ft.name, ft.role, item=io_object)
+                #     except AquariumModelError as e:
+                #         print("%s: %s" % (od["name"], e))
 
                 else:
-                    try:
-                        op.set_field_value(ft.name, ft.role, value=io_object)
-                    except AquariumModelError as e:
-                        print("%s: %s" % (od["name"], e))
+                    io_list = ft_io.get("value")
+                    if io_list:
+                        io_object = io_list[0].get("value")
+                        try:
+                            op.set_field_value(ft.name, ft.role, value=io_object)
+                        except AquariumModelError as e:
+                            print("%s: %s" % (od["name"], e))
 
             # what if i == 0?
             self.propagate_sample(self.op_data[i - 1]["operation"], self.op_data[i]["operation"])
@@ -638,13 +646,18 @@ class Leg:
         for role in ["input", "output"]:
             for name, replacement in self.sample_io.items():
                 role_defaults = od.get(role, {})
-                if not role_defaults.get(name):
-                    role_defaults[name] = {}
+
+                if not role_defaults.get(name): role_defaults[name] = {}
+                op_defaults = role_defaults[name]
 
                 if isinstance(replacement, Sample):
-                    role_defaults[name]["sample"] = replacement
+                    role_defaults[name]["sample"] = [
+                        { "sample": replacement }
+                    ]
                 else:
-                    role_defaults[name]["value"] = replacement
+                    role_defaults[name]["value"] = [
+                        { "value": replacement }
+                    ]
                     
         return od
 
