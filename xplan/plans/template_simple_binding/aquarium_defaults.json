@@ -1,139 +1,255 @@
 {
   "operation_defaults": [
     {
-      "name": "Innoculate Yeast Library",
       "input": {
-        "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Glycerol Stock",
-            "library": "Labeled Yeast Library Suspension",
-            "control": "Yeast Plate"
-          }
-        },
         "Media": {
-          "sample": "SDO -His -Trp -Ura"
+          "sample": [
+            {
+              "name": "SDO -His -Trp -Ura"
+            }
+          ]
         },
         "Options": {
-          "value": "{}"
-        }
-      },
-      "output": {
-        "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Liquid Culture",
-            "library": "Yeast Library Liquid Culture",
-            "control": "Yeast 5ml culture"
-          }
-        }
-      }
-    },
-    {
-      "name": "Dilute Yeast Library",
-      "input": {
-        "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Liquid Culture",
-            "library": "Yeast Library Liquid Culture",
-            "control": "Yeast 5ml culture"
-          }
+          "value": [
+            {
+              "value": "{}"
+            }
+          ]
         },
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Glycerol Stock",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast Plate",
+              "option_key": "control"
+            }
+          ]
+        }
+      },
+      "name": "Innoculate Yeast Library",
+      "output": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 5ml culture",
+              "option_key": "control"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
         "Media": {
-          "sample": "SDO + 2% Galactose -His -Trp -Ura"
+          "sample": [
+            {
+              "name": "SDO + 2% Galactose -His -Trp -Ura"
+            }
+          ]
+        },
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 5ml culture",
+              "option_key": "control"
+            }
+          ]
         }
       },
+      "name": "Dilute Yeast Library",
       "output": {
         "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Liquid Culture",
-            "library": "Yeast Library Liquid Culture",
-            "control": "Yeast 50ml culture"
-          }
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 50ml culture",
+              "option_key": "control"
+            }
+          ]
         }
       }
     },
     {
+      "input": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            }
+          ]
+        }
+      },
       "name": "Mix Cultures",
-      "input": {
-        "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Liquid Culture",
-            "library": "Yeast Library Liquid Culture"
-          }
-        }
-      },
       "output": {
         "Yeast Culture": {
-          "object_type": {
-            "library_start": "Yeast Library Liquid Culture",
-            "library": "Yeast Library Liquid Culture"
-          }
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            }
+          ]
         }
       }
     },
     {
-      "name": "Challenge and Label",
       "input": {
-        "Yeast Culture": {
-          "object_type": {
-            "library": "Yeast Library Liquid Culture",
-            "control": "Yeast 50ml culture"
-          }
+        "Antibody": {
+          "object_type": [
+            {
+              "name": "Antibody Stock"
+            }
+          ],
+          "sample": [
+            {
+              "name": "Anti-c-myc-FITC"
+            }
+          ]
         },
         "Protease": {
-          "object_type": "Biotinylated Binding Target Stock"
+          "object_type": [
+            {
+              "name": "Biotinylated Binding Target Stock"
+            }
+          ]
         },
-        "Antibody": {
-          "object_type": "Antibody Stock",
-          "sample": "Anti-c-myc-FITC"
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 50ml culture",
+              "option_key": "control"
+            }
+          ]
         }
       },
+      "name": "Challenge and Label",
       "output": {
         "Labeled Yeast Library": {
-          "object_type": {
-            "library": "Labeled Yeast Library Suspension",
-            "control": "Labeled Yeast Strain Suspension"
-          }
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
         }
       }
     },
     {
-      "name": "Sort Yeast Display Library",
       "input": {
-        "Labeled Yeast Library": {
-          "object_type": {
-            "library": "Labeled Yeast Library Suspension",
-            "control": "Labeled Yeast Strain Suspension"
-          }
-        },
         "Control?": {
-          "value": "no"
+          "value": [
+            {
+              "value": "no"
+            }
+          ]
+        },
+        "Labeled Yeast Library": {
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
         },
         "Sort?": {
-          "value": "yes"
+          "value": [
+            {
+              "value": "yes"
+            }
+          ]
         }
       },
+      "name": "Sort Yeast Display Library",
       "output": {
         "Labeled Yeast Library": {
-          "object_type": {
-            "library": "Labeled Yeast Library Suspension",
-            "control": "Labeled Yeast Strain Suspension"
-          }
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
         }
       }
     },
     {
-      "name": "Store Yeast Library Sample",
       "input": {
         "Yeast Culture": {
-          "object_type": "Yeast Library Liquid Culture"
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture"
+            }
+          ]
         }
       },
+      "name": "Store Yeast Library Sample",
       "output": {
         "Stored sample rep 1": {
-          "object_type": "Yeast Library in Soln 1"
+          "object_type": [
+            {
+              "name": "Yeast Library in Soln 1"
+            }
+          ]
         },
         "Stored sample rep 2": {
-          "object_type": "Yeast Library in Soln 1"
+          "object_type": [
+            {
+              "name": "Yeast Library in Soln 1"
+            }
+          ]
         }
       }
     }
