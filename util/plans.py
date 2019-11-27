@@ -22,7 +22,7 @@ def get_obj_by_name(leg, name):
 
 class ExternalPlan(metaclass=ABCMeta):
     """Interface for working with the Aquarium Session and Plan models."""
-    def __init__(self, aq_plan_name, aq_instance):
+    def __init__(self, plan_path, aq_instance, aq_plan_name=None):
         """
         1. Creates a session from stored secrets
         2. Creates a new Plan in the session
@@ -30,9 +30,9 @@ class ExternalPlan(metaclass=ABCMeta):
         4. Populates self.defaults with found samples
         5. Creates a few other fields to be populated by inheriting classes
 
-        :param aq_plan_name: name of folder containing configuration files
+        :param plan_path: name of folder containing configuration files
             Also used as the name of the Plan record in Aquarium
-        :type aq_plan_name: str
+        :type plan_path: str
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the config.yml file
         :type aq_instance: str
@@ -40,8 +40,9 @@ class ExternalPlan(metaclass=ABCMeta):
         """
         self.session = ExternalPlan.create_session(aq_instance)
 
-        self.aq_plan = Plan(name=aq_plan_name)
-        self.plan_path = "plans/%s" % aq_plan_name
+        self.plan_path = plan_path
+        self.aq_plan_name = aq_plan_name or os.path.split(plan_path)[1]
+        self.aq_plan = Plan(name=self.aq_plan_name)
 
         self.plan = self.load_json_from_file('plan.json')
         self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')

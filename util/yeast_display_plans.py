@@ -6,30 +6,30 @@ import pydent
 from pydent import models
 from pydent.models import Sample
 
-from plans import ExternalPlan, PlanStep, Transformation
-from prot_stab_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
-from prot_stab_legs import SortLeg, FlowLeg, ProtStabLeg
-from dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
+from util.plans import ExternalPlan, PlanStep, Transformation
+from util.yeast_display_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
+from util.yeast_display_legs import SortLeg, FlowLeg, YeastDisplayLeg
+from util.dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
 
 class YeastDisplayPlan(ExternalPlan):
     """
     Interface for working with the Aquarium Session and Plan models.
     Originally based on JSON schema derived from SIFT's XPlan schema.
     """
-    def __init__(self, aq_plan_name, aq_instance):
+    def __init__(self, plan_path, aq_instance, aq_plan_name=None):
         """
         In addition to super(), populates self.steps with new instances
         of PlanStep (YeastDisplayStep or DNASeqStep).
 
-        :param aq_plan_name: name of folder containing configuration files
+        :param plan_path: name of folder containing configuration files
             Also used as the name of the Plan record in Aquarium
-        :type aq_plan_name: str
+        :type plan_path: str
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the config.yml file
         :type aq_instance: str
         :return: new YeastDisplayPlan
         """
-        super().__init__(aq_plan_name, aq_instance)
+        super().__init__(plan_path, aq_instance, aq_plan_name)
         # self.provision_from_plan_params()
 
         # Get the list of samples for NGS

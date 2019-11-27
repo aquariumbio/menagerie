@@ -1,4 +1,4 @@
-from plans import Leg
+from util.plans import Leg
 
 class DNASeqLeg(Leg):
 

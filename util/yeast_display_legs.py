@@ -1,6 +1,6 @@
-from plans import Leg
+from util.plans import Leg
 
-class ProtStabLeg(Leg):
+class YeastDisplayLeg(Leg):
 
     leg_order = []
 
@@ -30,7 +30,7 @@ class ProtStabLeg(Leg):
     #     obj.get('sample')
 
 
-class OvernightLeg(ProtStabLeg):
+class OvernightLeg(YeastDisplayLeg):
 
     leg_order = ['Innoculate Yeast Library']
 
@@ -38,7 +38,7 @@ class OvernightLeg(ProtStabLeg):
         super().__init__(plan_step, cursor)
 
 
-class MixCulturesLeg(ProtStabLeg):
+class MixCulturesLeg(YeastDisplayLeg):
 
     leg_order = ['Mix Cultures']
 
@@ -54,7 +54,7 @@ class MixCulturesLeg(ProtStabLeg):
         self.aq_plan.add_wires([wire_pair])
 
 
-class NaiveLeg(ProtStabLeg):
+class NaiveLeg(YeastDisplayLeg):
 
     leg_order = ['Store Yeast Library Sample']
 
@@ -62,7 +62,7 @@ class NaiveLeg(ProtStabLeg):
         super().__init__(plan_step, cursor)
 
 
-class InductionLeg(ProtStabLeg):
+class InductionLeg(YeastDisplayLeg):
 
     leg_order = ['Dilute Yeast Library']
 
@@ -70,7 +70,7 @@ class InductionLeg(ProtStabLeg):
         super().__init__(plan_step, cursor)
 
 
-class TreatmentLeg(ProtStabLeg):
+class TreatmentLeg(YeastDisplayLeg):
 
     leg_order = []
 

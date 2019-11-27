@@ -10,7 +10,7 @@ sys.path.append(ext_plan_path)
 from plans import Cursor, Leg
 from yeast_display_plan.yeast_display_plans import YeastDisplayPlan
 
-from prot_stab_legs import SortLeg
+from yeast_display_legs import SortLeg
 
 from plan_tests import test_plan
 from user_input import get_input
@@ -18,13 +18,13 @@ from user_input import get_input
 # inputs = get_input()
 
 inputs = {
-    'aq_plan_name': 'json_harmonization', 
+    'plan_path': 'json_harmonization', 
     'start_date': datetime(2019, 10, 21, 22, 37, 14, 525441), 
     'aq_instance': 'laptop'
 }
 
 start_date = inputs['start_date']
-plan = YeastDisplayPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 
 # print(plan.operation_defaults)
 

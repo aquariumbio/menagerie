@@ -14,18 +14,18 @@ from plan_tests import test_plan
 from user_input import get_input
 
 # inputs = {
-#     'aq_plan_name': "GJR_EEHEE_miniSSM_1_ngs",
+#     'plan_path': "GJR_EEHEE_miniSSM_1_ngs",
 #     'aq_instance': "production"
 # }
 
 # inputs = {
-#     'aq_plan_name': "ds1_hifi_ngs_prep_test",
+#     'plan_path': "ds1_hifi_ngs_prep_test",
 #     'aq_instance': "laptop"
 # }
 
 inputs = get_input(start_date=False)
 
-plan = YeastDisplayPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 session = plan.session
 cursor = Cursor(y=18)
 

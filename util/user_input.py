@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-def get_input(aq_plan_name=True, start_date=True, aq_instance=True):
+def get_input(plan_path=True, start_date=True, aq_instance=True):
     inputs = {}
 
-    if aq_plan_name: inputs["aq_plan_name"] = get_aq_plan_name()
+    if plan_path: inputs["plan_path"] = get_plan_path()
     if start_date: inputs["start_date"] = get_start_date()
     if aq_instance: inputs["aq_instance"] = get_aq_instance()
     print()
@@ -58,9 +58,8 @@ def get_start_date():
 
     return start_date
 
-def get_aq_plan_name():
+def get_plan_path():
     print()
-    print("Please provide a name for this plan.")
-    print("The name must match the name of a folder in the `plans` subdirectory.")
-    aq_plan_name = input("Name: ")
-    return aq_plan_name
+    print("Please provide a path to a folder containing the .json files for this plan.")
+    plan_path = input("Path: ") 
+    return plan_path

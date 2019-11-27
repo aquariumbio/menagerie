@@ -4,11 +4,9 @@ import pydent
 from pydent import models
 from pydent.models import Sample
 
-import plans
-from plans import ExternalPlan, PlanStep, Transformation
-import plasmid_assembly_legs
-from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
-from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
+from util.plans import ExternalPlan, PlanStep, Transformation
+from util.plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
+from util.plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
 
 class CloningPlan(ExternalPlan):
     """
@@ -16,20 +14,20 @@ class CloningPlan(ExternalPlan):
     Originally based on JSON schema derived from BU/SAIL Puppeteer schema.
     """
 
-    def __init__(self, aq_plan_name, aq_instance):
+    def __init__(self, plan_path, aq_instance, aq_plan_name=None):
         """
         In addition to super(), populates self.steps with new instances
         of PlanStep (PCRStep, GibsonStep or YeastTransformationStep).
 
-        :param aq_plan_name: name of folder containing configuration files
+        :param plan_path: name of folder containing configuration files
             Also used as the name of the Plan record in Aquarium
-        :type aq_plan_name: str
+        :type plan_path: str
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the config.yml file
         :type aq_instance: str
         :return: new CloningPlan
         """
-        super().__init__(aq_plan_name, aq_instance)
+        super().__init__(plan_path, aq_instance, aq_plan_name)
 
         # self.provision_samples()
 

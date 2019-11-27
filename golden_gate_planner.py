@@ -15,12 +15,12 @@ from plan_tests import test_plan
 from user_input import get_input
 
 inputs = {
-    "aq_plan_name": "golden_gate_test",
+    "plan_path": "golden_gate_test",
     "aq_instance": "nursery"
 }
 # inputs = get_input(start_date=False)
 
-plan = CloningPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = CloningPlan(inputs['plan_path'], inputs['aq_instance'])
 
 cursor = Cursor(y=8)
 

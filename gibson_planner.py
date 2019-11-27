@@ -18,11 +18,11 @@ from user_input import get_input
 
 # inputs = get_input(start_date=False)
 inputs = {
-    'aq_plan_name': 'json_harmonization',
+    'plan_path': 'json_harmonization',
     'aq_instance': 'laptop'
 }
 
-plan = CloningPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = CloningPlan(inputs['plan_path'], inputs['aq_instance'])
 
 cursor = Cursor(y=26)
 
