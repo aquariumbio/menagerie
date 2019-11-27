@@ -106,9 +106,9 @@ ENV/
 config.yml
 
 .vscode/
-xplan/protstab_test/associations_test.py
-xplan/protstab_test/delete_plans.py
-xplan/protstab_test/plan-ref-old.json
+yeast_display_plan/protstab_test/associations_test.py
+yeast_display_plan/protstab_test/delete_plans.py
+yeast_display_plan/protstab_test/plan-ref-old.json
 
 *.DS_Store
 git_setup.sh

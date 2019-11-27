@@ -85,7 +85,7 @@ class PupPlanStep(PlanStep):
         self.name = self.plan_step.get('name')
         self.operator_type = plan_step["type"]
         
-        # It would be good to harmonize this with the XPlan schema
+        # It would be good to harmonize this with the YeastDisplayPlan schema
         self.operator = self.plan_step
 
         self.transformations = []
@@ -94,7 +94,7 @@ class PupPlanStep(PlanStep):
 
         # self.measurements = []
         # for msmt in self.operator.get('measurements', []):
-        #     self.measurements.append(XPlanMeasurement(self, msmt))
+        #     self.measurements.append(YeastDisplayPlanMeasurement(self, msmt))
 
         # self.measured_samples = [m.source for m in self.measurements]
 

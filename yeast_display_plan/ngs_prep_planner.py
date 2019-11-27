@@ -8,7 +8,7 @@ ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor
-from xplan.xplans import XPlan
+from yeast_display_plan.yeast_display_plans import YeastDisplayPlan
 
 from plan_tests import test_plan
 from user_input import get_input
@@ -25,7 +25,7 @@ from user_input import get_input
 
 inputs = get_input(start_date=False)
 
-plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = YeastDisplayPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 session = plan.session
 cursor = Cursor(y=18)
 

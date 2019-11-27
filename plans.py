@@ -379,7 +379,7 @@ class ProvisionStep(PlanStep):
                 raise "Unable to find or add sample {}".format(sample_name)
 
     # This seems structurally similar to what is going on in
-    # self.plan_params['input_samples'] for XPlan
+    # self.plan_params['input_samples'] for YeastDisplayPlan
     # def provision_samples(self):
     #     """Finds all the input samples for the PupPlan."""
     #     prov_step = [s for s in self.plan["steps"] if s["type"] == "provision"][0]

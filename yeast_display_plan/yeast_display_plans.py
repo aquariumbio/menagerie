@@ -11,7 +11,7 @@ from prot_stab_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
 from prot_stab_legs import SortLeg, FlowLeg, ProtStabLeg
 from dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
 
-class XPlan(ExternalPlan):
+class YeastDisplayPlan(ExternalPlan):
     """
     Interface for working with the Aquarium Session and Plan models.
     Originally based on JSON schema derived from SIFT's XPlan schema.
@@ -27,7 +27,7 @@ class XPlan(ExternalPlan):
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the config.yml file
         :type aq_instance: str
-        :return: new XPlan
+        :return: new YeastDisplayPlan
         """
         super().__init__(aq_plan_name, aq_instance)
         # self.provision_from_plan_params()
@@ -52,7 +52,7 @@ class XPlan(ExternalPlan):
             step = DNASeqStep(self, step_data)
         
         else:
-            step = XPlanStep(self, step_data)
+            step = YeastDisplayPlanStep(self, step_data)
 
         return step
 
@@ -79,7 +79,7 @@ class XPlan(ExternalPlan):
         return isinstance(s, Sample) and s.sample_type.name == "Protease"
 
 
-class XPlanStep(PlanStep):
+class YeastDisplayPlanStep(PlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
         self.plan = plan
@@ -92,11 +92,11 @@ class XPlanStep(PlanStep):
 
         self.transformations = []
         for txn in self.operator.get('transformations', []):
-            self.transformations.append(XPlanTransformation(self, txn))
+            self.transformations.append(YeastDisplayPlanTransformation(self, txn))
 
         self.measurements = []
         for msmt in self.operator.get('measurements', []):
-            self.measurements.append(XPlanMeasurement(self, msmt))
+            self.measurements.append(YeastDisplayPlanMeasurement(self, msmt))
 
         self.measured_samples = [m.source for m in self.measurements]
 
@@ -127,7 +127,7 @@ class XPlanStep(PlanStep):
         return element.get('sample') or element.get('sample_key')
 
 
-class DNASeqStep(XPlanStep):
+class DNASeqStep(YeastDisplayPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
@@ -185,7 +185,7 @@ class DNASeqStep(XPlanStep):
             cursor.return_y()
 
 
-class YeastDisplayStep(XPlanStep):
+class YeastDisplayStep(YeastDisplayPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
@@ -359,7 +359,7 @@ class YeastDisplayStep(XPlanStep):
                 cursor.incr_x()
 
 
-class XPlanTransformation(Transformation):
+class YeastDisplayPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):
         super().__init__(plan_step, transformation)
         self.source = self.format(transformation['source'])
@@ -399,10 +399,10 @@ class XPlanTransformation(Transformation):
 
     @staticmethod
     def sample_key(element):
-        return XPlanStep.sample_key(element)
+        return YeastDisplayPlanStep.sample_key(element)
 
 
-class XPlanMeasurement():
+class YeastDisplayPlanMeasurement():
     def __init__(self, plan_step, measurement):
         self.plan_step = plan_step
         self.plan = self.plan_step.plan

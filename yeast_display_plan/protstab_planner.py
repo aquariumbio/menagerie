@@ -8,7 +8,7 @@ ext_plan_path = '/workspaces/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor, Leg
-from xplan.xplans import XPlan
+from yeast_display_plan.yeast_display_plans import YeastDisplayPlan
 
 from prot_stab_legs import SortLeg
 
@@ -24,7 +24,7 @@ inputs = {
 }
 
 start_date = inputs['start_date']
-plan = XPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = YeastDisplayPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
 # print(plan.operation_defaults)
 
