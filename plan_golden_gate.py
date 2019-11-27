@@ -1,18 +1,14 @@
 import sys
+import os
 import warnings
 warnings.filterwarnings('ignore')
 
-ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
-sys.path.append(ext_plan_path)
+from util.plans import Cursor
+from util.cloning_plans import CloningPlan
+from util.plasmid_assembly_legs import GoldenGateLeg, SangerSeqLeg
 
-from plans import Cursor
-from cloning_plan.cloning_plans import CloningPlan
-from plasmid_assembly_legs import GoldenGateLeg, SangerSeqLeg
-
-import os
-
-from plan_tests import test_plan
-from user_input import get_input
+from util.plan_tests import test_plan
+from util.user_input import get_input
 
 inputs = {
     "plan_path": "golden_gate_test",

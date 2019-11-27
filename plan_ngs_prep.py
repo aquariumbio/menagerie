@@ -4,14 +4,11 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-ext_plan_path = '/Users/devin/Documents/work/ext-plan-pydent'
-sys.path.append(ext_plan_path)
+from util.plans import Cursor
+from util.yeast_display_plans import YeastDisplayPlan
 
-from plans import Cursor
-from yeast_display_plan.yeast_display_plans import YeastDisplayPlan
-
-from plan_tests import test_plan
-from user_input import get_input
+from util.plan_tests import test_plan
+from util.user_input import get_input
 
 # inputs = {
 #     'plan_path': "GJR_EEHEE_miniSSM_1_ngs",

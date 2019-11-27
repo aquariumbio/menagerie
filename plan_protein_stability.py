@@ -4,16 +4,13 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-ext_plan_path = '/workspaces/ext-plan-pydent'
-sys.path.append(ext_plan_path)
+from util.plans import Cursor, Leg
+from util.yeast_display_plans import YeastDisplayPlan
 
-from plans import Cursor, Leg
-from yeast_display_plan.yeast_display_plans import YeastDisplayPlan
+from util.yeast_display_legs import SortLeg
 
-from yeast_display_legs import SortLeg
-
-from plan_tests import test_plan
-from user_input import get_input
+from util.plan_tests import test_plan
+from util.user_input import get_input
 
 # inputs = get_input()
 
