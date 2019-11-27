@@ -13,7 +13,7 @@ from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
 class PupPlan(ExternalPlan):
     """
     Interface for working with the Aquarium Session and Plan models.
-    Uses JSON schema derived from BU/SAIL Puppeteer schema.
+    Originally based on JSON schema derived from BU/SAIL Puppeteer schema.
     """
 
     def __init__(self, aq_plan_name, aq_instance):
@@ -31,7 +31,7 @@ class PupPlan(ExternalPlan):
         """
         super().__init__(aq_plan_name, aq_instance)
 
-        self.provision_samples()
+        # self.provision_samples()
 
         for step in self.steps:
             dst_sample_type = self.destination_sample_type(step["type"])

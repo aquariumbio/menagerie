@@ -14,7 +14,7 @@ from dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
 class XPlan(ExternalPlan):
     """
     Interface for working with the Aquarium Session and Plan models.
-    Uses JSON schema derived from SIFT's XPlan schema.
+    Originally based on JSON schema derived from SIFT's XPlan schema.
     """
     def __init__(self, aq_plan_name, aq_instance):
         """
@@ -55,56 +55,6 @@ class XPlan(ExternalPlan):
             step = XPlanStep(self, step_data)
 
         return step
-
-    # def provision_from_plan_params(self):
-    #     # Find input samples that are likely to vary between operations.
-    #     # This seems structurally similar to what is going on in
-    #     # self.provision_samples() for PupPlan
-    #     # TODO: This should be harmonized with the plan_params['operation_defaults'] structure
-    #     for key, sample_data in self.plan_params.get('input_samples', {}).items():
-    #         # Special case:
-    #         # Libraries that are combined at the beginning of the Plan.
-    #         if key == "library_composition":
-    #             sample_ids = sample_data["components"]
-    #             component_samples = []
-
-    #             for sid in sample_ids:
-    #                 component_samples.append(self.find_input_sample(sid))
-
-    #             sample_data["components"] = component_samples
-    #             self.add_input_sample(key, sample_data)
-
-    #         # Special case:
-    #         # Collect all of the outputs of an already-run Plan.
-    #         elif key == "plan_outputs":
-    #             plan = self.session.Plan.find(sample_data["plan_id"])
-    #             ops = plan.operations
-
-    #             ot_name = sample_data["operation_type"]
-    #             ops = [op for op in ops if op.operation_type.name == ot_name]
-
-    #             for op in ops:
-    #                 item = op.output(sample_data["output"]).item
-    #                 if item:
-    #                     self.add_input_sample(op.id, item)
-    #                 else:
-    #                     msg = "Could not find {} Item for {} Operation {}"
-    #                     print(msg.format(sample_data["output"], ot_name, op.id))
-    #                     print()
-
-    #         # A list of Samples.
-    #         elif isinstance(sample_data, list):
-    #             found_input = []
-
-    #             for d in sample_data:
-    #                 found_input.append(self.find_input_sample(d))
-
-    #             self.add_input_sample(key, found_input)
-
-    #         # A single Sample.
-    #         else:
-    #             found_input = self.find_input_sample(sample_data)
-    #             self.add_input_sample(key, found_input)
 
     def dna_seq_steps(self):
         """Get PlanSteps of operator type 'dna_seq'."""
