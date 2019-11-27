@@ -102,8 +102,6 @@ ENV/
 
 #sd2e
 */secrets.json
-*/config.yml
-config.yml
 
 .vscode/
 yeast_display_plan/protstab_test/associations_test.py

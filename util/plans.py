@@ -78,24 +78,22 @@ class ExternalPlan(metaclass=ABCMeta):
         :return: new Session
         """
         dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'config.yml')
+        filename = os.path.join(dirname, 'secrets.json')
 
-        # TODO: Update this to use secrets.json convention
-        with open(filename, 'r') as f:
-            config = yaml.load(f)
+        with open(filename) as f:
+            secrets = json.load(f)
 
-        login = config['aquarium'][aq_instance]
-
+        credentials = secrets[aq_instance]
         session = AqSession(
-            login['username'],
-            login['password'],
-            login['url']
+            credentials["login"],
+            credentials["password"],
+            credentials["aquarium_url"]
         )
 
         msg = "Connected to Aquarium at {} using pydent version {}"
         print(msg.format(session.url, str(__version__)))
 
-        me = session.User.where({'login': login['username']})[0]
+        me = session.User.where({'login': credentials['username']})[0]
         print('Logged in as {}\n'.format(me.name))
 
         return session
