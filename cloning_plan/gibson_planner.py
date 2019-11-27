@@ -7,7 +7,7 @@ ext_plan_path = '/workspaces/ext-plan-pydent'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor
-from pup_plan.pup_plans import PupPlan
+from cloning_plan.cloning_plans import CloningPlan
 from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
 from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
 
@@ -22,7 +22,7 @@ inputs = {
     'aq_instance': 'laptop'
 }
 
-plan = PupPlan(inputs['aq_plan_name'], inputs['aq_instance'])
+plan = CloningPlan(inputs['aq_plan_name'], inputs['aq_instance'])
 
 cursor = Cursor(y=26)
 

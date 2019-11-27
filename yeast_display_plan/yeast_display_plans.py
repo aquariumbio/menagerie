@@ -117,7 +117,7 @@ class YeastDisplayPlanStep(PlanStep):
 
         return yeast_inputs
 
-    # TODO: Output Operations are handled differently in pup_plans. Harmonize.
+    # TODO: Output Operations are handled differently in cloning_plans. Harmonize.
     def add_output_operation(self, uri, op):
         """Adds an Operation to the list of output operations for the PlanStep."""
         self.output_operations[uri] = op

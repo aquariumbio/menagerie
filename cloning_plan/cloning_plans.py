@@ -10,7 +10,7 @@ import plasmid_assembly_legs
 from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
 from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
 
-class PupPlan(ExternalPlan):
+class CloningPlan(ExternalPlan):
     """
     Interface for working with the Aquarium Session and Plan models.
     Originally based on JSON schema derived from BU/SAIL Puppeteer schema.
@@ -27,7 +27,7 @@ class PupPlan(ExternalPlan):
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the config.yml file
         :type aq_instance: str
-        :return: new PupPlan
+        :return: new CloningPlan
         """
         super().__init__(aq_plan_name, aq_instance)
 
@@ -58,7 +58,7 @@ class PupPlan(ExternalPlan):
             step = YeastTransformationStep(self, step_data)
 
         else:
-            step = PupPlanStep(self, step_data)
+            step = CloningPlanStep(self, step_data)
 
         return step
 
@@ -75,7 +75,7 @@ class PupPlan(ExternalPlan):
         return dst_sample_type
 
 
-class PupPlanStep(PlanStep):
+class CloningPlanStep(PlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
         self.plan = plan
@@ -90,7 +90,7 @@ class PupPlanStep(PlanStep):
 
         self.transformations = []
         for txn in self.operator.get('transformations', []):
-            self.transformations.append(PupPlanTransformation(self, txn))
+            self.transformations.append(CloningPlanTransformation(self, txn))
 
         # self.measurements = []
         # for msmt in self.operator.get('measurements', []):
@@ -103,12 +103,12 @@ class PupPlanStep(PlanStep):
         self.step_type = self.operator_type
 
 
-class GoldenGateStep(PupPlanStep):
+class GoldenGateStep(CloningPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
 
-class GibsonStep(PupPlanStep):
+class GibsonStep(CloningPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
@@ -153,7 +153,7 @@ class GibsonStep(PupPlanStep):
         return step_outputs
 
 
-class PCRStep(PupPlanStep):
+class PCRStep(CloningPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
@@ -179,7 +179,7 @@ class PCRStep(PupPlanStep):
 
         return step_outputs
 
-class YeastTransformationStep(PupPlanStep):
+class YeastTransformationStep(CloningPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
@@ -216,7 +216,7 @@ class YeastTransformationStep(PupPlanStep):
 
         return step_outputs
 
-class PupPlanTransformation(Transformation):
+class CloningPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):
         super().__init__(plan_step, transformation)
         self.source = self.format(transformation['source'])
