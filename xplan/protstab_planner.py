@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-ext_plan_path = '/workspaces/ext-plan-pydent'
+ext_plan_path = '/workspaces/menagerie'
 sys.path.append(ext_plan_path)
 
 from plans import Cursor, Leg
