@@ -45,7 +45,7 @@
       "operator": {
         "transformations": [
           {
-            "destination:": [
+            "destination": [
               {
                 "name": "Test Fragment 1",
                 "sample_type": "Fragment"
@@ -67,7 +67,7 @@
             ]
           },
           {
-            "destination:": [
+            "destination": [
               {
                 "name": "Test Fragment 2",
                 "sample_type": "Fragment"
@@ -98,7 +98,7 @@
       "operator": {
         "transformations": [
           {
-            "destination:": [
+            "destination": [
               {
                 "name": "Test Plasmid 2",
                 "sample_type": "Plasmid"

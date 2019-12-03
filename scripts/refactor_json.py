@@ -1,8 +1,8 @@
 import json
 
 
-file_path = "yeast_display_plan/plans/template_simple_binding/aquarium_defaults.json"
-new_file_path = "yeast_display_plan/plans/template_simple_binding/new_aquarium_defaults.json"
+file_path = "cloning_plans/test_gibson/aquarium_defaults.json"
+new_file_path = "cloning_plans/test_gibson/new_aquarium_defaults.json"
 
 with open(file_path) as f:
     old_json = json.load(f)

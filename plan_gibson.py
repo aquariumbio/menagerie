@@ -1,24 +1,20 @@
 import sys
-import warnings
-warnings.filterwarnings('ignore')
-import time
-
-ext_plan_path = '/workspaces/ext-plan-pydent'
-sys.path.append(ext_plan_path)
-
-from plans import Cursor
-from cloning_plan.cloning_plans import CloningPlan
-from plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
-from plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
-
 import os
+import time
+import warnings
+# warnings.filterwarnings('ignore')
 
-from plan_tests import test_plan
-from user_input import get_input
+from util.plans import Cursor
+from util.cloning_plans import CloningPlan
+from util.plasmid_assembly_legs import GibsonLeg, SangerSeqLeg, PCRLeg
+from util.plasmid_assembly_legs import YeastTransformationLeg, YeastGenotypingLeg
+
+from util.plan_tests import test_plan
+from util.user_input import get_input
 
 # inputs = get_input(start_date=False)
 inputs = {
-    'plan_path': 'json_harmonization',
+    'plan_path': 'cloning_plans/test_gibson',
     'aq_instance': 'laptop'
 }
 
@@ -26,17 +22,13 @@ plan = CloningPlan(inputs['plan_path'], inputs['aq_instance'])
 
 cursor = Cursor(y=26)
 
-plan_step = plan.step_by_build_method("pcr")
+plan_step = plan.get_steps_by_type("pcr")[0]
 step_outputs = plan_step.create_step(cursor)
 cursor.advance_to_next_step()
 
-plan_step = plan.step_by_build_method("gibson")
+plan_step = plan.get_steps_by_type("gibson")[0]
 step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 cursor.advance_to_next_step()
-
-# These should be moved to another script
-# plan_step = plan.step_by_build_method("Yeast Transformation")
-# step_outputs = plan_step.create_step(cursor, n_qcs=2, step_outputs=step_outputs)
 
 plan.create_aq_plan()
 

@@ -17,16 +17,22 @@ class CloningLeg(Leg):
         super().__init__(plan_step, cursor)
 
     def set_sample_inputs(self, source):
-        for handle, name in source.items():
-            if isinstance(name, str):
-                self.sample_io[handle] = self.ext_plan.input_sample(name)
-            elif isinstance(name, list):
-                samples = [self.ext_plan.input_sample(n) for n in name]
-                self.sample_io[handle] = samples
+        for s in source:
+            this_io = self.sample_io.get(s["input_name"])
+            this_sample = self.ext_plan.input_sample(s["name"])
+
+            if this_io:
+                if isinstance(this_io, list):
+                    self.sample_io[s["input_name"]].append(this_sample)
+                else:
+                    self.sample_io[s["input_name"]] = [this_io, this_sample]
+
+            else:
+                this_io = this_sample
 
     def set_sample_outputs(self, destination):
         for handle in self.primary_handles:
-            self.sample_io[handle] = self.ext_plan.input_sample(destination)
+            self.sample_io[handle] = self.ext_plan.input_sample(destination["name"])
 
     def set_sample_io(self, source, destination):
         self.set_sample_outputs(destination)
@@ -46,13 +52,13 @@ class GoldenGateLeg(CloningLeg):
         super().__init__(plan_step, cursor)
 
     def set_sample_io(self, source, destination):
-        self.sample_io["Plasmid"] = self.ext_plan.input_sample(destination)
+        self.sample_io["Plasmid"] = self.ext_plan.input_sample(destination["name"])
 
-        backbones = [s for s in source if s.startswith("Vector")] or [None]
+        backbones = [s for s in source if s["input_name"].startswith("Vector")] or [None]
         self.sample_io["Backbone"] = self.ext_plan.input_sample(backbones[0])
 
-        inserts = [s for s in source if not s.startswith("Vector")]
-        self.sample_io["Inserts"] = [self.ext_plan.input_sample(i) for i in inserts]
+        inserts = [s for s in source if not s["input_name"].startswith("Vector")]
+        self.sample_io["Inserts"] = [self.ext_plan.input_sample(i["name"]) for i in inserts]
 
 
 class GibsonLeg(CloningLeg):

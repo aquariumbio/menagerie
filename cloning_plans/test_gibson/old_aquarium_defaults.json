@@ -1,0 +1,352 @@
+{
+  "operation_defaults": [
+    {
+      "name": "Assemble Plasmid",
+      "input": {
+        "Fragment": {
+        "object_type": "Fragment Stock"
+        }
+      },
+      "output":{
+        "Plasmid": {
+        "object_type": "Gibson Reaction Result"
+        }
+      }
+    },
+    {
+      "name": "Assemble NEB Golden Gate",
+      "input": {  
+        "Backbone": {
+          "object_type": "Fragment Stock"
+        },
+        "Inserts": {
+          "object_type": "Fragment Stock"
+        }
+      },
+      "output": {  
+        "Plasmid": {
+          "object_type": "Golden Gate Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Transform Cells from Stripwell",
+      "input": {
+        "Plasmid": {
+          "object_type": "Golden Gate Stripwell"
+        },
+        "Comp Cells": {
+          "sample": "DH5alpha"
+        }
+      },
+      "output": {  
+        "Transformed E Coli": {
+          "object_type": "Transformed E. coli Aliquot"
+        }
+      }
+    },
+    {
+      "name": "Transform Cells",
+      "input": {
+          "Plasmid": {
+          "object_type": "Gibson Reaction Result"
+        },
+        "Comp Cells": {
+          "sample": "DH5alpha"
+        }
+      },
+      "output": {
+          "Transformed E Coli": {
+          "object_type": "Transformed E. coli Aliquot"
+        }
+      }
+    },
+    {
+      "name": "Plate Transformed Cells",
+      "input": {
+        "Plasmid": {
+          "object_type": "Transformed E. coli Aliquot"
+        }
+      },
+      "output": {
+        "Plate": {
+          "object_type": "E coli Plate of Plasmid"
+        }
+      }
+    },
+    {
+      "name": "Check Plate",
+      "input": {
+        "Plasmid": {
+          "object_type": "E coli Plate of Plasmid"
+        }
+      },
+      "output": {
+        "Plasmid": {
+          "object_type": "Checked E coli Plate of Plasmid"
+        }
+      }
+    },
+    {
+      "name": "Make Overnight Suspension",
+      "input": {
+        "Plasmid": {
+          "object_type": "Checked E coli Plate of Plasmid"
+        }
+      },
+      "output": {
+        "Overnight": {
+          "object_type": "TB Overnight of Plasmid"
+        }
+      }
+    },
+    {
+      "name": "Make Miniprep",
+      "input": {
+        "Plasmid": {
+          "object_type": "TB Overnight of Plasmid"
+        }
+      },
+      "output": {
+        "Plasmid": {
+          "object_type": "Plasmid Stock"
+        }
+      }
+    },
+    {
+      "name": "Send to Sequencing",
+      "input": {
+        "Plasmid": {
+          "object_type": "Plasmid Stock"
+        },
+        "Sequencing Primer": {
+          "object_type": "Primer Aliquot"
+        }
+      },
+      "output": {
+        "Plasmid for Sequencing": {
+          "object_type": "Sequencing Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Upload Sequencing Results",
+      "input": {
+        "Plasmid": {
+          "object_type": "Sequencing Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Purify Gel Slice",
+      "input": {  
+        "Gel": {
+          "object_type": "Gel Slice"
+        }
+      },
+      "output": {  
+        "Fragment": {
+          "object_type": "Fragment Stock"
+        }
+      }
+    },
+    {
+      "name": "Extract Gel Slice",
+      "input": {  
+        "Fragment": {
+          "object_type": "50 mL 0.8 Percent Agarose Gel in Gel Box"
+        }
+      },
+      "output": {  
+        "Fragment": {
+          "object_type": "Gel Slice"
+        }
+      }
+    },
+    {
+      "name": "Run Gel",
+      "input": {  
+        "Fragment": {
+          "object_type": "Stripwell"
+        },
+        "Gel": {
+          "object_type": "50 mL 0.8 Percent Agarose Gel in Gel Box"
+        }
+      },
+      "output": {  
+        "Fragment": {
+          "object_type": "50 mL 0.8 Percent Agarose Gel in Gel Box"
+        }
+      }
+    },
+    {
+      "name": "Make PCR Fragment",
+      "input": {  
+        "Template": {
+          "object_type": {
+            "plasmid_stock": "Plasmid Stock",
+            "dna_library": "50X PCR Template"
+          }
+        },
+        "Forward Primer": {
+          "object_type": "Primer Aliquot"
+        },
+        "Reverse Primer": {
+          "object_type": "Primer Aliquot"
+        }
+      },
+      "output": {  
+        "Fragment": {
+          "object_type": "Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Yeast Transformation",
+      "input": {  
+        "Genetic Material": {
+          "object_type": "0.6mL tube of Digested Plasmid"
+        },
+        "Parent": {
+          "object_type": "Yeast Competent Cell"
+        }
+      },
+      "output": {  
+        "Transformation": {
+          "object_type": "Yeast Plate"
+        }
+      }
+    },
+    {
+      "name": "Check Yeast Plate",
+      "input": {  
+        "Plate": {
+          "object_type": "Yeast Plate"
+        }
+      },
+      "output": {  
+        "Plate": {
+          "object_type": "Yeast Plate"
+        }
+      }
+    },
+    {
+      "name": "Streak on Media Plate",
+      "input": {  
+        "Yeast Strain": {
+          "object_type": "Yeast Plate"
+        }
+      },
+      "output": {  
+        "Streak Plate": {
+          "object_type": "Divided Yeast Plate"
+        }
+      }
+    },
+    {
+      "name": "Check Divided Yeast Plate",
+      "input": {  
+        "Plate": {
+          "object_type": "Divided Yeast Plate"
+        }
+      },
+      "output": {  
+        "Plate": {
+          "object_type": "Divided Yeast Plate"
+        }
+      }
+    },
+    {
+      "name": "Yeast Overnight Suspension from Collection",
+      "input": {  
+        "Yeast Strain": {
+          "object_type": "Divided Yeast Plate"
+        }
+      },
+      "output": {  
+        "Overnight": {
+          "object_type": "Yeast Overnight Suspension"
+        }
+      }
+    },
+    {
+      "name": "Yeast Glycerol Stock",
+      "input": {  
+        "Yeast": {
+          "object_type": "Yeast Overnight Suspension"
+        }
+      },
+      "output": {  
+        "Yeast": {
+          "object_type": "Yeast Glycerol Stock"
+        }
+      }
+    },
+    {
+      "name": "Yeast Lysate",
+      "input": {  
+        "Plate": {
+          "object_type": "Yeast Plate"
+        }
+      },
+      "output": {  
+        "Lysate": {
+          "object_type": "Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Colony PCR",
+      "input": {  
+        "Template": {
+          "object_type": "Stripwell"
+        },
+        "QC Primer1": {
+          "object_type": "Primer Aliquot"
+        },
+        "QC Primer2": {
+          "object_type": "Primer Aliquot"
+        }
+      },
+      "output": {  
+        "PCR": {
+          "object_type": "Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Fragment Analyzing",
+      "input": {  
+        "PCR": {
+          "object_type": "Stripwell"
+        }
+      }
+    },
+    {
+      "name": "Plasmid Digest",
+      "input": {  
+        "Integrant": {
+          "object_type": "Plasmid Stock"
+        }
+      },
+      "output": {  
+        "Digested Plasmid": {
+          "object_type": "0.6mL tube of Digested Plasmid"
+        }
+      }
+    },
+    {
+      "name": "Operation Type Name",
+      "input": {  
+        "Input Handle": {
+          "object_type": "Container Type for Input"
+        }
+      },
+      "output": {  
+        "Output Handle": {
+          "object_type": "Container Type for Output"
+        }
+      }
+    }
+  ]
+}
