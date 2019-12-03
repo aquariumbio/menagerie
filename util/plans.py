@@ -17,8 +17,11 @@ from pydent.models import Sample, Item, Plan
 from pydent.exceptions import AquariumModelError
 
 def get_obj_by_name(leg, name):
-    ops = [x for x in leg if x["name"] == name]
-    if ops: return ops[0]
+    return get_obj_by_attr(leg, "name", name)
+
+def get_obj_by_attr(objects, attr, value):
+    objs = [o for o in objects if o[attr] == value]
+    if objs: return objs[0]
 
 class ExternalPlan(metaclass=ABCMeta):
     """Interface for working with the Aquarium Session and Plan models."""
@@ -93,7 +96,7 @@ class ExternalPlan(metaclass=ABCMeta):
         msg = "Connected to Aquarium at {} using pydent version {}"
         print(msg.format(session.url, str(__version__)))
 
-        me = session.User.where({'login': credentials['username']})[0]
+        me = session.User.where({'login': credentials['login']})[0]
         print('Logged in as {}\n'.format(me.name))
 
         return session
@@ -123,22 +126,29 @@ class ExternalPlan(metaclass=ABCMeta):
                     for s in sample_data:
                         sample_name = s.get("name")
                         if sample_name:
-                            sample = self.session.Sample.find_by_name(sample_name)
-                            if sample:
-                                s["sample"] = sample
-                            else:
-                                raise "Input error: {}".format(sample_name)
+                            try:
+                                sample = self.session.Sample.find_by_name(sample_name)
+                                if sample:
+                                    s["sample"] = sample
+                                else:
+                                    raise InputError("Sample not found: {}".format(sample_name))
+                            except InputError as e:
+                                print(e.message)
+                                # raise
                                 
                     ot_data = io_data.get("object_type", [])
                     for o in ot_data:
                         ot_name = o.get("name")
                         if ot_name:
-                            object_type = self.session.ObjectType.find_by_name(ot_name)
-                            if object_type:
-                                o["object_type"] = object_type
-                            else:
-                                raise "Input error: {}".format(ot_data)
-
+                            try:
+                                object_type = self.session.ObjectType.find_by_name(ot_name)
+                                if object_type:
+                                    o["object_type"] = object_type
+                                else:
+                                    raise InputError("ObjectType not found: {}".format(ot_name))
+                            except InputError as e:
+                                print(e.message)
+                                # raise
 
     def get_samples(self, sample_type_name, sample_name, properties={}):
         """
@@ -191,7 +201,7 @@ class ExternalPlan(metaclass=ABCMeta):
         :type type: str
         :return: list
         """
-        return [s for s in self.steps if s.operator_type == type]
+        return [s for s in self.steps if s.type == type]
 
     def provision_steps(self):
         """Get PlanSteps of operator type 'provision'."""
@@ -375,7 +385,7 @@ class ProvisionStep(PlanStep):
             if aq_samples:
                 self.plan.add_input_sample(sample_key, aq_samples[0])
             else:
-                raise "Unable to find or add sample {}".format(sample_name)
+                raise InputError("Unable to find or add sample {}".format(sample_name))
 
 
 class Transformation:
@@ -522,7 +532,7 @@ class Leg:
                     return [o["object_type"] for o in ot_data if o["option_key"] == container_opt][0]
 
                 else:
-                    raise Exception("Option required to specify container: " + ot_data)
+                    raise InputError("Option required to specify container: " + ot_data)
             
             elif len(ot_data) == 1:
                 return ot_data[0]["object_type"]
@@ -917,3 +927,14 @@ class Cursor:
         self.set_xy(round(self.min_x / self.x_incr), round(self.min_y / self.y_incr))
         self.decr_y()
         self.set_home()
+
+
+class InputError(Exception):
+    """Exception raised for errors in the input.
+
+    Attributes:
+        message -- explanation of the error
+    """
+
+    def __init__(self, message):
+        self.message = message
