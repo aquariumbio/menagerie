@@ -6,26 +6,20 @@ warnings.filterwarnings('ignore')
 
 from util.plans import Cursor, Leg
 from util.yeast_display_plans import YeastDisplayPlan
-
 from util.yeast_display_legs import SortLeg
 
 from util.plan_tests import test_plan
 from util.user_input import get_input
 
 # inputs = get_input()
-
 inputs = {
-    'plan_path': 'json_harmonization', 
-    'start_date': datetime(2019, 10, 21, 22, 37, 14, 525441), 
+    'plan_path': 'yeast_display_plans/template_stability', 
+    'start_date': datetime.today(), 
     'aq_instance': 'laptop'
 }
 
 start_date = inputs['start_date']
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
-
-# print(plan.operation_defaults)
-
-# raise "done"
 
 cursor = Cursor(y=18)
 
@@ -44,8 +38,7 @@ for step_id in plan.step_ids(plan.get_steps_by_type('yeast_display_round')):
 
     start_date += timedelta(days=incr)
 
-    step_info = (plan_step.step_id, plan_step.operator.get("description"))
-    print("Step {} ({}) complete".format(step_info[0], step_info[1]))
+    print(plan_step.name + ' complete')
     print()
 
 plan.create_aq_plan()

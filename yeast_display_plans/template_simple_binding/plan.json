@@ -70,19 +70,19 @@
       "operator": {
         "measurements": [
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_expressing"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "high_fitc_control"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "autofluorescence_control"
             }
@@ -156,13 +156,13 @@
       "operator": {
         "measurements": [
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_1A"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "high_fitc_low_pe_control"
             }
@@ -217,13 +217,13 @@
       "operator": {
         "measurements": [
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_2A"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "high_fitc_low_pe_control"
             }
@@ -278,31 +278,31 @@
       "operator": {
         "measurements": [
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_3A"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_3B"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_3C"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "library_sort_3D"
             }
           },
           {
-            "file": "fcs",
+            "file_type": "fcs",
             "source": {
               "sample_key": "high_fitc_low_pe_control"
             }
@@ -414,49 +414,49 @@
       "operator": {
         "measurements": [
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_expressing"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_1A"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_2A"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_3A"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_3B"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_3C"
             }
           },
           {
-            "file": "fastq",
+            "file_type": "fastq",
             "source": {
               "sample_key": "library_sort_3D"
             }
