@@ -1,0 +1,70 @@
+{
+  "name": "simple_ngs_prep_template",
+  "steps": [
+    {
+      "id": 1,
+      "name": "DNA Sequencing",
+      "type": "dna_seq",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {}
+          }
+        ]
+      }
+    }
+  ]
+}

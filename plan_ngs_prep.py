@@ -15,14 +15,17 @@ from util.user_input import get_input
 #     'aq_instance': "production"
 # }
 
-# inputs = {
-#     'plan_path': "ds1_hifi_ngs_prep_test",
-#     'aq_instance': "laptop"
-# }
+inputs = {
+    'plan_path': "yeast_display_plans/template_ngs_prep_1-14",
+    'aq_instance': "laptop"
+}
 
-inputs = get_input(start_date=False)
+# inputs = get_input(start_date=False)
 
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
+
+# sys.exit("Terminating early")
+
 session = plan.session
 cursor = Cursor(y=18)
 

@@ -32,13 +32,15 @@ class YeastDisplayPlan(ExternalPlan):
         super().__init__(plan_path, aq_instance, aq_plan_name)
         # self.provision_from_plan_params()
 
+        self.load_inputs_from_params()
+
         # Get the list of samples for NGS
         # Assumes that there is only one source and only one dna_seq_step
         # TODO: This method is not great.
         self.ngs_sample_keys = []
         for step in self.dna_seq_steps():
             for source in step.measured_samples:
-                self.ngs_sample_keys.append(source["sample_key"])
+                self.ngs_sample_keys.append(source.get("sample_key"))
 
     def initialize_step(self, step_data):
         super().initialize_step(step_data)
@@ -77,6 +79,63 @@ class YeastDisplayPlan(ExternalPlan):
         :return: boolean
         """
         return isinstance(s, Sample) and s.sample_type.name == "Protease"
+
+    def load_inputs_from_params(self):
+        # Find input samples that are likely to vary between operations.
+        # This seems structurally similar to what is going on in
+        # self.provision_samples() for PupPlan
+        # TODO: This should be moved to a super() in ExternalPlan
+        for key, sample_data in self.plan_params['input_samples'].items():
+            # Special case:
+            # Libraries that are combined at the beginning of the Plan.
+            if key == "library_composition":
+                sample_ids = sample_data["components"]
+                component_samples = []
+
+                for sid in sample_ids:
+                    component_samples.append(self.find_input_sample(sid))
+
+                sample_data["components"] = component_samples
+                self.add_input_sample(key, sample_data)
+
+            # Special case:
+            # Collect all of the outputs of an already-run Plan.
+            elif key == "plan_outputs":
+                plan = self.session.Plan.find(sample_data["plan_id"])
+                ops = plan.operations
+
+                ot_name = sample_data["operation_type"]
+                ops = [op for op in ops if op.operation_type.name == ot_name]
+
+                for op in ops:
+                    item = op.output(sample_data["output"]).item
+                    if item:
+                        self.add_input_sample(op.id, item)
+                    else:
+                        msg = "Could not find {} Item for {} Operation {}"
+                        print(msg.format(sample_data["output"], ot_name, op.id))
+                        print()
+
+            # A list of items
+            elif key == "items":
+                items = self.session.Item.find(sample_data)
+                for item in items:
+                    self.add_input_sample(item.id, item)
+
+            # A list of Samples.
+            elif isinstance(sample_data, list):
+                found_input = []
+
+                for d in sample_data:
+                    found_input.append(self.find_input_sample(d))
+
+                self.add_input_sample(key, found_input)
+
+            # A single Sample.
+            else:
+                found_input = self.find_input_sample(sample_data)
+                if found_input:
+                    self.add_input_sample(key, found_input)
 
 
 class YeastDisplayPlanStep(PlanStep):
@@ -136,6 +195,7 @@ class DNASeqStep(YeastDisplayPlanStep):
         qpcr_2_reverse_primers = self.plan.input_samples.pop("qpcr_2_reverse_primers")
 
         items = list(self.plan.input_samples.values())
+        print(self.plan.input_samples)
         items.sort(key=lambda i: i.id)
 
         # This is kinda hacky because it doesn't filter for yeast library items
