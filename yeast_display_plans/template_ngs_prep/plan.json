@@ -1,0 +1,103 @@
+{
+  "name": "simple_ngs_prep_template",
+  "steps": [
+    {
+      "id": 1,
+      "name": "DNA Sequencing",
+      "type": "dna_seq",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fastq",
+            "source":  {
+              "sample_key": "library_ngs_1"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+              "sample_key": "library_ngs_2"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+              "sample_key": "library_ngs_3"
+            }
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              {
+                "sample_key": "library_ngs_1"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Forward Primer",
+                "name": "Test Primer 1",
+                "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                "input_name": "Reverse Primer",
+                "name": "Test Primer 2",
+                "sample_key": "qpcr_2_reverse_primer"
+              },
+              {
+                "input_name": "Template",
+                "item_id": 19
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "library_ngs_2"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Forward Primer",
+                "name": "Test Primer 1",
+                "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                "input_name": "Reverse Primer",
+                "name": "Test Primer 3",
+                "sample_key": "qpcr_2_reverse_primer"
+              },
+              {
+                "input_name": "Template",
+                "item_id": 20
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "library_ngs_3"
+              }
+            ],
+            "source": [
+              {
+                "input_name": "Forward Primer",
+                "name": "Test Primer 1",
+                "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                "input_name": "Reverse Primer",
+                "name": "Test Primer 4",
+                "sample_key": "qpcr_2_reverse_primer"
+              },
+              {
+                "input_name": "Template",
+                "item_id": 21
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

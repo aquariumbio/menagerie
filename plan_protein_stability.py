@@ -11,12 +11,12 @@ from util.yeast_display_legs import SortLeg
 from util.plan_tests import test_plan
 from util.user_input import get_input
 
-# inputs = get_input()
-inputs = {
-    'plan_path': 'yeast_display_plans/template_stability', 
-    'start_date': datetime.today(), 
-    'aq_instance': 'laptop'
-}
+inputs = get_input()
+# inputs = {
+#     'plan_path': 'yeast_display_plans/template_stability', 
+#     'start_date': datetime.today(), 
+#     'aq_instance': 'laptop'
+# }
 
 start_date = inputs['start_date']
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
