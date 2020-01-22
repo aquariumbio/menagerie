@@ -1,0 +1,468 @@
+{
+  "name": "simple_protein_binding_template",
+  "plan_options": {
+    "assay_microliters": 300, 
+    "protease_working_microliters": 180, 
+    "n_protease_washes": 1, 
+    "quench_protease": false, 
+    "vortex_interval_minutes": 10, 
+    "protease_incubation_time_minutes": 40
+  },
+  "alt_plan_options": {
+    "incubate_with_protease": false, 
+    "n_protease_washes": 0, 
+    "quench_protease": false
+  },
+  "steps": [
+    {
+      "id": 1,
+      "name": "Provision Samples",
+      "type": "provision",
+      "operator": {
+        "samples": [
+          {
+            "name": "VirB8-SAPE",
+            "sample_type": "Biotinylated Binding Target",
+            "sample_key": "treatment_plus_sape"
+          },
+          {
+            "name": "VirB8",
+            "sample_type": "Biotinylated Binding Target",
+            "sample_key": "treatment"
+          },
+          {
+            "name": "Mock Treatment SAPE",
+            "sample_type": "Biotinylated Binding Target",
+            "sample_key": "mock_treatment_sape"
+          },
+          {
+            "name": "Longxing August 19",
+            "sample_type": "DNA Library",
+            "sample_key": "library"
+          },
+          {
+            "name": "EBY100 + PETCONv3_baker",
+            "sample_type": "Yeast Strain",
+            "sample_key": "binding_negative"
+          },
+          {
+            "name": "AMA1-best",
+            "sample_type": "Yeast Strain",
+            "sample_key": "fitc_binding_positive"
+          },
+          {
+            "name": "Anti-c-myc-FITC",
+            "sample_type": "Antibody",
+            "sample_key": "anti_myc"
+          },
+          {
+            "name": "Anti-c-myc-FITC + SAPE",
+            "sample_type": "Antibody",
+            "sample_key": "anti_myc_plus_sape"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Sort 0: expressors",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_expressing"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "high_fitc_control"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "autofluorescence_control"
+            }
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              {
+                "sample_key": "library_expressing"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library"
+              },
+              {
+                "concentration": 0,
+                "sample_key": "mock_treatment_sape"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "high_fitc_control"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "fitc_binding_positive"
+              },
+              {
+                "concentration": 0,
+                "sample_key": "mock_treatment_sape"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "autofluorescence_control"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "binding_negative"
+              },
+              {
+                "concentration": 0,
+                "sample_key": "mock_treatment_sape"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Sort 1: high concentration with avidity",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_1A"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "high_fitc_low_pe_control"
+            }
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_1A"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_expressing"
+              },
+              {
+                "concentration": 1,
+                "sample_key": "treatment_plus_sape"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "high_fitc_low_pe_control"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_expressing"
+              },
+              {
+                "concentration": 1,
+                "sample_key": "mock_treatment_sape"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Sort 2: high concentration WITHOUT avidity",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_2A"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "high_fitc_low_pe_control"
+            }
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_2A"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_1A"
+              },
+              {
+                "concentration": 1,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "high_fitc_low_pe_control"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_1A"
+              },
+              {
+                "concentration": 0,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "Sort 3: titrate concentration WITHOUT avidity",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_3A"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_3B"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_3C"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "library_sort_3D"
+            }
+          },
+          {
+            "file_type": "fcs",
+            "source": {
+              "sample_key": "high_fitc_low_pe_control"
+            }
+          }
+        ],
+        "transformations": [
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_3A"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_2A"
+              },
+              {
+                "concentration": 1,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_3B"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_2A"
+              },
+              {
+                "concentration": 0.1,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_3C"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_2A"
+              },
+              {
+                "concentration": 0.01,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "library_sort_3D"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_2A"
+              },
+              {
+                "concentration": 0.001,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          },
+          {
+            "destination": [
+              {
+                "sample_key": "high_fitc_low_pe_control"
+              }
+            ],
+            "source": [
+              {
+                "sample_key": "library_sort_2A"
+              },
+              {
+                "concentration": 0,
+                "sample_key": "treatment"
+              },
+              {
+                "sample_key": "anti_myc_plus_sape"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 6,
+      "name": "DNA Sequencing",
+      "type": "dna_seq",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_expressing"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_1A"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_2A"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_3A"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_3B"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_3C"
+            }
+          },
+          {
+            "file_type": "fastq",
+            "source": {
+              "sample_key": "library_sort_3D"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
