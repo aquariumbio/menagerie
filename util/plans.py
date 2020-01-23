@@ -52,17 +52,19 @@ class ExternalPlan(metaclass=ABCMeta):
         self.aq_plan_name = aq_plan_name or os.path.split(plan_path)[1]
         self.aq_plan = Plan(name=self.aq_plan_name)
 
-        self.plan = self.load_json_from_file('plan.json')
-        self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')
-        self.plan_params = self.load_json_from_file("params.json")
+        self.steps = []
+        self.input_samples = {}
+        self.temp_data_associations = []
 
+        self.plan = self.load_json_from_file('plan.json')
+
+        self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')
         self.operation_defaults = self.aq_defaults.get("operation_defaults", [])
         self.defaults = self.operation_defaults
         self.populate_from_database()
 
-        self.steps = []
-        self.input_samples = {}
-        self.temp_data_associations = [] 
+        self.plan_params = self.load_json_from_file("params.json")
+        self.load_inputs_from_params() 
         
         # Create PlanStep objects based on step type
         for step_data in self.plan["steps"]:
@@ -154,6 +156,60 @@ class ExternalPlan(metaclass=ABCMeta):
                             except InputError as e:
                                 print(e.message)
                                 # raise
+
+    def load_inputs_from_params(self):
+        # Find existing input samples specified in the params.json file
+        for key, sample_data in self.plan_params['input_samples'].items():
+            # Special case:
+            # Libraries that are combined at the beginning of the Plan.
+            if key == "library_composition":
+                sample_ids = sample_data["components"]
+                component_samples = []
+
+                for sid in sample_ids:
+                    component_samples.append(self.find_input_sample(sid))
+
+                sample_data["components"] = component_samples
+                self.add_input_sample(key, sample_data)
+
+            # Special case:
+            # Collect all of the outputs of an already-run Plan.
+            elif key == "plan_outputs":
+                plan = self.session.Plan.find(sample_data["plan_id"])
+                ops = plan.operations
+
+                ot_name = sample_data["operation_type"]
+                ops = [op for op in ops if op.operation_type.name == ot_name]
+
+                for op in ops:
+                    item = op.output(sample_data["output"]).item
+                    if item:
+                        self.add_input_sample(op.id, item)
+                    else:
+                        msg = "Could not find {} Item for {} Operation {}"
+                        print(msg.format(sample_data["output"], ot_name, op.id))
+                        print()
+
+            # A list of items
+            elif key == "items":
+                items = self.session.Item.find(sample_data)
+                for item in items:
+                    self.add_input_sample(item.id, item)
+
+            # A list of Samples.
+            elif isinstance(sample_data, list):
+                found_input = []
+
+                for d in sample_data:
+                    found_input.append(self.find_input_sample(d))
+
+                self.add_input_sample(key, found_input)
+
+            # A single Sample.
+            else:
+                found_input = self.find_input_sample(sample_data)
+                if found_input:
+                    self.add_input_sample(key, found_input)
 
     def get_samples(self, sample_type_name, sample_name, properties={}):
         """
@@ -471,16 +527,14 @@ class Leg:
         wires = []
 
         for ot_attr in self.leg_order:
-            if isinstance(ot_attr, dict):
-                ot_name = ot_attr["name"]
-            else:
-                ot_name = ot_attr
+            if isinstance(ot_attr, str):
+                ot_attr = {"name": ot_attr}
 
-            od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_name))
+            od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_attr["name"]))
             od = od or {}
             # od = { operation_defaults": od }
             od["operation"] = self.initialize_op(ot_attr)
-            # od["name"] = od["operation"].operation_type.name
+            od["name"] = od["operation"].operation_type.name
             # od["container_types"] = self.get_container_types(od["name"])
             op_data.append(od)
 
@@ -495,12 +549,7 @@ class Leg:
 
         return [op_data, wires]
 
-    def initialize_op(self, ot_name):
-
-        if isinstance(ot_name, str):
-            ot_attr = {"name": ot_name}
-        elif isinstance(ot_name, dict):
-            ot_attr = ot_name
+    def initialize_op(self, ot_attr):
 
         ot_attr["deployed"] = True
         op_types = self.session.OperationType.where(ot_attr)

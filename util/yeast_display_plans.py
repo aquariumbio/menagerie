@@ -4,9 +4,9 @@ import os
 
 import pydent
 from pydent import models
-from pydent.models import Sample
+from pydent.models import Sample, Item
 
-from util.plans import ExternalPlan, PlanStep, Transformation
+from util.plans import ExternalPlan, PlanStep, Transformation, InputError
 from util.yeast_display_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
 from util.yeast_display_legs import SortLeg, FlowLeg, YeastDisplayLeg
 from util.dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
@@ -30,9 +30,6 @@ class YeastDisplayPlan(ExternalPlan):
         :return: new YeastDisplayPlan
         """
         super().__init__(plan_path, aq_instance, aq_plan_name)
-        # self.provision_from_plan_params()
-
-        self.load_inputs_from_params()
 
         # Get the list of samples for NGS
         # Assumes that there is only one source and only one dna_seq_step
@@ -79,63 +76,6 @@ class YeastDisplayPlan(ExternalPlan):
         :return: boolean
         """
         return isinstance(s, Sample) and s.sample_type.name == "Protease"
-
-    def load_inputs_from_params(self):
-        # Find input samples that are likely to vary between operations.
-        # This seems structurally similar to what is going on in
-        # self.provision_samples() for PupPlan
-        # TODO: This should be moved to a super() in ExternalPlan
-        for key, sample_data in self.plan_params['input_samples'].items():
-            # Special case:
-            # Libraries that are combined at the beginning of the Plan.
-            if key == "library_composition":
-                sample_ids = sample_data["components"]
-                component_samples = []
-
-                for sid in sample_ids:
-                    component_samples.append(self.find_input_sample(sid))
-
-                sample_data["components"] = component_samples
-                self.add_input_sample(key, sample_data)
-
-            # Special case:
-            # Collect all of the outputs of an already-run Plan.
-            elif key == "plan_outputs":
-                plan = self.session.Plan.find(sample_data["plan_id"])
-                ops = plan.operations
-
-                ot_name = sample_data["operation_type"]
-                ops = [op for op in ops if op.operation_type.name == ot_name]
-
-                for op in ops:
-                    item = op.output(sample_data["output"]).item
-                    if item:
-                        self.add_input_sample(op.id, item)
-                    else:
-                        msg = "Could not find {} Item for {} Operation {}"
-                        print(msg.format(sample_data["output"], ot_name, op.id))
-                        print()
-
-            # A list of items
-            elif key == "items":
-                items = self.session.Item.find(sample_data)
-                for item in items:
-                    self.add_input_sample(item.id, item)
-
-            # A list of Samples.
-            elif isinstance(sample_data, list):
-                found_input = []
-
-                for d in sample_data:
-                    found_input.append(self.find_input_sample(d))
-
-                self.add_input_sample(key, found_input)
-
-            # A single Sample.
-            else:
-                found_input = self.find_input_sample(sample_data)
-                if found_input:
-                    self.add_input_sample(key, found_input)
 
 
 class YeastDisplayPlanStep(PlanStep):
@@ -187,29 +127,74 @@ class YeastDisplayPlanStep(PlanStep):
 
 
 class DNASeqStep(YeastDisplayPlanStep):
+
+    valid_templates = ["DNA Library"]
+
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
 
+        if not self.transformations:
+            self.create_transformations_from_params()
+
+    def create_transformations_from_params(self):
+        input_samples = self.plan.input_samples
+        qpcr_2_reverse_primers = input_samples.get("qpcr_2_reverse_primers")
+        qpcr_2_forward_primer = input_samples.get("qpcr_2_forward_primer")
+
+        template_items = [i for i in input_samples.values() if self.istemplate(i)]
+        template_items.sort(key=lambda i: i.id)
+
+        for i in template_items:
+            txn = {
+                "source": [
+                    {
+                        "input_name": "Template",
+                        "item": i
+                    },
+                    {
+                        "input_name": "Forward Primer",
+                        "sample": qpcr_2_forward_primer,
+                        "sample_key": "qpcr_2_forward_primer"
+                    },
+                    {
+                        "input_name": "Reverse Primer",
+                        "sample": qpcr_2_reverse_primers.pop(0),
+                        "sample_key": "qpcr_2_reverse_primer"
+                    }
+                ],
+                "destination": [
+
+                ]
+            }
+            self.transformations.append(YeastDisplayPlanTransformation(self, txn))
+
+    @staticmethod
+    def istemplate(item):
+        return isinstance(item, Item) and item.sample.sample_type.name in DNASeqStep.valid_templates
+
     def create_step(self, cursor):
-        qpcr_2_forward_primer = self.plan.session.Sample.find_by_name("Petcon NGS prep forward primer")
-        qpcr_2_reverse_primers = self.plan.input_samples.pop("qpcr_2_reverse_primers")
+        for txn in self.transformations:
+            template_source = [s for s in txn.source if s["input_name"] == "Template"][0]
 
-        items = list(self.plan.input_samples.values())
-        print(self.plan.input_samples)
-        items.sort(key=lambda i: i.id)
+            if template_source.get("item"):
+                library_item = template_source["item"]
+            elif template_source.get("item_id"):
+                library_item = self.plan.session.Item.find(template_source["item_id"])
+            else:
+                raise InputError("Unable to identify Item for source: " + template_source)
 
-        # This is kinda hacky because it doesn't filter for yeast library items
-        for item in items:
+            library_sample = library_item.sample
+
             extract_leg = ExtractDNALeg(self, cursor)
-            extract_leg.set_yeast_from_sample(item.sample)
+            extract_leg.set_yeast_from_sample(library_sample)
             extract_leg.add()
             input_op = extract_leg.get_input_op()
 
-            # print("Attempting to set fv for %d" % item.id)
+            # print("Attempting to set fv for %d" % library_item.id)
             try:
-                input_op.set_field_value("Yeast Library", "input", item=item)
+                input_op.set_field_value("Yeast Library", "input", item=library_item)
             except:
-                print("Failed to set fv for %d" % item.id)
+                print("Failed to set fv for %d" % library_item.id)
 
             upstr_op = extract_leg.get_output_op()
 
@@ -221,11 +206,17 @@ class DNASeqStep(YeastDisplayPlanStep):
 
                 elif opt == "qPCR2":
                     plates = True
-                    io_obj["Forward Primer"] = qpcr_2_forward_primer
-                    io_obj["Reverse Primer"] = qpcr_2_reverse_primers.pop(0)
+
+                    fwd_primer_src = [s for s in txn.source if s.get("sample_key") == "qpcr_2_forward_primer"][0]
+                    fwd_primer = fwd_primer_src.get("sample") or self.plan.session.Sample.find_by_name(fwd_primer_src["name"])
+                    io_obj["Forward Primer"] = fwd_primer
+
+                    rev_primer_src = [s for s in txn.source if s.get("sample_key") == "qpcr_2_reverse_primer"][0]
+                    rev_primer = rev_primer_src.get("sample") or self.plan.session.Sample.find_by_name(rev_primer_src["name"])
+                    io_obj["Reverse Primer"] = rev_primer
 
                 qpcr_leg = QPCRLeg(self, cursor, plates)
-                qpcr_leg.set_yeast_from_sample(item.sample)
+                qpcr_leg.set_yeast_from_sample(library_sample)
 
                 qpcr_leg.set_sample_io(io_obj)
                 qpcr_leg.add(opt)
@@ -235,7 +226,7 @@ class DNASeqStep(YeastDisplayPlanStep):
                 upstr_op = qpcr_leg.get_output_op()
 
             dilute_leg = DiluteLibraryLeg(self, cursor)
-            dilute_leg.set_yeast_from_sample(item.sample)
+            dilute_leg.set_yeast_from_sample(library_sample)
             dilute_leg.add()
 
             dnstr_op = dilute_leg.get_input_op()

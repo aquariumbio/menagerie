@@ -1,1 +1,16 @@
-{}
+{
+  "input_samples": {
+    "items": [19, 20, 21],
+    "_plan_outputs": {
+      "plan_id": "XXXXX",
+      "operation_type": "Store Yeast Library Sample",
+      "output": "Stored sample rep 1"
+    },
+    "qpcr_2_reverse_primers": [
+      "Test Primer 1",
+      "Test Primer 2",
+      "Test Primer 3"
+    ],
+    "qpcr_2_forward_primer": "Test Primer 4"
+  }
+}

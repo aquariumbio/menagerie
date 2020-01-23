@@ -16,7 +16,7 @@ from util.user_input import get_input
 # }
 
 inputs = {
-    'plan_path': "yeast_display_plans/template_ngs_prep_1-14",
+    'plan_path': "yeast_display_plans/template_ngs_prep",
     'aq_instance': "laptop"
 }
 
@@ -24,7 +24,8 @@ inputs = {
 
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 
-# sys.exit("Terminating early")
+print(plan.steps[0].transformations[0].source)
+sys.exit("Terminating early")
 
 session = plan.session
 cursor = Cursor(y=18)
@@ -39,10 +40,10 @@ for step_id in plan.step_ids(plan.get_steps_by_type('dna_seq')):
 plan.create_aq_plan()
 # plan.add_data_associations()
 
-# url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
-# print("Created Plan: {}".format(url))
-# print("{} total operations.".format(len(plan.aq_plan.operations)))
-# print("{} total wires.".format(len(plan.aq_plan.wires)))
+url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
+print("Created Plan: {}".format(url))
+print("{} total operations.".format(len(plan.aq_plan.operations)))
+print("{} total wires.".format(len(plan.aq_plan.wires)))
 
 # # out_path = os.path.join(plan.plan_path, 'dump.json')
 # # ref_path = os.path.join(plan.plan_path, 'dump-ref.json')
