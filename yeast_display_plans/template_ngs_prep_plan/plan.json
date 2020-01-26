@@ -1,0 +1,78 @@
+{
+  "name": "simple_ngs_prep_template",
+  "steps": [
+    {
+      "id": 1,
+      "name": "DNA Sequencing",
+      "type": "dna_seq",
+      "operator": {
+        "transformations": [
+          {
+            "source": [
+              {
+                  "input_name": "Template",
+                  "item_id": 19
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 4",
+                  "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer 1",
+                  "sample_key": "qpcr_2_reverse_primer"
+              }
+            ],
+            "destination": [
+
+            ]
+          },
+          {
+            "source": [
+              {
+                  "input_name": "Template",
+                  "item_id": 20
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 4",
+                  "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer 2",
+                  "sample_key": "qpcr_2_reverse_primer"
+              }
+            ],
+            "destination": [
+
+            ]
+          },
+          {
+            "source": [
+              {
+                  "input_name": "Template",
+                  "item_id": 21
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 4",
+                  "sample_key": "qpcr_2_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer 3",
+                  "sample_key": "qpcr_2_reverse_primer"
+              }
+            ],
+            "destination": [
+
+            ]
+          }
+        ],
+        "measurements": []
+      }
+    }
+  ]
+}

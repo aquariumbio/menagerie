@@ -16,7 +16,7 @@ from util.user_input import get_input
 # }
 
 inputs = {
-    'plan_path': "yeast_display_plans/template_ngs_prep",
+    'plan_path': "yeast_display_plans/template_ngs_prep_plan",
     'aq_instance': "laptop"
 }
 
@@ -24,8 +24,8 @@ inputs = {
 
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 
-print(plan.steps[0].transformations[0].source)
-sys.exit("Terminating early")
+# print(plan.steps[0].transformations[0].source)
+# sys.exit("Terminating early")
 
 session = plan.session
 cursor = Cursor(y=18)

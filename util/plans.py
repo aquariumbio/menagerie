@@ -158,8 +158,9 @@ class ExternalPlan(metaclass=ABCMeta):
                                 # raise
 
     def load_inputs_from_params(self):
+        params_inputs = self.plan_params.pop('input_samples', {})
         # Find existing input samples specified in the params.json file
-        for key, sample_data in self.plan_params['input_samples'].items():
+        for key, sample_data in params_inputs.items():
             # Special case:
             # Libraries that are combined at the beginning of the Plan.
             if key == "library_composition":
