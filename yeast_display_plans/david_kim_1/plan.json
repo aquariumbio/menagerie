@@ -1,0 +1,896 @@
+{
+  "name": "simple_protein_stability_template",
+  "steps": [
+    {
+      "id": 1,
+      "name": "Provision Samples",
+      "type": "provision",
+      "operator": {
+        "samples": [
+          {
+            "name": "Small beta-barrels round1",
+            "sample_type": "DNA Library",
+            "sample_key": "library"
+          },
+          {
+            "name": "EBY100 + PETCONv3_baker",
+            "sample_type": "Yeast Strain",
+            "sample_key": "binding_negative"
+          },
+          {
+            "name": "AMA1-best",
+            "sample_type": "Yeast Strain",
+            "sample_key": "fitc_binding_positive"
+          },
+          {
+            "name": "Trypsin",
+            "sample_type": "Protease",
+            "sample_key": "trypsin"
+          },
+          {
+            "name": "Chymotrypsin",
+            "sample_type": "Protease",
+            "sample_key": "chymotrypsin"
+          },
+          {
+            "name": "Anti-c-myc-FITC",
+            "sample_type": "Antibody",
+            "sample_key": "anti_myc"
+          }
+        ]
+      }
+    },
+    {
+      "id": 2,
+      "name": "Round 1: low concentration",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_expressing"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_1"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_1"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_2"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_2"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "chymotrypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "trypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "high_binding_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "autofluorescence_control"
+					}
+          }
+        ],
+        "transformations": [
+          {
+            "destination":  [
+							{
+								"sample_key": "library_expressing"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_1"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library"
+							},
+              {
+                "concentration": 28,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_1"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library"
+							},
+              {
+                "concentration": 28,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_2"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library"
+							},
+              {
+                "concentration": 83,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_2"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library"
+							},
+              {
+                "concentration": 83,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "chymotrypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "trypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "high_binding_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "autofluorescence_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "binding_negative"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 3,
+      "name": "Round 2: medium concentration",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_2_expressing"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_2_expressing"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_3"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_3"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_4"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_4"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "chymotrypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "trypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "high_binding_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "autofluorescence_control"
+					}
+          }
+        ],
+        "transformations": [
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_2_expressing"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_2"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_2_expressing"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_2"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_3"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_2"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_3"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_2"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_4"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_2"
+							},
+              {
+                "concentration": 750,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_4"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_2"
+							},
+              {
+                "concentration": 750,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "chymotrypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "trypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "high_binding_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "autofluorescence_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "binding_negative"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 4,
+      "name": "Round 3: high concentration",
+      "type": "yeast_display_round",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_4_expressing"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_4_expressing"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_5"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_5"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_chymotrypsin_6"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "library_trypsin_6"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "chymotrypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "trypsin_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "high_binding_control"
+					}
+          },
+          {
+            "file_type": "fcs",
+            "source":  {
+							"sample_key": "autofluorescence_control"
+					}
+          }
+        ],
+        "transformations": [
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_4_expressing"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_4"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_4_expressing"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_4"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_5"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_4"
+							},
+              {
+                "concentration": 2250,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_5"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_4"
+							},
+              {
+                "concentration": 2250,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_chymotrypsin_6"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_chymotrypsin_4"
+							},
+              {
+                "concentration": 6750,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "library_trypsin_6"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "library_trypsin_4"
+							},
+              {
+                "concentration": 6750,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "chymotrypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "chymotrypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "trypsin_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 250,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "high_binding_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "fitc_binding_positive"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          },
+          {
+            "destination":  [
+							{
+								"sample_key": "autofluorescence_control"
+							}
+						],
+            "source":  [
+							{
+								"sample_key": "binding_negative"
+							},
+              {
+                "concentration": 0,
+                "sample_key": "trypsin"
+              },
+              {
+                "sample_key": "anti_myc"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "id": 5,
+      "name": "DNA Sequencing",
+      "type": "dna_seq",
+      "operator": {
+        "measurements": [
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_2"
+					}
+
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_2"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_1"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_1"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_expressing"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_6"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_6"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_5"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_5"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_4"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_4"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_trypsin_3"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library_chymotrypsin_3"
+					}
+          },
+          {
+            "file_type": "fastq",
+            "source":  {
+							"sample_key": "library"
+					}
+          }
+        ]
+      }
+    }
+  ]
+}
