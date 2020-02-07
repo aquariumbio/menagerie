@@ -7,10 +7,10 @@
       "output": "Stored sample rep 1"
     },
     "qpcr_2_reverse_primers": [
-      "Test Primer 1",
-      "Test Primer 2",
-      "Test Primer 3"
+      "Test Primer 4",
+      "Test Primer 5",
+      "Test Primer 6"
     ],
-    "qpcr_2_forward_primer": "Test Primer 4"
+    "qpcr_2_forward_primer": "Test Primer 3"
   }
 }

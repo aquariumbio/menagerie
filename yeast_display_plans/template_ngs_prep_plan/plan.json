@@ -15,18 +15,26 @@
               },
               {
                   "input_name": "Forward Primer",
-                  "sample": "Test Primer 4",
+                  "sample": "Test Primer Mix 1",
+                  "sample_key": "qpcr_1_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer Mix 2",
+                  "sample_key": "qpcr_1_reverse_primer"
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 3",
                   "sample_key": "qpcr_2_forward_primer"
               },
               {
                   "input_name": "Reverse Primer",
-                  "sample": "Test Primer 1",
+                  "sample": "Test Primer 4",
                   "sample_key": "qpcr_2_reverse_primer"
               }
             ],
-            "destination": [
-
-            ]
+            "destination": []
           },
           {
             "source": [
@@ -36,18 +44,26 @@
               },
               {
                   "input_name": "Forward Primer",
-                  "sample": "Test Primer 4",
+                  "sample": "Test Primer Mix 1",
+                  "sample_key": "qpcr_1_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer Mix 2",
+                  "sample_key": "qpcr_1_reverse_primer"
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 3",
                   "sample_key": "qpcr_2_forward_primer"
               },
               {
                   "input_name": "Reverse Primer",
-                  "sample": "Test Primer 2",
+                  "sample": "Test Primer 5",
                   "sample_key": "qpcr_2_reverse_primer"
               }
             ],
-            "destination": [
-
-            ]
+            "destination": []
           },
           {
             "source": [
@@ -57,18 +73,26 @@
               },
               {
                   "input_name": "Forward Primer",
-                  "sample": "Test Primer 4",
+                  "sample": "Test Primer 1",
+                  "sample_key": "qpcr_1_forward_primer"
+              },
+              {
+                  "input_name": "Reverse Primer",
+                  "sample": "Test Primer 2",
+                  "sample_key": "qpcr_1_reverse_primer"
+              },
+              {
+                  "input_name": "Forward Primer",
+                  "sample": "Test Primer 3",
                   "sample_key": "qpcr_2_forward_primer"
               },
               {
                   "input_name": "Reverse Primer",
-                  "sample": "Test Primer 3",
+                  "sample": "Test Primer 6",
                   "sample_key": "qpcr_2_reverse_primer"
               }
             ],
-            "destination": [
-
-            ]
+            "destination": []
           }
         ],
         "measurements": []

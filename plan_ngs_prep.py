@@ -16,7 +16,7 @@ from util.user_input import get_input
 # }
 
 inputs = {
-    'plan_path': "yeast_display_plans/template_ngs_prep_plan",
+    'plan_path': "yeast_display_plans/template_ngs_prep_params",
     'aq_instance': "laptop"
 }
 
