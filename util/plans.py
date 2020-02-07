@@ -49,7 +49,7 @@ class ExternalPlan(metaclass=ABCMeta):
 
         self.plan = self.load_json_from_file('plan.json')
         self.aq_defaults = self.load_json_from_file('aquarium_defaults.json')
-        self.plan_params = self.load_json_from_file("params_%s.json" % aq_instance)
+        self.plan_params = self.load_json_from_file("params.json")
 
         self.operation_defaults = self.aq_defaults.get("operation_defaults", [])
         self.defaults = self.operation_defaults
