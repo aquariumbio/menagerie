@@ -1,22 +1,32 @@
 from datetime import datetime, timedelta
+import json
+import os
 
 def get_input(plan_path=True, start_date=True, aq_instance=True):
     inputs = {}
 
     if plan_path: inputs["plan_path"] = get_plan_path()
     if start_date: inputs["start_date"] = get_start_date()
-    if aq_instance: inputs["aq_instance"] = get_aq_instance()
+    if aq_instance:
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'secrets.json')
+        with open(filename) as f:
+            secrets = json.load(f)
+
+        aq_instance_choices = list(secrets.keys())
+        inputs["aq_instance"] = get_aq_instance(aq_instance_choices)
+
     print()
 
     return inputs
 
-def get_aq_instance():
+def get_aq_instance(aq_instance_choices):
     while True:
         print()
         print("Which Aquarium instance would you like to push to?")
-        instance = input("Enter laptop, nursery, or production: ").lower()
+        instance = input("{}: ".format(aq_instance_choices)).lower()
 
-        if instance in ["nursery", "production", "laptop"]:
+        if instance in aq_instance_choices:
             break
 
         else:
