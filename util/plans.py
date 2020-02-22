@@ -24,7 +24,12 @@ def get_obj_by_attr(objects, attr, value):
     if objs: return objs[0]
 
 class ExternalPlan(metaclass=ABCMeta):
-    """Interface for working with the Aquarium Session and Plan models."""
+    """
+    `ExternalPlan` Takes JSON-formatted plan data as input and instantiates 
+    Aquarium Session and Plan models. Based on the structure of the input plan, 
+    it also creates and manages other objects, including `PlanStep`, 
+    `Transformation`, and `Leg`.
+    """
     def __init__(self, plan_path, aq_instance, aq_plan_name=None):
         """
         1. Creates a session from stored secrets
@@ -193,7 +198,7 @@ class ExternalPlan(metaclass=ABCMeta):
 
         return aq_samples
 
-    def get_steps_by_type(self, type):
+    def get_steps_by_type(self, type, sorted_by_id=True):
         """
         Return PlanStep objects based on operator type.
 
@@ -201,7 +206,12 @@ class ExternalPlan(metaclass=ABCMeta):
         :type type: str
         :return: list
         """
-        return [s for s in self.steps if s.type == type]
+        steps = [s for s in self.steps if s.type == type]
+
+        if sorted_by_id:
+            steps = sorted(steps, key=lambda s: s.step_id)
+
+        return steps
 
     def provision_steps(self):
         """Get PlanSteps of operator type 'provision'."""
@@ -296,9 +306,20 @@ class ExternalPlan(metaclass=ABCMeta):
         """
         return self.input_samples.get(sample_key)
 
+    def report(self):
+        ap = self.aq_plan
+        url = ap.session.url + "/plans?plan_id={}".format(ap.id)
+        print("Created Plan: {}".format(url))
+        print("{} total operations.".format(len(ap.operations)))
+        print("{} total wires.".format(len(ap.wires)))
+
 
 class PlanStep:
-    """A list of transformations that occur simultaneously in the Plan."""
+    """
+    A `PlanStep` represents a set of `Transformations` that take place 
+    in parallel. For exaple, several plasmid assembly operations or samples 
+    in a round of yeast display selection.
+    """
     def __init__(self, plan, plan_step):
         """
         All the important functions happen in inheriting classes.
@@ -365,6 +386,10 @@ class PlanStep:
 
         return flattened
 
+    def report(self):
+        print(self.name + ' complete')
+        print()
+
 
 class ProvisionStep(PlanStep):
 
@@ -400,9 +425,11 @@ class Transformation:
 
 class Leg:
     """
-    Aclass describing frequently-used chain of OperationTypes that converts one
-    sample into another (the "primary samples"). Generally does not allow any
-    branching of the primary samples.
+    A `Leg` is a relatively simple and frequently-used chain of 
+    Aquarium `Operations` with a defined set of inputs and outputs, 
+    loosely corresponding to a **Module** in the 
+    Aquarium **Designer** GUI. Generally, new workflows will require 
+    the creation of new concrete classes.
     """
     # The oder of OperationTypes
     leg_order = []
@@ -814,7 +841,11 @@ class Leg:
 
 # TODO: Fix this so that it can deal with fractional increments.
 class Cursor:
-    """A class to keep track of where to put the next operation."""
+    """
+    `Cursor` is a class to keep track of where to put the next operation 
+    in the graphical planner inerface of Aquarium. It uses appropriately 
+    sized increments in `x` and `y` to help create a pretty layout.
+    """
     def __init__(self, x=None, y=None):
         x = x or 1
         y = y or 10

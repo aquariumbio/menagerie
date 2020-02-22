@@ -358,6 +358,10 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 
                 cursor.incr_x()
 
+        cursor.update_max_x()
+        cursor.decr_y(SortLeg.length() + 3)
+        cursor.set_y_home()
+
 
 class YeastDisplayPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):
