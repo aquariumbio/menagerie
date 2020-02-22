@@ -31,16 +31,16 @@ In order to add credentials for your Aquarium instance(s), `cp util/secrets_temp
 
 ```json
 {
-    "laptop": {
-        "login": "neptune",
-        "password": "aquarium", 
-        "aquarium_url": "http://localhost:3000/"
-    },
-    "production": {
-        "login": "your_production_username",
-        "password": "your_production_password", 
-        "aquarium_url": "production_production_url"
-    }
+  "laptop": {
+    "login": "neptune",
+    "password": "aquarium",
+    "aquarium_url": "http://localhost:3000/"
+  },
+  "production": {
+    "login": "your_production_username",
+    "password": "your_production_password",
+    "aquarium_url": "production_production_url"
+  }
 }
 ```
 
@@ -58,7 +58,7 @@ There are 3 files that Menagerie takes as input.
 ```json
 {
   "operation_defaults": [
-      {
+    {
       "name": "Challenge and Label",
       "input": {
         "Antibody": {
@@ -86,7 +86,8 @@ There are 3 files that Menagerie takes as input.
               "value": 250
             }
           ]
-        },"Yeast Culture": {
+        },
+        "Yeast Culture": {
           "object_type": [
             {
               "name": "Yeast Library Liquid Culture",
@@ -123,43 +124,43 @@ There are 3 files that Menagerie takes as input.
 `plan.json` specifies the Aquarium `Samples` and operational flow that uniquely comprise your experiment. It usually contains several parts called `steps`. The first step is sometimes the `provision` step:
 ```json
 {
-    "id": 1,
-    "name": "Provision Samples",
-    "type": "provision",
-    "operator": {
-        "samples": [
-            {
-                "name": "DNA LIBRARY SAMPLE NAME",
-                "sample_type": "DNA Library",
-                "sample_key": "library"
-            },
-            {
-                "name": "EBY100 + PETCONv3_baker",
-                "sample_type": "Yeast Strain",
-                "sample_key": "binding_negative"
-            },
-            {
-                "name": "AMA1-best",
-                "sample_type": "Yeast Strain",
-                "sample_key": "fitc_binding_positive"
-            },
-            {
-                "name": "Trypsin",
-                "sample_type": "Protease",
-                "sample_key": "trypsin"
-            },
-            {
-                "name": "Chymotrypsin",
-                "sample_type": "Protease",
-                "sample_key": "chymotrypsin"
-            },
-            {
-                "name": "Anti-c-myc-FITC",
-                "sample_type": "Antibody",
-                "sample_key": "anti_myc"
-            }
-        ]
-    }
+  "id": 1,
+  "name": "Provision Samples",
+  "type": "provision",
+  "operator": {
+    "samples": [
+      {
+        "name": "DNA LIBRARY SAMPLE NAME",
+        "sample_type": "DNA Library",
+        "sample_key": "library"
+      },
+      {
+        "name": "EBY100 + PETCONv3_baker",
+        "sample_type": "Yeast Strain",
+        "sample_key": "binding_negative"
+      },
+      {
+        "name": "AMA1-best",
+        "sample_type": "Yeast Strain",
+        "sample_key": "fitc_binding_positive"
+      },
+      {
+        "name": "Trypsin",
+        "sample_type": "Protease",
+        "sample_key": "trypsin"
+      },
+      {
+        "name": "Chymotrypsin",
+        "sample_type": "Protease",
+        "sample_key": "chymotrypsin"
+      },
+      {
+        "name": "Anti-c-myc-FITC",
+        "sample_type": "Antibody",
+        "sample_key": "anti_myc"
+      }
+    ]
+  }
 }
 ```
 If `provision` step is present, then Menagerie will look for all of the samples listed in the Aquarium database. These can then be accessed in later steps using the `sample_key` attribute.
@@ -167,90 +168,90 @@ If `provision` step is present, then Menagerie will look for all of the samples 
 In subsequent steps, the `operator` contains an array of `transformations`. The `source` and `destination` entities are referred to by the `sample_key`:
 ```json
 {
-      "id": 2,
-      "name": "Round 1: low concentration",
-      "type": "yeast_display_round",
-      "operator": {
-        "transformations": [
+  "id": 2,
+  "name": "Round 1: low concentration",
+  "type": "yeast_display_round",
+  "operator": {
+    "transformations": [
+      {
+        "destination": [
           {
-            "destination":  [
-                {
-                    "sample_key": "library_expressing"
-                }
-            ],
-            "source":  [
-                {
-                    "sample_key": "library"
-                },
-              {
-                "concentration": 0,
-                "sample_key": "trypsin"
-              },
-              {
-                "sample_key": "anti_myc"
-              }
-            ]
+            "sample_key": "library_expressing"
+          }
+        ],
+        "source": [
+          {
+            "sample_key": "library"
           },
           {
-            "destination":  [
-							{
-								"sample_key": "library_chymotrypsin_1"
-							}
-						],
-            "source":  [
-							{
-								"sample_key": "library"
-							},
-              {
-                "concentration": 28,
-                "sample_key": "chymotrypsin"
-              },
-              {
-                "sample_key": "anti_myc"
-              }
-            ]
+            "concentration": 0,
+            "sample_key": "trypsin"
           },
           {
-            "destination":  [
-							{
-								"sample_key": "library_trypsin_1"
-							}
-						],
-            "source":  [
-							{
-								"sample_key": "library"
-							},
-              {
-                "concentration": 28,
-                "sample_key": "trypsin"
-              },
-              {
-                "sample_key": "anti_myc"
-              }
-            ]
+            "sample_key": "anti_myc"
+          }
+        ]
+      },
+      {
+        "destination": [
+          {
+            "sample_key": "library_chymotrypsin_1"
+          }
+        ],
+        "source": [
+          {
+            "sample_key": "library"
           },
           {
-            "destination":  [
-							{
-								"sample_key": "autofluorescence_control"
-							}
-						],
-            "source":  [
-							{
-								"sample_key": "binding_negative"
-							},
-              {
-                "concentration": 0,
-                "sample_key": "trypsin"
-              },
-              {
-                "sample_key": "anti_myc"
-              }
-            ]
+            "concentration": 28,
+            "sample_key": "chymotrypsin"
+          },
+          {
+            "sample_key": "anti_myc"
+          }
+        ]
+      },
+      {
+        "destination": [
+          {
+            "sample_key": "library_trypsin_1"
+          }
+        ],
+        "source": [
+          {
+            "sample_key": "library"
+          },
+          {
+            "concentration": 28,
+            "sample_key": "trypsin"
+          },
+          {
+            "sample_key": "anti_myc"
+          }
+        ]
+      },
+      {
+        "destination": [
+          {
+            "sample_key": "autofluorescence_control"
+          }
+        ],
+        "source": [
+          {
+            "sample_key": "binding_negative"
+          },
+          {
+            "concentration": 0,
+            "sample_key": "trypsin"
+          },
+          {
+            "sample_key": "anti_myc"
           }
         ]
       }
-    }
+    ]
+  }
+}
 ```
 
 ### Plan a protein stability experiment
