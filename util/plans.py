@@ -638,8 +638,7 @@ class Leg:
         :param container_opt: an option for specifying one of several containers
         :type container_opt: str
         """
-        for i in range(len(self.op_data)):
-            od = self.op_data[i]
+        for i, od in enumerate(self.op_data):
             op = od["operation"]
 
             # io_defaults = od["operation_defaults"]

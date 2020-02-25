@@ -144,12 +144,12 @@ class DNASeqStep(YeastDisplayPlanStep):
         template_items = [i for i in input_samples.values() if self.istemplate(i)]
         template_items.sort(key=lambda i: i.id)
 
-        for i in template_items:
+        for i, template_item in enumerate(template_items):
             txn = {
                 "source": [
                     {
                         "input_name": "Template",
-                        "item": i
+                        "item": template_item
                     },
                     {
                         "input_name": "Forward Primer",
@@ -158,7 +158,7 @@ class DNASeqStep(YeastDisplayPlanStep):
                     },
                     {
                         "input_name": "Reverse Primer",
-                        "sample": qpcr_2_reverse_primers.pop(0),
+                        "sample": qpcr_2_reverse_primers[i],
                         "sample_key": "qpcr_2_reverse_primer"
                     }
                 ],
@@ -234,6 +234,8 @@ class DNASeqStep(YeastDisplayPlanStep):
 
             cursor.incr_x()
             cursor.return_y()
+        
+        cursor.update_max_x()
 
 
 class YeastDisplayStep(YeastDisplayPlanStep):

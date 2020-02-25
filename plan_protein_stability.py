@@ -1,20 +1,18 @@
 from datetime import datetime, timedelta
-import warnings
-warnings.filterwarnings('ignore')
 
 from util.plans import Cursor
 from util.yeast_display_plans import YeastDisplayPlan
 from util.user_input import get_input
 
 # Ask for inputs on the command line
-inputs = get_input()
+# inputs = get_input()
 
 # Override get_input() for convenience when testing code
-# inputs = {
-#     'plan_path': 'yeast_display_plans/template_stability', 
-#     'start_date': datetime.today(), 
-#     'aq_instance': 'laptop'
-# }
+inputs = {
+    'plan_path': 'yeast_display_plans/template_stability', 
+    'start_date': datetime.today(), 
+    'aq_instance': 'laptop'
+}
 
 start_date = inputs['start_date']
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
