@@ -444,7 +444,7 @@ class PlanStep:
         return flattened
 
     def report(self):
-        print(self.name + ' complete')
+        print(self.plan_step.get("name") + ' complete')
         print()
 
 
@@ -507,48 +507,56 @@ class Leg:
         self.session = self.ext_plan.session
         self.cursor = cursor
 
-        self.op_data, self.wires = self.create_operations()
+        self.op_data = []
+        self.wires = []
+        # self.create_operations()
 
         # This is no longer a good name for this variable.
         self.sample_io = {}
 
-    # Does it make sense to populate this intermediate object?
-    # Why not just build the array of operations?
-    def create_operations(self):
+    def add(self, container_opt=None):
+        """
+        Sets the input and output for the list of Operations, then adds the
+        operations and wires to the Aq Plan object.
+
+        :param container_opt: an option for specifying one of several containers
+        :type container_opt: str
+        """
+        self.create_operations(container_opt)
+        self.aq_plan.add_operations([od["operation"] for od in self.op_data])
+        self.aq_plan.add_wires(self.wires)
+        print("### " + str(len(self.aq_plan.operations)) + " total operations")
+        print()
+
+    def create_operations(self, container_opt):
         """
         Instantiates operations and places them in a list along with data for
         populating ContainerType fields. Also wires the operations together
         based on primary sample. Returns the list of operation data and the list
         of Wires
 
-        :return: list
+        :return: None
         """
-
-        op_data = []
-        wires = []
 
         for ot_attr in self.leg_order:
             if isinstance(ot_attr, str):
                 ot_attr = {"name": ot_attr}
 
             od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_attr["name"]))
-            od = od or {}
-            # od = { operation_defaults": od }
-            od["operation"] = self.initialize_op(ot_attr)
-            od["name"] = od["operation"].operation_type.name
-            # od["container_types"] = self.get_container_types(od["name"])
-            op_data.append(od)
+            od = od or {"name": ot_attr["name"]}
 
-            # Maybe this should happen in a different method?
-            # Could make more sense in Leg.add()
-            if len(op_data) > 1:
-                wire = self.get_wire_pair(op_data[-2]["operation"], od["operation"])
-                if not None in wire:
-                    wires.append(wire)
+            od["operation"] = self.initialize_op(ot_attr)
+
+            this_io = self.replace_defaults(od)
+            self.set_io(od["operation"], this_io, container_opt)
+            self.op_data.append(od)
+
+            if len(self.op_data) > 1:
+                self.wire_ops(self.op_data[-2]["operation"], od["operation"])
+
+            print("Set IO for " + od["name"])
 
             self.cursor.decr_y()
-
-        return [op_data, wires]
 
     def initialize_op(self, ot_attr):
 
@@ -567,161 +575,95 @@ class Leg:
 
         return op
 
-    # def get_container_types(self, ot_name):
-    #     """
-    #     Returns the container types data for a specific OperationType.
+    def set_io(self, operation, this_io, container_opt):
+        """
+        Sets the input and output for an Operation.
 
-    #     :param ot_name: the name of the OperationType
-    #     :type ot_name: str
-    #     :return: dict
-    #     """
-    #     default_container_types = self.ext_plan.aq_defaults["container_types"]
-    #     ct = copy.deepcopy(get_obj_by_name(default_container_types, ot_name))
+        :param operation: the Operation to be set
+        :type operation: Operation
+        :param this_io: dict of i/o data for an OperationType 
+            from aquarium_defaults.json
+        :type this_io: dict
+        :param container_opt: an option for specifying one of several containers
+        :type container_opt: str
+        """
 
-    #     if ct:
-    #         ct.pop("name")
-    #     else:
-    #         ct = {}
+        op_type = operation.operation_type
 
-    #     return ct
+        for ft in op_type.field_types:
+            ft_io = this_io.get(ft.role, {}).get(ft.name, {})
+            
+            if ft.ftype == 'sample':
+                io_list = ft_io.get("sample")
+                if io_list:
+                    io_object = io_list[0].get("sample")
+                    container = self.choose_container(ft_io, container_opt)
+                    if ft.array and isinstance(io_object, list):
+                        values = [{
+                            "sample": io_object.pop(0),
+                            "container": container
+                        }]
 
-    def get_container(self, ot_name, io_name, role, container_opt=None):
+                        try:
+                            operation.set_field_value_array(ft.name, ft.role, values)
+                        except AquariumModelError as e:
+                            print("%s: %s" % (op_type.name, e))
+
+                        for obj in io_object:
+                            try:
+                                operation.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
+                            except AquariumModelError as e:
+                                print("%s: %s" % (op_type.name, e))
+                    else:
+                        if isinstance(io_object, Item):
+                            sample = None
+                            item = io_object
+                        else:
+                            sample = io_object
+                            item = None
+
+                        try:
+                            operation.set_field_value(ft.name, ft.role, sample=sample, item=item, container=container)
+                        except AquariumModelError as e:
+                            print("%s: %s" % (op_type.name, e))
+
+            else:
+                io_list = ft_io.get("value")
+                if io_list:
+                    io_object = io_list[0].get("value")
+                    try:
+                        operation.set_field_value(ft.name, ft.role, value=io_object)
+                    except AquariumModelError as e:
+                        print("%s: %s" % (op_type.name, e))
+
+    def choose_container(self, io_data, container_opt=None):
         """
         Gets a container (ObjectType) for an input or output.
 
-        :param ot_name: the name of the OperationType
-        :type ot_name: str
-        :param io_name: the name ("handle") of the input or output
-        :type io_name: str
-        :param role: the role ("input" or "output")
-        :type role: str
+        :param io_data: dict containing i/o data for a particular FieldType
+        :type io_data: dict
         :param container_opt: an option for specifying one of several containers
         :type container_opt: str
         :return: ObjectType
         """
-        role_data = get_obj_by_name(self.op_data, ot_name).get(role)
+        ot_data = io_data.get("object_type", [])
+        if len(ot_data) > 1:
+            if container_opt:
+                return [o["object_type"] for o in ot_data if o["option_key"] == container_opt][0]
 
-        if role_data:
-            io_data = role_data.get(io_name)
-            ot_data = io_data.get("object_type", [])
-            if len(ot_data) > 1:
-                if container_opt:
-                    return [o["object_type"] for o in ot_data if o["option_key"] == container_opt][0]
-
-                else:
-                    raise InputError("Option required to specify container: " + ot_data)
-            
-            elif len(ot_data) == 1:
-                return ot_data[0]["object_type"]
-
-    # Is there any reason why this can't be done as the operations
-    # are being created?
-    def add(self, container_opt=None):
-        """
-        Sets the input and output for the list of Operations, then adds the
-        operations and wires to the Aq Plan object.
-
-        :param container_opt: an option for specifying one of several containers
-        :type container_opt: str
-        """
-        self.set_io(container_opt)
-        self.aq_plan.add_operations([od["operation"] for od in self.op_data])
-        self.aq_plan.add_wires(self.wires)
-        print("### " + str(len(self.aq_plan.operations)) + " total operations")
-        print()
-
-    def set_io(self, container_opt):
-        """
-        Sets the input and output for the list of Operations. Propagates the
-        primary sample forward through the chain.
-
-        :param container_opt: an option for specifying one of several containers
-        :type container_opt: str
-        """
-        for i, od in enumerate(self.op_data):
-            op = od["operation"]
-
-            # io_defaults = od["operation_defaults"]
-            # print(od)
-            # print(self.sample_io)
-            # raise
-
-            this_io = self.replace_defaults(od)
-            # print(this_io)
-            # print()
-            # raise
-
-            for ft in op.operation_type.field_types:
-                # print(ft)
-                ft_io = this_io.get(ft.role, {}).get(ft.name, {})
-                # io_object = ft_io.get("sample") or ft_io.get("value")
-
-                # is_sample = ft.ftype == 'sample' #isinstance(io_object, Sample)
-                # is_item = isinstance(io_object, Item)
-                # is_array = ft.array #isinstance(io_object, list)
-
-                if ft.ftype == 'sample':
-                    io_list = ft_io.get("sample")
-                    if io_list:
-                        io_object = io_list[0].get("sample")
-                        container = self.get_container(op.operation_type.name, ft.name, ft.role, container_opt)
-                        if ft.array and isinstance(io_object, list):
-                            values = [{
-                                "sample": io_object.pop(0),
-                                "container": container
-                            }]
-
-                            try:
-                                op.set_field_value_array(ft.name, ft.role, values)
-                            except AquariumModelError as e:
-                                print("%s: %s" % (od["name"], e))
-
-                            for obj in io_object:
-                                try:
-                                    op.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
-                                except AquariumModelError as e:
-                                    print("%s: %s" % (od["name"], e))
-                        else:
-                            if isinstance(io_object, Item):
-                                sample = None
-                                item = io_object
-                            else:
-                                sample = io_object
-                                item = None
-
-                            try:
-                                op.set_field_value(ft.name, ft.role, sample=sample, item=item, container=container)
-                            except AquariumModelError as e:
-                                print("%s: %s" % (od["name"], e))
-
-
-                # elif is_item:
-                #     try:
-                #         op.set_field_value(ft.name, ft.role, item=io_object)
-                #     except AquariumModelError as e:
-                #         print("%s: %s" % (od["name"], e))
-
-                else:
-                    io_list = ft_io.get("value")
-                    if io_list:
-                        io_object = io_list[0].get("value")
-                        try:
-                            op.set_field_value(ft.name, ft.role, value=io_object)
-                        except AquariumModelError as e:
-                            print("%s: %s" % (od["name"], e))
-
-            # what if i == 0?
-            self.propagate_sample(self.op_data[i - 1]["operation"], self.op_data[i]["operation"])
-
-            print("Set IO for " + od["name"])
+            else:
+                raise InputError("Option required to specify container: " + ot_data)
+        
+        elif len(ot_data) == 1:
+            return ot_data[0]["object_type"]
 
     def replace_defaults(self, od):
         for role in ["input", "output"]:
             for name, replacement in self.sample_io.items():
                 role_defaults = od.get(role, {})
 
-                if not role_defaults.get(name): role_defaults[name] = {}
-                op_defaults = role_defaults[name]
+                if not role_defaults.get(name): 
+                    role_defaults[name] = {}
 
                 if isinstance(replacement, Sample):
                     role_defaults[name]["sample"] = [
@@ -731,7 +673,6 @@ class Leg:
                     role_defaults[name]["value"] = [
                         { "value": replacement }
                     ]
-                    
         return od
 
     def wire_ops(self, upstr_op, dnstr_op):
