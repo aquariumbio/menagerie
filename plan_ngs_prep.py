@@ -1,5 +1,3 @@
-import sys
-
 from util.plans import Cursor
 from util.yeast_display_plans import YeastDisplayPlan
 from util.user_input import get_input
@@ -15,9 +13,6 @@ inputs = {
 
 plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 
-# print(plan.steps[0].transformations[0].source)
-# sys.exit("Terminating early")
-
 # Keeps track of where to put the next operation in the Aquarium Designer GUI
 cursor = Cursor(y=18)
 
@@ -27,8 +22,6 @@ for plan_step in plan.get_steps_by_type('dna_seq'):
     plan_step.create_step(cursor)
 
     plan_step.report()
-
-sys.exit("Terminating early")
 
 plan.create_aq_plan()
 plan.report()
