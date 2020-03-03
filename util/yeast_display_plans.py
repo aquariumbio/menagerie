@@ -51,7 +51,7 @@ class YeastDisplayPlan(ExternalPlan):
             step = DNASeqStep(self, step_data)
         
         else:
-            step = YeastDisplayPlanStep(self, step_data)
+            step = None
 
         return step
 

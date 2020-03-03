@@ -16,6 +16,8 @@ from pydent import AqSession, models, __version__
 from pydent.models import Sample, Item, Plan
 from pydent.exceptions import AquariumModelError
 
+from util.format_output import warn
+
 def get_obj_by_name(leg, name):
     return get_obj_by_attr(leg, "name", name)
 
@@ -44,6 +46,9 @@ class ExternalPlan(metaclass=ABCMeta):
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the secrets.json file
         :type aq_instance: str
+        :param aq_plan_name: the name to assign to the Aquarium Plan, if you
+            wish it to be different
+        :type aq_plan_name: str
         :return: new ExternalPlan
         """
         self.session = ExternalPlan.create_session(aq_instance)
@@ -69,10 +74,25 @@ class ExternalPlan(metaclass=ABCMeta):
         # Create PlanStep objects based on step type
         for step_data in self.plan["steps"]:
             step = self.initialize_step(step_data)
-            self.steps.append(step)
+            if step: 
+                self.steps.append(step)
+            else:
+                msg = "Unrecognized step type \"{}\" in plan.json"
+                warn(msg.format(step_data["type"]))
 
     @abstractmethod
     def initialize_step(self, step_data):
+        """
+        Initialize a `PlanStep` object based on `step_data` from 
+            `plan.json`. Each class derived from `ExternalPlan` must override
+            this method with its own in order to deal with customization. 
+            Generally, these methods should call `super().initialize_step(step_data)` 
+            to cover generally applicable step types such as `ProvisionStep`.
+
+        :param step_data: one of the JSON-derived step objects from `plan.json`
+        :type step_data: dict
+        :return: PlanStep
+        """
         step_type = step_data["type"]
 
         if step_type == "provision":
@@ -82,6 +102,7 @@ class ExternalPlan(metaclass=ABCMeta):
     def create_session(aq_instance):
         """
         Create a session using credentials in secrets.json.
+
         :param aq_instance: the instance of Aquarium to use
             Corresponds to a key in the secrets.json file
         :type aq_instance: str
@@ -140,8 +161,7 @@ class ExternalPlan(metaclass=ABCMeta):
                                 else:
                                     raise InputError("Sample not found: {}".format(sample_name))
                             except InputError as e:
-                                print(e.message)
-                                # raise
+                                warn(e.message)
                                 
                     ot_data = io_data.get("object_type", [])
                     for o in ot_data:
@@ -154,8 +174,7 @@ class ExternalPlan(metaclass=ABCMeta):
                                 else:
                                     raise InputError("ObjectType not found: {}".format(ot_name))
                             except InputError as e:
-                                print(e.message)
-                                # raise
+                                warn(e.message)
 
     def load_inputs_from_params(self):
         params_inputs = self.plan_params.pop('input_samples', {})
@@ -188,8 +207,7 @@ class ExternalPlan(metaclass=ABCMeta):
                         self.add_input_sample(op.id, item)
                     else:
                         msg = "Could not find {} Item for {} Operation {}"
-                        print(msg.format(sample_data["output"], ot_name, op.id))
-                        print()
+                        warn(msg.format(sample_data["output"], ot_name, op.id))
 
             # A list of items
             elif key == "items":
@@ -578,7 +596,7 @@ class Leg:
 
             # TODO: Make this a proper warning.
             if not od:
-                print("WARNING: Did not find Aquarium defaults for {}".format(ot_attr["name"]))
+                warn("Did not find Aquarium defaults for {}".format(ot_attr["name"]))
                 od = {"name": ot_attr["name"]}
 
             od["operation"] = self.initialize_op(ot_attr)
@@ -600,9 +618,9 @@ class Leg:
         op_types = self.session.OperationType.where(ot_attr)
 
         if len(op_types) != 1:
-            msg = "Didn't find a unique Operation Type for %s: %s"
+            msg = "Did not find a unique Operation Type for %s: %s"
             ots = [ot.category + " > " + ot.name for ot in op_types]
-            print(msg % (ot_attr["name"], ots))
+            warn(msg % (ot_attr["name"], ots))
 
         op_type = op_types[0]
         op = op_type.instance()
@@ -643,13 +661,13 @@ class Leg:
                         try:
                             operation.set_field_value_array(ft.name, ft.role, values)
                         except AquariumModelError as e:
-                            print("%s: %s" % (op_type.name, e))
+                            warn("%s: %s" % (op_type.name, e))
 
                         for obj in io_object:
                             try:
                                 operation.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
                             except AquariumModelError as e:
-                                print("%s: %s" % (op_type.name, e))
+                                warn("%s: %s" % (op_type.name, e))
                     else:
                         if isinstance(io_object, Item):
                             sample = None
@@ -661,7 +679,7 @@ class Leg:
                         try:
                             operation.set_field_value(ft.name, ft.role, sample=sample, item=item, container=container)
                         except AquariumModelError as e:
-                            print("%s: %s" % (op_type.name, e))
+                            warn("%s: %s" % (op_type.name, e))
 
             else:
                 io_list = ft_io.get("value")
@@ -670,7 +688,7 @@ class Leg:
                     try:
                         operation.set_field_value(ft.name, ft.role, value=io_object)
                     except AquariumModelError as e:
-                        print("%s: %s" % (op_type.name, e))
+                        warn("%s: %s" % (op_type.name, e))
 
     def choose_container(self, io_data, container_opt=None):
         """
@@ -773,7 +791,7 @@ class Leg:
                     try:
                         fv.set_value(sample=upstr_sample)
                     except AquariumModelError as e:
-                        print("%s: %s" % (dnstr_op.operation_type.name, e))
+                        warn("%s: %s" % (dnstr_op.operation_type.name, e))
 
     def get_wire_pair(self, upstr_op, dnstr_op):
         """
@@ -906,22 +924,18 @@ class Cursor:
     def incr_x(self, mult=1):
         self.x += round(mult * self.x_incr)
         self.update_max_x()
-        # print("x = %d" % self.x)
 
     def decr_x(self, mult=1):
         self.x -= round(mult * self.x_incr)
         self.update_min_x()
-        # print("x = %d" % self.x)
 
     def incr_y(self, mult=1):
         self.y += round(mult * self.y_incr)
         self.update_max_y()
-        # print("y = %d" % self.y)
 
     def decr_y(self, mult=1):
         self.y -= round(mult * self.y_incr)
         self.update_min_y()
-        # print("y = %d" % self.y)
 
     def set_x_home(self, x=None):
         if x:

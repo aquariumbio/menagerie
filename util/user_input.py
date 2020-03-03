@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 import json
 import os
+import argparse
 
 def get_input(plan_path=True, start_date=True, aq_instance=True):
     inputs = {}
@@ -73,3 +74,13 @@ def get_plan_path():
     print("Please provide a path to a folder containing the .json files for this plan.")
     plan_path = input("Path: ") 
     return plan_path
+
+def get_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-t", "--test",
+                        help="bypass user inputs",
+                        action="store_true")
+    parser.add_argument("-e", "--ephemeral",
+                        help="don't push plan to server",
+                        action="store_true")
+    return parser.parse_args()

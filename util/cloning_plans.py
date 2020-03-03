@@ -56,7 +56,7 @@ class CloningPlan(ExternalPlan):
             step = YeastTransformationStep(self, step_data)
 
         else:
-            step = CloningPlanStep(self, step_data)
+            step = None
 
         return step
 
