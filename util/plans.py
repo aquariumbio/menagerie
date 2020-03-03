@@ -389,9 +389,14 @@ class PlanStep:
         """
         self.plan = plan
         self.plan_step = plan_step
+        self.step_id = self.plan_step['id']
+        self.name = self.plan_step.get('name')
         self.operator = plan_step.get("operator", {})
         self.type = plan_step["type"]
+        self.operator_type = self.type
         self.transformations = []
+        self.measurements = []
+        self.output_operations = {}
 
     def get_inputs(self, sample_type_name):
         """

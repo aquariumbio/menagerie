@@ -79,29 +79,9 @@ class CloningPlan(ExternalPlan):
 class CloningPlanStep(PlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
-        # self.plan = plan
-        # self.plan_step = plan_step
 
-        self.step_id = self.plan_step['id']
-        self.name = self.plan_step.get('name')
-        # self.operator_type = plan_step["type"]
-        
-        # It would be good to harmonize this with the YeastDisplayPlan schema
-        # self.operator = self.plan_step['operator']
-
-        # self.transformations = []
         for txn in self.operator.get('transformations', []):
             self.transformations.append(CloningPlanTransformation(self, txn))
-
-        # self.measurements = []
-        # for msmt in self.operator.get('measurements', []):
-        #     self.measurements.append(YeastDisplayPlanMeasurement(self, msmt))
-
-        # self.measured_samples = [m.source for m in self.measurements]
-
-        self.output_operations = {}
-
-        # self.step_type = self.operator_type
 
 
 class GoldenGateStep(CloningPlanStep):

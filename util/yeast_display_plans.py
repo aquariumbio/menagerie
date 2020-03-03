@@ -81,25 +81,14 @@ class YeastDisplayPlan(ExternalPlan):
 class YeastDisplayPlanStep(PlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
-        self.plan = plan
-        self.plan_step = plan_step
 
-        self.step_id = self.plan_step['id']
-        self.operator = self.plan_step['operator']
-        self.operator_type = self.type
-        self.name = self.plan_step['name']
-
-        self.transformations = []
         for txn in self.operator.get('transformations', []):
             self.transformations.append(YeastDisplayPlanTransformation(self, txn))
 
-        self.measurements = []
         for msmt in self.operator.get('measurements', []):
             self.measurements.append(YeastDisplayPlanMeasurement(self, msmt))
 
         self.measured_samples = [m.source for m in self.measurements]
-
-        self.output_operations = {}
 
 
     def yeast_inputs(self):
