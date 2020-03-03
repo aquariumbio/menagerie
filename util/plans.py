@@ -543,7 +543,6 @@ class Leg:
 
         self.op_data = []
         self.wires = []
-        # self.create_operations()
 
         # This is no longer a good name for this variable.
         self.sample_io = {}
@@ -564,10 +563,9 @@ class Leg:
 
     def create_operations(self, container_opt):
         """
-        Instantiates operations and places them in a list along with data for
-        populating ContainerType fields. Also wires the operations together
-        based on primary sample. Returns the list of operation data and the list
-        of Wires
+        Instantiates operations and places them in self.op_data along with data for
+        populating ObjectType fields. Also wires the operations together
+        based on primary sample. 
 
         :return: None
         """
@@ -577,7 +575,11 @@ class Leg:
                 ot_attr = {"name": ot_attr}
 
             od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_attr["name"]))
-            od = od or {"name": ot_attr["name"]}
+
+            # TODO: Make this a proper warning.
+            if not od:
+                print("WARNING: Did not find Aquarium defaults for {}".format(ot_attr["name"]))
+                od = {"name": ot_attr["name"]}
 
             od["operation"] = self.initialize_op(ot_attr)
 
