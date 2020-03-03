@@ -478,7 +478,36 @@ class Transformation:
     def __init__(self, plan_step, transformation):
         self.plan_step = plan_step
         self.plan = self.plan_step.plan
+        self.source = self.format(transformation['source'])
+        self.destination = self.format(transformation['destination'])
 
+    def source_samples(self):
+        return [x['sample'] for x in self.source]
+
+    def destination_samples(self):
+        return [x['sample'] for x in self.destination]
+
+    def fetch_source(self, key, value):
+        found = [s for s in self.source if s.get(key) == value]
+        if found: return found[0]
+
+    def fetch_destination(self, key, value):
+        found = [s for s in self.destination if s.get(key) == value]
+        if found: return found[0]
+
+    @staticmethod
+    def format(element):
+        if isinstance(element, list):
+            return [{ 'sample': e } if isinstance(e, str) else e for e in element]
+
+        elif isinstance(element, dict):
+            return [element]
+
+        elif isinstance(element, str):
+            return [{ 'sample': element }]
+
+        else:
+            raise Exception('Format of %s not recognized' % str(element))
 
 class Leg:
     """

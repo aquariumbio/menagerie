@@ -6,7 +6,9 @@
       "operation_type": "Store Yeast Library Sample",
       "output": "Stored sample rep 1"
     },
-    "qpcr_2_reverse_primers": [
+    "qpcr_1_reverse_primer": "Test Primer Mix 2",
+    "qpcr_1_forward_primer": "Test Primer Mix 1",
+    "qpcr_2_reverse_primer": [
       "Test Primer 4",
       "Test Primer 5",
       "Test Primer 6"

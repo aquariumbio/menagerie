@@ -136,9 +136,12 @@ class DNASeqStep(YeastDisplayPlanStep):
         if not self.transformations:
             self.create_transformations_from_params()
 
+    # TODO: Make this more general and less stupid
     def create_transformations_from_params(self):
         input_samples = self.plan.input_samples
-        qpcr_2_reverse_primers = input_samples.get("qpcr_2_reverse_primers")
+        qpcr_1_reverse_primer = input_samples.get("qpcr_1_reverse_primer")
+        qpcr_1_forward_primer = input_samples.get("qpcr_1_forward_primer")
+        qpcr_2_reverse_primer = input_samples.get("qpcr_2_reverse_primer")
         qpcr_2_forward_primer = input_samples.get("qpcr_2_forward_primer")
 
         template_items = [i for i in input_samples.values() if self.istemplate(i)]
@@ -153,12 +156,22 @@ class DNASeqStep(YeastDisplayPlanStep):
                     },
                     {
                         "input_name": "Forward Primer",
+                        "sample": qpcr_1_forward_primer,
+                        "sample_key": "qpcr_1_forward_primer"
+                    },
+                    {
+                        "input_name": "Reverse Primer",
+                        "sample": qpcr_1_reverse_primer,
+                        "sample_key": "qpcr_1_reverse_primer"
+                    },
+                    {
+                        "input_name": "Forward Primer",
                         "sample": qpcr_2_forward_primer,
                         "sample_key": "qpcr_2_forward_primer"
                     },
                     {
                         "input_name": "Reverse Primer",
-                        "sample": qpcr_2_reverse_primers[i],
+                        "sample": qpcr_2_reverse_primer[i],
                         "sample_key": "qpcr_2_reverse_primer"
                     }
                 ],
@@ -204,15 +217,23 @@ class DNASeqStep(YeastDisplayPlanStep):
                 if opt == "qPCR1":
                     plates = False
 
+                    fwd_primer_src = txn.fetch_source("sample_key", "qpcr_1_forward_primer")
+                    fwd_primer = fwd_primer_src.get("sample") #or self.plan.session.Sample.find_by_name(fwd_primer_src["name"])
+                    io_obj["Forward Primer"] = fwd_primer
+
+                    rev_primer_src = txn.fetch_source("sample_key", "qpcr_1_reverse_primer")
+                    rev_primer = rev_primer_src.get("sample") #or self.plan.session.Sample.find_by_name(rev_primer_src["name"])
+                    io_obj["Reverse Primer"] = rev_primer
+
                 elif opt == "qPCR2":
                     plates = True
 
-                    fwd_primer_src = [s for s in txn.source if s.get("sample_key") == "qpcr_2_forward_primer"][0]
-                    fwd_primer = fwd_primer_src.get("sample") or self.plan.session.Sample.find_by_name(fwd_primer_src["name"])
+                    fwd_primer_src = txn.fetch_source("sample_key", "qpcr_2_forward_primer")
+                    fwd_primer = fwd_primer_src.get("sample") #or self.plan.session.Sample.find_by_name(fwd_primer_src["name"])
                     io_obj["Forward Primer"] = fwd_primer
 
-                    rev_primer_src = [s for s in txn.source if s.get("sample_key") == "qpcr_2_reverse_primer"][0]
-                    rev_primer = rev_primer_src.get("sample") or self.plan.session.Sample.find_by_name(rev_primer_src["name"])
+                    rev_primer_src = txn.fetch_source("sample_key", "qpcr_2_reverse_primer")
+                    rev_primer = rev_primer_src.get("sample") #or self.plan.session.Sample.find_by_name(rev_primer_src["name"])
                     io_obj["Reverse Primer"] = rev_primer
 
                 qpcr_leg = QPCRLeg(self, cursor, plates)
@@ -419,8 +440,6 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 class YeastDisplayPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):
         super().__init__(plan_step, transformation)
-        self.source = self.format(transformation['source'])
-        self.destination = self.format(transformation['destination'])
 
     def source_samples(self):
         return [self.sample_key(x) for x in self.source]
@@ -439,20 +458,6 @@ class YeastDisplayPlanTransformation(Transformation):
 
     def yeast(self):
         return [x for x in self.source_samples() if x in self.plan_step.yeast_inputs()]
-
-    @staticmethod
-    def format(element):
-        if isinstance(element, list):
-            return [{ 'sample': e } if isinstance(e, str) else e for e in element]
-
-        elif isinstance(element, dict):
-            return [element]
-
-        elif isinstance(element, str):
-            return [{ 'sample': element }]
-
-        else:
-            raise Exception('Format of %s not recognized' % str(element))
 
     @staticmethod
     def sample_key(element):
