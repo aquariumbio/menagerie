@@ -1,0 +1,544 @@
+{
+  "operation_defaults": [
+    {
+      "input": {
+        "Media": {
+          "sample": [
+            {
+              "name": "SDO -His -Trp -Ura"
+            }
+          ]
+        },
+        "Options": {
+          "value": [
+            {
+              "value": "{}"
+            }
+          ]
+        },
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Glycerol Stock",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Divided Yeast Plate",
+              "option_key": "control"
+            }
+          ]
+        }
+      },
+      "name": "Innoculate Yeast Library",
+      "output": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 5ml culture",
+              "option_key": "control"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Media": {
+          "sample": [
+            {
+              "name": "SDO + 2% Galactose -His -Trp -Ura"
+            }
+          ]
+        },
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 5ml culture",
+              "option_key": "control"
+            }
+          ]
+        }
+      },
+      "name": "Dilute Yeast Library",
+      "output": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 50ml culture",
+              "option_key": "control"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            }
+          ]
+        }
+      },
+      "name": "Mix Cultures",
+      "output": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library_start"
+            },
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Antibody": {
+          "object_type": [
+            {
+              "name": "Antibody Stock"
+            }
+          ],
+          "sample": [
+            {
+              "name": "Anti-c-myc-FITC"
+            }
+          ]
+        },
+        "Protease": {
+          "object_type": [
+            {
+              "name": "Protease Stock"
+            }
+          ]
+        },
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture",
+              "option_key": "library"
+            },
+            {
+              "name": "Yeast 50ml culture",
+              "option_key": "control"
+            }
+          ]
+        }
+      },
+      "name": "Challenge and Label",
+      "output": {
+        "Labeled Yeast Library": {
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Control?": {
+          "value": [
+            {
+              "value": "no"
+            }
+          ]
+        },
+        "Labeled Yeast Library": {
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
+        },
+        "Sort?": {
+          "value": [
+            {
+              "value": "yes"
+            }
+          ]
+        }
+      },
+      "name": "Sort Yeast Display Library",
+      "output": {
+        "Labeled Yeast Library": {
+          "object_type": [
+            {
+              "name": "Labeled Yeast Library Suspension",
+              "option_key": "library"
+            },
+            {
+              "name": "Labeled Yeast Strain Suspension",
+              "option_key": "control"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Yeast Culture": {
+          "object_type": [
+            {
+              "name": "Yeast Library Liquid Culture"
+            }
+          ]
+        }
+      },
+      "name": "Store Yeast Library Sample",
+      "output": {
+        "Stored sample rep 1": {
+          "object_type": [
+            {
+              "name": "Yeast Library in Soln 1"
+            }
+          ]
+        },
+        "Stored sample rep 2": {
+          "object_type": [
+            {
+              "name": "Yeast Library in Soln 1"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Yeast Library": {
+          "object_type": [
+            {
+              "name": "Yeast Library in Soln 1"
+            }
+          ]
+        }
+      },
+      "name": "Treat With Zymolyase",
+      "output": {
+        "Yeast Library": {
+          "object_type": [
+            {
+              "name": "Zymolyased Yeast Library"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Yeast Library": {
+          "object_type": [
+            {
+              "name": "Zymolyased Yeast Library"
+            }
+          ]
+        }
+      },
+      "name": "Yeast Plasmid Extraction",
+      "output": {
+        "Plasmid Library": {
+          "object_type": [
+            {
+              "name": "Plasmid Library"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Zymoprepped sample": {
+          "object_type": [
+            {
+              "name": "Plasmid Library"
+            }
+          ]
+        }
+      },
+      "name": "Digest Genomic DNA",
+      "output": {
+        "Exonucleased sample": {
+          "object_type": [
+            {
+              "name": "Post-exonuclease"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Forward Primer": {
+          "object_type": [
+            {
+              "name": "Primer Mix Stock",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Primer Aliquot",
+              "option_key": "qPCR2"
+            }
+          ]
+        },
+        "Reverse Primer": {
+          "object_type": [
+            {
+              "name": "Primer Mix Stock",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Primer Aliquot",
+              "option_key": "qPCR2"
+            }
+          ]
+        },
+        "Template": {
+          "object_type": [
+            {
+              "name": "Post-exonuclease",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Amplified Fragment Library",
+              "option_key": "qPCR2"
+            }
+          ]
+        }
+      },
+      "name": "Make qPCR Fragment",
+      "output": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "96 qPCR collection"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Forward Primer": {
+          "object_type": [
+            {
+              "name": "Primer Mix Stock",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Primer Aliquot",
+              "option_key": "qPCR2"
+            }
+          ]
+        },
+        "Reverse Primer": {
+          "object_type": [
+            {
+              "name": "96-Well Primer Aliquot Plate",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "96-Well Primer Aliquot Plate",
+              "option_key": "qPCR2"
+            }
+          ]
+        },
+        "Template": {
+          "object_type": [
+            {
+              "name": "Post-exonuclease",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Amplified Fragment Library",
+              "option_key": "qPCR2"
+            }
+          ]
+        }
+      },
+      "name": "Make qPCR Fragment WITH PLATES",
+      "output": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "96 qPCR collection"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "96 qPCR collection"
+            }
+          ]
+        },
+        "Gel Type": {
+          "value": [
+            {
+              "value": "low-melting"
+            }
+          ]
+        },
+        "Percentage": {
+          "value": [
+            {
+              "value": 2.0
+            }
+          ]
+        }
+      },
+      "name": "Run Pre-poured Gel",
+      "output": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "50 mL Agarose Gel in Gel Box"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "50 mL Agarose Gel in Gel Box"
+            }
+          ]
+        }
+      },
+      "name": "Extract Gel Slice (NGS)",
+      "output": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "Library Gel Slice"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "Gel": {
+          "object_type": [
+            {
+              "name": "Library Gel Slice"
+            }
+          ]
+        }
+      },
+      "name": "Purify Gel Slice (NGS)",
+      "output": {
+        "Fragment": {
+          "object_type": [
+            {
+              "name": "Amplified Fragment Library",
+              "option_key": "qPCR1"
+            },
+            {
+              "name": "Illuminated Fragment Library",
+              "option_key": "qPCR2"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "qPCR sample": {
+          "object_type": [
+            {
+              "name": "Illuminated Fragment Library"
+            }
+          ]
+        }
+      },
+      "name": "Qubit concentration",
+      "output": {
+        "qPCR sample": {
+          "object_type": [
+            {
+              "name": "Illuminated Fragment Library"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "input": {
+        "DNA library": {
+          "object_type": [
+            {
+              "name": "Illuminated Fragment Library"
+            }
+          ]
+        }
+      },
+      "name": "Dilute to 4nM",
+      "output": {
+        "DNA library": {
+          "object_type": [
+            {
+              "name": "Illuminated Fragment Library"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -1,14 +1,12 @@
 {
   "input_samples": {
-    "plan_outputs": {
-      "plan_id": XXXXX,
+    "items": [19, 20, 21],
+    "_plan_outputs": {
+      "plan_id": "XXXXX",
       "operation_type": "Store Yeast Library Sample",
       "output": "Stored sample rep 1"
     },
-    "qpcr_1_forward_primer": "Petcon Forward",
-    "qpcr_1_reverse_primer": "Petcon Reverse",
-    "qpcr_2_forward_primer": "Petcon NGS prep forward primer",
-    "qpcr_2_reverse_primer": [
+    "qpcr_2_reverse_primers": [
       "P7-finish_TSBC01-r",
       "P7-finish_TSBC02-r",
       "P7-finish_TSBC03-r",
@@ -24,7 +22,7 @@
       "P7-finish_TSBC13-r",
       "P7-finish_TSBC14-r"
     ],
-    "alternate_qpcr_2_reverse_primer": [
+    "alternate_qpcr_2_reverse_primers": [
       "P7-finish_TSBC15-r",
       "P7-finish_TSBC16-r",
       "P7-finish_TSBC17-r",
