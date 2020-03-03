@@ -42,7 +42,7 @@ class ExternalPlan(metaclass=ABCMeta):
             Also used as the name of the Plan record in Aquarium
         :type plan_path: str
         :param aq_instance: the instance of Aquarium to use
-            Corresponds to a key in the config.yml file
+            Corresponds to a key in the secrets.json file
         :type aq_instance: str
         :return: new ExternalPlan
         """
@@ -81,9 +81,9 @@ class ExternalPlan(metaclass=ABCMeta):
     @staticmethod
     def create_session(aq_instance):
         """
-        Create a session using credentials in config.yml.
+        Create a session using credentials in secrets.json.
         :param aq_instance: the instance of Aquarium to use
-            Corresponds to a key in the config.yml file
+            Corresponds to a key in the secrets.json file
         :type aq_instance: str
         :return: new Session
         """

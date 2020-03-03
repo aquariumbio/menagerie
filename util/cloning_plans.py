@@ -23,7 +23,7 @@ class CloningPlan(ExternalPlan):
             Also used as the name of the Plan record in Aquarium
         :type plan_path: str
         :param aq_instance: the instance of Aquarium to use
-            Corresponds to a key in the config.yml file
+            Corresponds to a key in the secrets.json file
         :type aq_instance: str
         :return: new CloningPlan
         """
