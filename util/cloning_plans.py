@@ -29,8 +29,6 @@ class CloningPlan(ExternalPlan):
         """
         super().__init__(plan_path, aq_instance, aq_plan_name)
 
-        # self.provision_samples()
-
         for step in self.steps:
             dst_sample_type = self.destination_sample_type(step.type)
             # Why is this block not also in XPlan?

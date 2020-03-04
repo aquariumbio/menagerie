@@ -1,4 +1,4 @@
-from util.plans import Cursor
+from util.cursor import Cursor
 from util.yeast_display_plans import YeastDisplayPlan
 from util.user_input import get_input, get_args
 from util.format_output import print_blue

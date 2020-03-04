@@ -6,7 +6,7 @@ import pydent
 from pydent import models
 from pydent.models import Sample, Item
 
-from util.plans import ExternalPlan, PlanStep, Transformation, InputError
+from util.plans import ExternalPlan, PlanStep, Transformation, Measurement, InputError
 from util.yeast_display_legs import OvernightLeg, NaiveLeg, InductionLeg, MixCulturesLeg
 from util.yeast_display_legs import SortLeg, FlowLeg, YeastDisplayLeg
 from util.dna_seq_legs import ExtractDNALeg, QPCRLeg, DiluteLibraryLeg
@@ -86,7 +86,7 @@ class YeastDisplayPlanStep(PlanStep):
             self.transformations.append(YeastDisplayPlanTransformation(self, txn))
 
         for msmt in self.operator.get('measurements', []):
-            self.measurements.append(YeastDisplayPlanMeasurement(self, msmt))
+            self.measurements.append(Measurement(self, msmt))
 
         self.measured_samples = [m.source for m in self.measurements]
 
@@ -109,10 +109,6 @@ class YeastDisplayPlanStep(PlanStep):
     def add_output_operation(self, uri, op):
         """Adds an Operation to the list of output operations for the PlanStep."""
         self.output_operations[uri] = op
-
-    @staticmethod
-    def sample_key(element):
-        return element.get('sample') or element.get('sample_key')
 
 
 class DNASeqStep(YeastDisplayPlanStep):
@@ -430,12 +426,6 @@ class YeastDisplayPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):
         super().__init__(plan_step, transformation)
 
-    def source_samples(self):
-        return [self.sample_key(x) for x in self.source]
-
-    def destination_samples(self):
-        return [self.sample_key(x) for x in self.destination]
-
     def protease(self):
         provisioned = self.plan.prov_protease_inputs()
         proteases = [x for x in self.source if self.sample_key(x) in provisioned.keys()]
@@ -447,15 +437,3 @@ class YeastDisplayPlanTransformation(Transformation):
 
     def yeast(self):
         return [x for x in self.source_samples() if x in self.plan_step.yeast_inputs()]
-
-    @staticmethod
-    def sample_key(element):
-        return YeastDisplayPlanStep.sample_key(element)
-
-
-class YeastDisplayPlanMeasurement():
-    def __init__(self, plan_step, measurement):
-        self.plan_step = plan_step
-        self.plan = self.plan_step.plan
-        self.source = measurement['source']
-        self.file = measurement.get('file')

@@ -1,4 +1,4 @@
-from util.plans import Cursor
+from util.cursor import Cursor
 from util.cloning_plans import CloningPlan
 from util.plasmid_assembly_legs import GoldenGateLeg, SangerSeqLeg
 

@@ -261,7 +261,7 @@ from datetime import datetime, timedelta
 import warnings
 warnings.filterwarnings('ignore')
 
-from util.plans import Cursor
+from util.cursor import Cursor
 from util.yeast_display_plans import YeastDisplayPlan
 from util.user_input import get_input
 
