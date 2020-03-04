@@ -1,62 +1,58 @@
-import sys
-import os
-import warnings
-warnings.filterwarnings('ignore')
-
 from util.plans import Cursor
 from util.cloning_plans import CloningPlan
 from util.plasmid_assembly_legs import GoldenGateLeg, SangerSeqLeg
 
-from util.plan_tests import test_plan
-from util.user_input import get_input
+from util.user_input import get_input, get_args
+from util.format_output import print_blue
 
-inputs = {
-    "plan_path": "golden_gate_test",
-    "aq_instance": "nursery"
-}
-# inputs = get_input(start_date=False)
+def main():
+    args = get_args()
 
-plan = CloningPlan(inputs['plan_path'], inputs['aq_instance'])
+    if args.test:
+        # Override get_input() for convenience when testing code
+        print_blue("RUNNING IN TEST MODE")
+        inputs = {
+            "plan_path": "golden_gate_test",
+            "aq_instance": "nursery"
+        }
+    else:
+        # Ask for inputs on the command line
+        inputs = get_input(start_date=False)
 
-cursor = Cursor(y=8)
+    plan = CloningPlan(inputs['plan_path'], inputs['aq_instance'])
 
-n_seqs = 3
+    # Keeps track of where to put the next operation in the Aquarium Designer GUI
+    cursor = Cursor(y=8)
 
-for step_id in plan.step_ids():
-    plan_step = plan.step(step_id)
+    n_seqs = 3
 
-    txns = plan_step.transformations
-    for txn in txns:
-        src = txn['source']
-        for dst in txn['destination']:
-            gg_leg = GoldenGateLeg(plan_step, cursor)
-            gg_leg.set_sample_io(src, dst)
-            aq_plan_objs = gg_leg.add()
-            upstr_op = gg_leg.get_output_op()
+    for step_id in plan.step_ids():
+        plan_step = plan.step(step_id)
 
-            for i in range(n_seqs):
-                ss_leg = SangerSeqLeg(plan_step, cursor)
-                ss_leg.set_sample_io(src, dst)
-                aq_plan_objs = ss_leg.add()
-                dnstr_op = ss_leg.get_input_op()
-                ss_leg.wire_ops(upstr_op, dnstr_op)
-                cursor.incr_x()
-                cursor.incr_y(ss_leg.length())
+        txns = plan_step.transformations
+        for txn in txns:
+            src = txn['source']
+            for dst in txn['destination']:
+                gg_leg = GoldenGateLeg(plan_step, cursor)
+                gg_leg.set_sample_io(src, dst)
+                aq_plan_objs = gg_leg.add()
+                upstr_op = gg_leg.get_output_op()
 
-            cursor.return_y()
+                for i in range(n_seqs):
+                    ss_leg = SangerSeqLeg(plan_step, cursor)
+                    ss_leg.set_sample_io(src, dst)
+                    aq_plan_objs = ss_leg.add()
+                    dnstr_op = ss_leg.get_input_op()
+                    ss_leg.wire_ops(upstr_op, dnstr_op)
+                    cursor.incr_x()
+                    cursor.incr_y(ss_leg.length())
 
-plan.create_aq_plan()
-plan.add_data_associations()
+                cursor.return_y()
 
-url = plan.aq_plan.session.url + "/plans?plan_id={}".format(plan.aq_plan.id)
-print("Created Plan: {}".format(url))
-print("{} total operations.".format(len(plan.aq_plan.operations)))
-print("{} total wires.".format(len(plan.aq_plan.wires)))
+    if not args.ephemeral:
+        plan.create_aq_plan()
+        plan.add_data_associations()
+        plan.report()
 
-# cost = pplan.aq_plan.estimate_cost()
-
-# Paths for regression testing the output plan against a reference.
-# out_path = os.path.join(plan_test_path, 'plan.json')
-# ref_path = os.path.join(plan_test_path, 'plan-ref.json')
-
-# test_plan(plan, out_path, ref_path)
+if __name__ == "__main__":
+    main()

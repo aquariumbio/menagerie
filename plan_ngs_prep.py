@@ -31,6 +31,7 @@ def main():
 
     if not args.ephemeral:
         plan.create_aq_plan()
+        plan.add_data_associations()
         plan.report()
 
 if __name__ == "__main__":
