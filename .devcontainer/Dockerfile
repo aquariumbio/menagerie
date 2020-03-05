@@ -37,8 +37,7 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     #
     # Install pydent
-    && pip install pydent \
-    && pip install PyYAML
+    && pip install pydent
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
