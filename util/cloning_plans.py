@@ -160,6 +160,7 @@ class PCRStep(CloningPlanStep):
 
         return step_outputs
 
+
 class YeastTransformationStep(CloningPlanStep):
     def __init__(self, plan, plan_step):
         super().__init__(plan, plan_step)
@@ -197,6 +198,7 @@ class YeastTransformationStep(CloningPlanStep):
                 cursor.return_y()
 
         return step_outputs
+
 
 class CloningPlanTransformation(Transformation):
     def __init__(self, plan_step, transformation):

@@ -11,11 +11,12 @@ import copy
 from abc import ABCMeta, abstractmethod
 
 import pydent
-from pydent import AqSession, models, __version__
+from pydent import models
 from pydent.models import Sample, Item, Plan
 from pydent.exceptions import AquariumModelError
 
 from util.format_output import warn
+from util.pydent_helper import create_session
 
 def get_obj_by_name(leg, name):
     return get_obj_by_attr(leg, "name", name)
@@ -50,7 +51,7 @@ class ExternalPlan(metaclass=ABCMeta):
         :type aq_plan_name: str
         :return: new ExternalPlan
         """
-        self.session = ExternalPlan.create_session(aq_instance)
+        self.session = create_session(aq_instance)
 
         self.plan_path = plan_path
         self.aq_plan_name = aq_plan_name or os.path.split(plan_path)[1]
@@ -96,37 +97,6 @@ class ExternalPlan(metaclass=ABCMeta):
 
         if step_type == "provision":
             return ProvisionStep(self, step_data)
-
-    @staticmethod
-    def create_session(aq_instance):
-        """
-        Create a session using credentials in secrets.json.
-
-        :param aq_instance: the instance of Aquarium to use
-            Corresponds to a key in the secrets.json file
-        :type aq_instance: str
-        :return: new Session
-        """
-        dirname = os.path.dirname(__file__)
-        filename = os.path.join(dirname, 'secrets.json')
-
-        with open(filename) as f:
-            secrets = json.load(f)
-
-        credentials = secrets[aq_instance]
-        session = AqSession(
-            credentials["login"],
-            credentials["password"],
-            credentials["aquarium_url"]
-        )
-
-        msg = "Connected to Aquarium at {} using pydent version {}"
-        print(msg.format(session.url, str(__version__)))
-
-        me = session.User.where({'login': credentials['login']})[0]
-        print('Logged in as {}\n'.format(me.name))
-
-        return session
 
     def load_json_from_file(self, file_name):
         """
@@ -522,6 +492,7 @@ class Transformation:
         found = [s for s in self.destination if s.get(key) == value]
         if found: return found[0]
 
+    # TODO: This may be obsolete
     @staticmethod
     def format(element):
         if isinstance(element, list):
@@ -770,7 +741,7 @@ class Leg:
             wire_pair = [w0, w1]
             self.aq_plan.add_wires([wire_pair])
 
-    # This method may be redundant
+    # TODO: This method may be redundant
     def propagate_sample(self, upstr_op, dnstr_op):
         """
         Gets the output Sample for the upstream Operation and sets the
