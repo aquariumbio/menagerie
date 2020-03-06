@@ -34,7 +34,7 @@ In order to add credentials for your Aquarium instance(s), `cp util/secrets_temp
   "laptop": {
     "login": "neptune",
     "password": "aquarium",
-    "aquarium_url": "http://localhost:3000/"
+    "aquarium_url": "http://localhost/"
   },
   "production": {
     "login": "your_production_username",
@@ -45,7 +45,7 @@ In order to add credentials for your Aquarium instance(s), `cp util/secrets_temp
 ```
 
 ### 4. Install Aquarium locally in a Docker container
-Menagerie and Trident are able to make far-reaching modifications to the Aquarium database, and can launch computationally expensive queries on the server. It is highly recommended that you test any new code on a local Aquarium instance. You can install a local instance running in Docker by following [these instructions](https://www.aquarium.bio/?category=Getting%20Started&content=Docker%20Installation).
+Menagerie and Trident are able to make far-reaching modifications to the Aquarium database, and can launch computationally expensive queries on the server. It is highly recommended that you test any new code on a local Aquarium instance. You can install a local instance running in Docker by following [these instructions](https://github.com/klavinslab/aquarium-local).
 
 ## Quick Start
 
