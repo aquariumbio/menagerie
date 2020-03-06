@@ -40,21 +40,22 @@ class CloningPlan(ExternalPlan):
                     self.add_input_sample(dst["name"], sample)
 
     def initialize_step(self, step_data):
-        super().initialize_step(step_data)
+        step = super().initialize_step(step_data)
 
-        step_type = step_data["type"]
+        if not step:
+            step_type = step_data["type"]
 
-        if step_type == "pcr":
-            step = PCRStep(self, step_data)
+            if step_type == "pcr":
+                step = PCRStep(self, step_data)
 
-        elif step_type == "gibson":
-            step = GibsonStep(self, step_data)
+            elif step_type == "gibson":
+                step = GibsonStep(self, step_data)
 
-        elif step_type == "yeast_transformation":
-            step = YeastTransformationStep(self, step_data)
+            elif step_type == "yeast_transformation":
+                step = YeastTransformationStep(self, step_data)
 
-        else:
-            step = None
+            else:
+                step = None
 
         return step
 
