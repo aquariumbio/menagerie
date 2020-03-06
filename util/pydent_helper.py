@@ -3,6 +3,8 @@ import json
 import pydent
 from pydent import AqSession, __version__
 
+prettyprint = lambda x: json.dumps(x, indent=4, sort_keys=True)
+
 def create_session(aq_instance):
     """
     Create a session using credentials in secrets.json.

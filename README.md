@@ -47,9 +47,47 @@ In order to add credentials for your Aquarium instance(s), `cp util/secrets_temp
 ### 4. Install Aquarium locally in a Docker container
 Menagerie and Trident are able to make far-reaching modifications to the Aquarium database, and can launch computationally expensive queries on the server. It is highly recommended that you test any new code on a local Aquarium instance. You can install a local instance running in Docker by following [these instructions](https://www.aquarium.bio/?category=Getting%20Started&content=Docker%20Installation).
 
-## Using Menagerie
+## Quick Start
+
+### Plan a protein stability (yeast display) experiment
+This section describes the steps for planning a three-round yeast display selection experiment following Gabe Rocklin's [massively parallel measurement of protein stability](https://www.ncbi.nlm.nih.gov/pubmed/28706065). It is best to run this initially on a local Dockerized instance of Aquarium. If you haven't done so already, you can find steps for installing a Dockerized Aquarium instance [here](https://www.docker.com/get-started).
+
+Once you have Aquarium running locally, it is convenient to be able to backup and load versions of the database without having to restart the container. You can do that using the script `hot_swap_db.py` found [here](https://github.com/dvnstrcklnd/aq-hot-swap-db).
+
+You will need to download and install three workflow libraries. You can find instructions for installing workflows [here](https://www.aquarium.bio/?category=Community&content=Importing). It is a good idea to backup the database before importing. The libraries are:
+
+* [Standard Libraries](https://github.com/klavinslab/standard-libraries)
+* [Flow Cytometry](https://github.com/klavinslab/flow-cytometry)
+* [Yeast Display](https://github.com/dvnstrcklnd/aq-yeast-display)
+
+It is also a good idea to back up the database (using a distinct file name) after importing these. 
+
+Next, you will need to populate the database with some `Samples`. To do this, open the VS Code terminal using `^~` and run 
+
+```bash
+python util/load_test_samples.py 
+```
+
+From the browser, you should see that the following `Samples` are loaded:
+```
+►	6: Anti-c-myc-FITC		
+►	5: Chymotrypsin		
+►	4: Trypsin		
+►	3: AMA1-best		
+►	2: EBY100 + PETCONv3_baker		
+►	1: DNA LIBRARY SAMPLE NAME
+```
+
+You can again back up the database (using a third distinct file name) after creating these.
+
+Next, from the VS Code terminal, run: 
+```bash
+python plan_protein_stability.py -t
+```
 
 Menagerie uses several classes to manage the conversion of a JSON-formatted plan into an Aquarium `Plan` object.
+
+## Customizing Plans
 
 ### JSON Files
 There are 3 files that Menagerie takes as input.
@@ -254,49 +292,3 @@ In subsequent steps, the `operator` contains an array of `transformations`. The 
 }
 ```
 
-### Plan a protein stability experiment
-From `plan_protein_stability.py`
-```python
-from datetime import datetime, timedelta
-import warnings
-warnings.filterwarnings('ignore')
-
-from util.cursor import Cursor
-from util.yeast_display_plans import YeastDisplayPlan
-from util.user_input import get_input
-
-# Ask for inputs on the command line
-inputs = get_input()
-
-# Override get_input() for convenience when testing code
-# inputs = {
-#     'plan_path': 'yeast_display_plans/template_stability', 
-#     'start_date': datetime.today(), 
-#     'aq_instance': 'laptop'
-# }
-
-start_date = inputs['start_date']
-plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
-
-# Keeps track of where to put the next operation in the Aquarium Designer GUI
-cursor = Cursor(y=18)
-
-# The `plan.py` file may contain other types of steps, but we only
-#   want the `yeast_display_round` steps
-for plan_step in plan.get_steps_by_type('yeast_display_round'):
-    plan_step.create_step(cursor, start_date)
-
-    # Schedule certain operations on M, W, F
-    if start_date.weekday() == 4:
-        incr = 3
-    else:
-        incr = 2
-
-    start_date += timedelta(days=incr)
-
-    plan_step.report()
-
-plan.create_aq_plan()
-plan.add_data_associations()
-plan.report()
-```
