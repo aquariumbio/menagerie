@@ -1,0 +1,52 @@
+{
+    "samples": [
+      {
+        "name": "DNA LIBRARY SAMPLE NAME",
+        "sample_type": "DNA Library",
+        "description": "library",
+        "project": "Testing"
+      },
+      {
+        "name": "EBY100 + PETCONv3_baker",
+        "sample_type": "Yeast Strain",
+        "description": "binding_negative",
+        "project": "Testing"
+      },
+      {
+        "name": "AMA1-best",
+        "sample_type": "Yeast Strain",
+        "description": "fitc_binding_positive",
+        "project": "Testing"
+      },
+      {
+        "name": "Trypsin",
+        "sample_type": "Protease",
+        "description": "trypsin",
+        "project": "Testing"
+      },
+      {
+        "name": "Chymotrypsin",
+        "sample_type": "Protease",
+        "description": "chymotrypsin",
+        "project": "Testing"
+      },
+      {
+        "name": "Anti-c-myc-FITC",
+        "sample_type": "Antibody",
+        "description": "anti_myc",
+        "project": "Testing"
+      },
+      {
+        "name": "SDO -His -Trp -Ura",
+        "sample_type": "Media",
+        "description": "propagation_media",
+        "project": "Testing"
+      },
+      {
+        "name": "SDO + 2% Galactose -His -Trp -Ura",
+        "sample_type": "Media",
+        "description": "induction_media",
+        "project": "Testing"
+      }
+    ]
+}
