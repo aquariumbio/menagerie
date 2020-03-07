@@ -1,6 +1,7 @@
 #-------------------------------------------------------------------------------------------------------------
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License. See https://go.microsoft.com/fwlink/?linkid=2090316 for license information.
+# Additions Copyright (c) 2020 University of Washington. Licensed under the MIT License.
 #-------------------------------------------------------------------------------------------------------------
 
 FROM python:3
@@ -36,9 +37,9 @@ RUN apt-get update \
     && apt-get clean -y \
     && rm -rf /var/lib/apt/lists/* \
     #
+    # Added by Devin Strickland, University of Washinton
     # Install pydent
-    && pip install pydent \
-    && pip install PyYAML
+    && pip install pydent
 
 # Switch back to dialog for any ad-hoc use of apt-get
 ENV DEBIAN_FRONTEND=
