@@ -91,8 +91,37 @@ You can again back up the database (using a third distinct file name) after crea
 
 Next, from the VS Code terminal, run: 
 ```bash
-python plan_protein_stability.py -t
+vscode@docker-desktop:/workspaces/menagerie$ python plan_protein_stability.py -t
 ```
+Which produces the output:
+```bash
+RUNNING IN TEST MODE
+Connected to Aquarium at http://localhost/ using pydent version 0.0.35
+Logged in as Joe Neptune
 
-Menagerie uses several classes to manage the conversion of a JSON-formatted plan into an Aquarium `Plan` object.
+Yeast Library Liquid Culture. Available afts: 
+Set IO for Innoculate Yeast Library
+### 1 total operations
 
+Planning innoculation of library on 2020-03-06
+Set IO for Store Yeast Library Sample
+### 2 total operations
+
+Set IO for Dilute Yeast Library
+### 3 total operations
+
+Trypsin 0
+Set IO for Challenge and Label
+Set IO for Sort Yeast Display Library
+Set IO for Innoculate Yeast Library
+Set IO for Store Yeast Library Sample
+### 7 total operations
+.
+.
+.
+Created Plan: http://localhost//plans?plan_id=1
+103 total operations.
+96 total wires.
+```
+When you click on the link to the plan, you should see this:
+<img src="./docs/_images/quick_start_plan.png" alt="Yeast Display Plan" width="800"/>
