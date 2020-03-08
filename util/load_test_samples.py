@@ -5,10 +5,10 @@ from pydent.models import Sample, Item
 
 from pydent_helper import create_session, prettyprint
 
-def main():
-    session = create_session("laptop")
+def load_test_samples(sample_file, aq_instance="laptop"):
+    session = create_session(aq_instance)
 
-    with open("yeast_display_test_samples.json", "r") as f:
+    with open(sample_file, "r") as f:
         data = json.load(f)
 
     for s in data.get("samples", []):
@@ -23,6 +23,9 @@ def main():
     print("Loaded {} Samples:".format(len(samples)))
     for s in samples:
         print(s.name)
+
+def main():
+    load_test_samples("yeast_display_test_samples.json")
 
 if __name__ == "__main__":
     main()
