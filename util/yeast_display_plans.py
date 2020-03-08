@@ -40,18 +40,19 @@ class YeastDisplayPlan(ExternalPlan):
                 self.ngs_sample_keys.append(source.get("sample_key"))
 
     def initialize_step(self, step_data):
-        super().initialize_step(step_data)
+        step = super().initialize_step(step_data)
 
-        step_type = step_data["type"]
+        if not step:
+            step_type = step_data["type"]
 
-        if step_type == "protstab_round" or step_type == "yeast_display_round":
-            step = YeastDisplayStep(self, step_data)
+            if step_type == "protstab_round" or step_type == "yeast_display_round":
+                step = YeastDisplayStep(self, step_data)
 
-        elif step_type == "dna_seq":
-            step = DNASeqStep(self, step_data)
-        
-        else:
-            step = None
+            elif step_type == "dna_seq":
+                step = DNASeqStep(self, step_data)
+            
+            else:
+                step = None
 
         return step
 
