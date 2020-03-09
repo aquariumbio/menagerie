@@ -13,7 +13,7 @@ It is also a good idea to back up the database (using a distinct file name) afte
 Next, you will need to populate the database with some `Samples`. To do this, open the VS Code terminal using `^~` and run 
 
 ```bash
-python util/load_test_samples.py 
+python util/load_test_samples.py -f yeast_display_test_samples.json
 ```
 
 From the browser, you should see that the following `Samples` are loaded:
