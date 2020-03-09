@@ -1,0 +1,60 @@
+{
+    "samples": [
+      {
+        "name": "DNA LIBRARY SAMPLE NAME",
+        "sample_type": "DNA Library",
+        "description": "library",
+        "project": "Testing"
+      },
+      {
+        "name": "Petcon Forward",
+        "sample_type": "Primer Mix",
+        "description": "qpcr_1_forward_primer",
+        "project": "Testing"
+      },
+      {
+        "name": "Petcon Reverse",
+        "sample_type": "Primer Mix",
+        "description": "qpcr_1_reverse_primer",
+        "project": "Testing"
+      },
+      {
+        "name": "Petcon NGS prep forward primer",
+        "sample_type": "Primer",
+        "description": "qpcr_2_forward_primer for adding Illumina adapter",
+        "project": "Testing"
+      },
+      {
+        "name": "P7-finish_TSBC01-r",
+        "sample_type": "Primer",
+        "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
+        "project": "Testing"
+      },
+      {
+        "name": "P7-finish_TSBC02-r",
+        "sample_type": "Primer",
+        "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
+        "project": "Testing"
+      },
+      {
+        "name": "P7-finish_TSBC03-r",
+        "sample_type": "Primer",
+        "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
+        "project": "Testing"
+      }
+    ],
+    "items": [
+        {
+            "sample": "DNA LIBRARY SAMPLE NAME",
+            "object_type": "Yeast Library in Soln 1"
+        },
+        {
+            "sample": "DNA LIBRARY SAMPLE NAME",
+            "object_type": "Yeast Library in Soln 1"
+        },
+        {
+            "sample": "DNA LIBRARY SAMPLE NAME",
+            "object_type": "Yeast Library in Soln 1"
+        }
+    ]
+}
