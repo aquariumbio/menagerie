@@ -74,6 +74,6 @@ WARNING: ObjectType not found: Yeast Library Glycerol Stock
 This is probably fine as it is likely the result of the software looking for `Samples` and `ObjectTypes` listed in `aquarium_defaults.json` that are not in the minimal database that has been set up.
 
 When you click on the link to the plan, you should see this:
-<img src="./docs/_images/quick_start_yeast_display.png" alt="Yeast Display Plan" width="800"/>
+<img src="../docs/_images/quick_start_yeast_display.png" alt="Yeast Display Plan" width="800"/>
 
 Note that the `Plan` will not be ready to launch, because there are no `Items` in the Aquarium inventory.
