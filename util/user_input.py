@@ -83,4 +83,7 @@ def get_args():
     parser.add_argument("-e", "--ephemeral",
                         help="don't push plan to server",
                         action="store_true")
+    parser.add_argument("-s", "--server", 
+                        default="laptop",
+                        help="the key pointing to the server instance in secrets.json")
     return parser.parse_args()

@@ -14,14 +14,14 @@ def main():
         inputs = {
             'start_date': datetime.today(),
             'plan_path': 'yeast_display_plans/template_simple_binding',
-            'aq_instance': 'laptop'
+            'aq_instance': args.server
         }
     else:
         # Ask for inputs on the command line
-        inputs = get_input()
+        inputs = get_input(aq_instance=False)
 
     start_date = inputs['start_date']
-    plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
+    plan = YeastDisplayPlan(inputs['plan_path'], args.server)
 
     # Keeps track of where to put the next operation in the Aquarium Designer GUI
     cursor = Cursor(y=26)
