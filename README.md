@@ -13,7 +13,7 @@ Menagerie is a Python scripting interface for generating Aquarium Plans from hig
 
 Menagerie requires:
 
-* [Trident](https://github.com/klavinslab/trident)
+* [Trident](https://github.com/aquariumbio/trident)
 * An Aquarium login
 
 Menagerie is designed to be run in a Visual Studio Code [dev container](https://code.visualstudio.com/remote-tutorials/containers/how-it-works). To take advantage of this environment, you will also need to:
@@ -28,7 +28,7 @@ Running Menagerie in this environment eliminates the need to install Trident or 
 Get Menagerie using [git](https://git-scm.com/) with the command
 
 ```bash
-git clone https://github.com/klavinslab/menagerie.git
+git clone https://github.com/aquariumbio/menagerie.git
 ```
 
 ### 2. Open in VS Code dev container
