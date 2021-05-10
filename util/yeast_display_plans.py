@@ -387,6 +387,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 
                         this_leg.set_yeast(input_yeast)
                         this_leg.set_protease(src)
+                        this_leg.set_antibody(src)
 
                         # This is not a good way to set these variables
                         if ngs_sample:

@@ -79,29 +79,33 @@ class TreatmentLeg(YeastDisplayLeg):
     def __init__(self, plan_step, cursor):
         super().__init__(plan_step, cursor)
 
+    def set_antibody(self, source):
+        antibody = [s for s in source if s.get("sample_type") == "Antibody"]
+
+        if antibody:
+            key = self.plan_step.sample_key(antibody[0])
+            print("##### " + key)
+            antibody_sample = self.plan.input_sample(key)
+            self.sample_io['Antibody'] = antibody_sample
+
     def set_protease(self, source):
-        for st in self.treatment_sample_types:
-            protease_inputs = self.plan_step.get_inputs(st)
+        for sample_type in self.treatment_sample_types:
+            protease_inputs = self.plan_step.get_inputs(sample_type)
             if protease_inputs: break
 
-        p = [s for s in source if self.plan_step.sample_key(s) in protease_inputs]
+        protease = [s for s in source if self.plan_step.sample_key(s) in protease_inputs]
 
-        if p:
-            s = p[0]
-            prot_samp =  self.plan.input_sample(self.plan_step.sample_key(s))
+        if protease:
+            s = protease[0]
+            prot_samp = self.plan.input_sample(self.plan_step.sample_key(s))
             prot_conc = s['concentration']
+            self.sample_io['Protease'] = prot_samp
+            self.sample_io['Protease Concentration'] = prot_conc
+
+            print(prot_samp.name + " " + str(prot_conc))
 
         else:
             raise "protease not found"
-
-        # else:
-        #     prot_samp =  self.plan.input_sample(self.plan.default_protease)
-        #     prot_conc = 0
-
-        self.sample_io['Protease'] = prot_samp
-        self.sample_io['Protease Concentration'] = prot_conc
-
-        print(prot_samp.name + " " + str(prot_conc))
 
 
 class SortLeg(TreatmentLeg):

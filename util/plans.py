@@ -233,7 +233,7 @@ class ExternalPlan(metaclass=ABCMeta):
 
             s = self.session.Sample.new(
                 name=sample_name,
-                project='SD2',
+                project='Added by Menagerie',
                 sample_type_id=st.id,
                 properties=allowable_properties
             )
@@ -444,8 +444,8 @@ class PlanStep:
 
     @staticmethod
     def sample_key(element):
-        # TODO: Why isn't this reversed?
-        return element.get('sample') or element.get('sample_key')
+        # Note: Devin reversed the order of this for planinf binding experiments
+        return element.get('sample_key') or element.get('sample')
 
     def report(self):
         print(self.plan_step.get("name") + ' complete')
@@ -461,6 +461,9 @@ class ProvisionStep(PlanStep):
     def provision_samples(self):
         """Finds all the input samples for the Plan."""
         samples = self.operator.get("samples", [])
+        if not samples: return
+
+        print("Provisioning {} Samples".format(len(samples)))
 
         for sample in samples:
             sample_name = sample["name"]
@@ -470,9 +473,12 @@ class ProvisionStep(PlanStep):
 
             if aq_samples:
                 self.plan.add_input_sample(sample_key, aq_samples[0])
+                s = self.plan.input_sample(sample_key)
+                print("    {}: {}".format(sample_key, s.name))
             else:
                 raise InputError("Unable to find or add sample {}".format(sample_name))
 
+        print()
 
 class Transformation:
     """
@@ -482,7 +488,14 @@ class Transformation:
     def __init__(self, plan_step, transformation):
         self.plan_step = plan_step
         self.plan = self.plan_step.plan
+
         self.source = self.format(transformation['source'])
+
+        # TODO: Do I also need to do this for destination?
+        for s in self.source:
+            s['sample'] = self.plan.input_sample(self.sample_key(s))
+            s['sample_type'] = s['sample'].sample_type.name
+
         self.destination = self.format(transformation['destination'])
 
     def source_samples(self):
@@ -754,7 +767,7 @@ class Leg:
 
         for upstr_op in upstr_ops:
             src = self.primary_io(upstr_op, "output")
-            dst = [fv for fv in dnstr_fvs if fv.sample.name == w0.sample.name][0]
+            dst = [fv for fv in dnstr_fvs if fv.sample.name == src.sample.name][0]
             self.plan.add_wire(src, dst)
 
     # TODO: This method may be redundant

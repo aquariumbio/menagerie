@@ -13,7 +13,7 @@ def main():
         print_blue("RUNNING IN TEST MODE")
         inputs = {
             'start_date': datetime.today(),
-            'plan_path': 'yeast_display_plans/template_simple_binding',
+            'plan_path': 'yeast_display_plans/test_simple_binding',
             'aq_instance': args.server
         }
     else:

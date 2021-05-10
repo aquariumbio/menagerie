@@ -1,6 +1,6 @@
 {
   "input_samples": {
-    "items": [1, 2, 3],
+    "items": [466946, 466948, 466950],
     "qpcr_1_forward_primer": "Petcon Forward",
     "qpcr_1_reverse_primer": "Petcon Reverse",
     "qpcr_2_forward_primer": "Petcon NGS prep forward primer",

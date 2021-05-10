@@ -5,16 +5,16 @@ import pydent
 from pydent import models
 from pydent.models import Sample, Item
 
-from pydent_helper import create_session, prettyprint
+from util.pydent_helper import create_session, prettyprint
 
-def load_test_samples(sample_file, aq_instance="laptop"):
+def load_test_samples(sample_file, aq_instance="laptop_production"):
     session = create_session(aq_instance)
 
     with open(sample_file, "r") as f:
         data = json.load(f)
 
     sample_data = data.get("samples")
-    if sample_data: 
+    if sample_data:
         new_samples = load_samples(sample_data, session)
 
     item_data = data.get("items")
