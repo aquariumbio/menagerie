@@ -493,6 +493,7 @@ class Transformation:
 
         # TODO: Do I also need to do this for destination?
         for s in self.source:
+            print(s)
             s['sample'] = self.plan.input_sample(self.sample_key(s))
             s['sample_type'] = s['sample'].sample_type.name
 

@@ -49,9 +49,8 @@ class MixCulturesLeg(YeastDisplayLeg):
         self.sample_io["Component Yeast Culture"] = library_composition["components"]
         self.sample_io["Proportions"] = str(library_composition["proportions"])
 
-    def wire_ops(self, upstr_fv, dnstr_fv):
-        wire_pair = [upstr_fv, dnstr_fv]
-        self.aq_plan.add_wires([wire_pair])
+    def wire_ops(self, src, dst):
+        self.plan.add_wire(src, dst)
 
 
 class NaiveLeg(YeastDisplayLeg):

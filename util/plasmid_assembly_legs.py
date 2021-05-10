@@ -122,11 +122,11 @@ class PCRLeg(CloningLeg):
         pour_gel.y = self.cursor.y
 
         run_gel = get_obj_by_name(self.op_data, "Run Gel")["operation"]
-        gel_output = pour_gel.output("Lane")
-        gel_input = run_gel.input("Gel")
+        src = pour_gel.output("Lane")
+        dst = run_gel.input("Gel")
 
         self.aq_plan.add_operations([pour_gel])
-        self.aq_plan.add_wires([[gel_output, gel_input]])
+        self.plan.add_wire(src, dst)
 
 
 class YeastTransformationLeg(CloningLeg):
@@ -171,9 +171,9 @@ class YeastTransformationLeg(CloningLeg):
         return get_obj_by_name(self.op_data, "Check Yeast Plate")["operation"]
 
     def wire_plasmid(self):
-        upstr_fv = self.select_op("Plasmid Digest").output("Digested Plasmid")
-        dnstr_fv = self.select_op("Yeast Transformation").input("Genetic Material")
-        self.aq_plan.add_wires([[upstr_fv, dnstr_fv]])
+        src = self.select_op("Plasmid Digest").output("Digested Plasmid")
+        dst = self.select_op("Yeast Transformation").input("Genetic Material")
+        self.plan.add_wire(src, dst)
 
 
 class YeastGenotypingLeg(CloningLeg):
