@@ -50,7 +50,7 @@ class YeastDisplayPlan(ExternalPlan):
 
             elif step_type == "dna_seq":
                 step = DNASeqStep(self, step_data)
-            
+
             else:
                 step = None
 
@@ -241,7 +241,7 @@ class DNASeqStep(YeastDisplayPlanStep):
 
             cursor.incr_x()
             cursor.return_y()
-        
+
         cursor.update_max_x()
 
 

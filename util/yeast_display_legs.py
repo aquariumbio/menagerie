@@ -15,7 +15,7 @@ class YeastDisplayLeg(Leg):
         super().__init__(plan_step, cursor)
 
     def set_yeast(self, input_sample_uri):
-        input_sample = self.ext_plan.input_sample(input_sample_uri)
+        input_sample = self.plan.input_sample(input_sample_uri)
         self.set_yeast_from_sample(input_sample)
 
     def set_yeast_from_sample(self, input_sample):
@@ -88,14 +88,14 @@ class TreatmentLeg(YeastDisplayLeg):
 
         if p:
             s = p[0]
-            prot_samp =  self.ext_plan.input_sample(self.plan_step.sample_key(s))
+            prot_samp =  self.plan.input_sample(self.plan_step.sample_key(s))
             prot_conc = s['concentration']
-        
+
         else:
             raise "protease not found"
 
         # else:
-        #     prot_samp =  self.ext_plan.input_sample(self.ext_plan.default_protease)
+        #     prot_samp =  self.plan.input_sample(self.plan.default_protease)
         #     prot_conc = 0
 
         self.sample_io['Protease'] = prot_samp
