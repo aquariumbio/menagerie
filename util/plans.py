@@ -490,14 +490,17 @@ class Transformation:
         self.plan = self.plan_step.plan
 
         self.source = self.format(transformation['source'])
-
-        # TODO: Do I also need to do this for destination?
         for s in self.source:
-            print(s)
             s['sample'] = self.plan.input_sample(self.sample_key(s))
             s['sample_type'] = s['sample'].sample_type.name
 
         self.destination = self.format(transformation['destination'])
+        for d in self.destination:
+            sample_key = self.sample_key(d)
+            source_key = self.source_key(d)
+            s = self.plan.input_sample(sample_key) or self.plan.input_sample(source_key)
+            if s:
+                self.plan.add_input_sample(sample_key, s)
 
     def source_samples(self):
         return [self.sample_key(x) for x in self.source]
@@ -531,6 +534,10 @@ class Transformation:
     @staticmethod
     def sample_key(element):
         return PlanStep.sample_key(element)
+
+    @staticmethod
+    def source_key(element):
+        return element.get('source_key')
 
 
 class Leg:

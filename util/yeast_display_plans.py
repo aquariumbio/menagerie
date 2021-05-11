@@ -370,7 +370,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
                 partitioned[sample].append(t)
 
             proteases = list(partitioned.keys())
-            proteases.sort()
+            proteases.sort(key=lambda p: p.name)
 
             for p in proteases:
                 txns = partitioned[p]
@@ -412,7 +412,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 
                         if output_op:
                             self.add_output_operation(dst, output_op)
-                            self.plan.add_input_sample(dst, output_op.output('Yeast Culture').sample)
+                            # self.plan.add_input_sample(dst, output_op.output('Yeast Culture').sample)
 
                         cursor.incr_x()
                         cursor.return_y()
