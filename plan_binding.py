@@ -12,16 +12,16 @@ def main():
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
+            'plan_path': 'yeast_display_plans/template_simple_binding',
             'start_date': datetime.today(),
-            'plan_path': 'yeast_display_plans/test_simple_binding',
-            'aq_instance': args.server
+            'aq_instance': 'laptop_production'
         }
     else:
         # Ask for inputs on the command line
         inputs = get_input(aq_instance=False)
 
     start_date = inputs['start_date']
-    plan = YeastDisplayPlan(inputs['plan_path'], args.server)
+    plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
 
     # Keeps track of where to put the next operation in the Aquarium Designer GUI
     cursor = Cursor(y=26)

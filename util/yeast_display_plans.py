@@ -76,7 +76,8 @@ class YeastDisplayPlan(ExternalPlan):
         :type s: object
         :return: boolean
         """
-        return isinstance(s, Sample) and s.sample_type.name == "Protease"
+        protease_sample_types = ["Protease", "Biotinylated Binding Target"]
+        return isinstance(s, Sample) and s.sample_type.name in protease_sample_types
 
 
 class YeastDisplayPlanStep(PlanStep):
