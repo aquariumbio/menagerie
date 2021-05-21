@@ -60,6 +60,7 @@ class ExternalPlan(metaclass=ABCMeta):
 
         self.steps = []
         self.input_samples = {}
+        self.input_items = {}
         self.temp_data_associations = []
 
         self.plan = self.load_json_from_file('plan.json')
@@ -183,7 +184,8 @@ class ExternalPlan(metaclass=ABCMeta):
             elif key == "items":
                 items = self.session.Item.find(sample_data)
                 for item in items:
-                    self.add_input_sample(item.id, item)
+                    self.add_input_sample(item.id, item.sample)
+                    self.add_input_item(item.id, item)
 
             # A list of Samples.
             elif isinstance(sample_data, list):
@@ -346,6 +348,9 @@ class ExternalPlan(metaclass=ABCMeta):
         """
         self.input_samples[key] = sample
 
+    def add_input_item(self, key, item):
+        self.input_items[key] = item
+
     def input_sample(self, sample_key):
         """
         Return the input Sample based on the key. If not found, return the key
@@ -491,7 +496,8 @@ class Transformation:
 
         self.source = self.format(transformation['source'])
         for s in self.source:
-            s['sample'] = self.plan.input_sample(self.sample_key(s))
+            if not s.get('sample'):
+                s['sample'] = self.plan.input_sample(self.sample_key(s))
             s['sample_type'] = s['sample'].sample_type.name
 
         self.destination = self.format(transformation['destination'])
