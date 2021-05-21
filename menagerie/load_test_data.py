@@ -87,7 +87,7 @@ def get_args():
 
 def main():
     args = get_args()
-    load_test_samples("test_data/{}".format(args.filename))
+    load_test_samples(args.filename)
 
 if __name__ == "__main__":
     main()
