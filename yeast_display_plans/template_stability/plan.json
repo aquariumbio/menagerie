@@ -8,7 +8,7 @@
       "operator": {
         "samples": [
           {
-            "name": "DNA LIBRARY SAMPLE NAME",
+            "name": "Two Six 100K 2020-03-03",
             "sample_type": "DNA Library",
             "sample_key": "library"
           },
@@ -105,7 +105,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_expressing"
+								"sample_key": "library_expressing",
+                "source_key": "library"
 							}
 						],
             "source":  [
@@ -124,7 +125,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_1"
+								"sample_key": "library_chymotrypsin_1",
+                "source_key": "library"
 							}
 						],
             "source":  [
@@ -143,7 +145,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_1"
+								"sample_key": "library_trypsin_1",
+                "source_key": "library"
 							}
 						],
             "source":  [
@@ -162,7 +165,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_2"
+								"sample_key": "library_chymotrypsin_2",
+                "source_key": "library"
 							}
 						],
             "source":  [
@@ -181,7 +185,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_2"
+								"sample_key": "library_trypsin_2",
+                "source_key": "library"
 							}
 						],
             "source":  [
@@ -200,7 +205,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "chymotrypsin_control"
+								"sample_key": "chymotrypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -219,7 +225,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "trypsin_control"
+								"sample_key": "trypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -238,7 +245,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "high_binding_control"
+								"sample_key": "high_binding_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -257,7 +265,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "autofluorescence_control"
+								"sample_key": "autofluorescence_control",
+                "source_key": "binding_negative"
 							}
 						],
             "source":  [
@@ -347,7 +356,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_2_expressing"
+								"sample_key": "library_chymotrypsin_2_expressing",
+                "source_key": "library_chymotrypsin_2"
 							}
 						],
             "source":  [
@@ -366,7 +376,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_2_expressing"
+								"sample_key": "library_trypsin_2_expressing",
+                "source_key": "library_trypsin_2"
 							}
 						],
             "source":  [
@@ -385,7 +396,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_3"
+								"sample_key": "library_chymotrypsin_3",
+                "source_key": "library_chymotrypsin_2"
 							}
 						],
             "source":  [
@@ -404,7 +416,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_3"
+								"sample_key": "library_trypsin_3",
+                "source_key": "library_trypsin_2"
 							}
 						],
             "source":  [
@@ -423,7 +436,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_4"
+								"sample_key": "library_chymotrypsin_4",
+                "source_key": "library_chymotrypsin_2"
 							}
 						],
             "source":  [
@@ -442,7 +456,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_4"
+								"sample_key": "library_trypsin_4",
+                "source_key": "library_trypsin_2"
 							}
 						],
             "source":  [
@@ -461,7 +476,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "chymotrypsin_control"
+								"sample_key": "chymotrypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -480,7 +496,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "trypsin_control"
+								"sample_key": "trypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -499,7 +516,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "high_binding_control"
+								"sample_key": "high_binding_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -518,7 +536,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "autofluorescence_control"
+								"sample_key": "autofluorescence_control",
+                "source_key": "binding_negative"
 							}
 						],
             "source":  [
@@ -608,7 +627,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_4_expressing"
+								"sample_key": "library_chymotrypsin_4_expressing",
+                "source_key": "library_chymotrypsin_4"
 							}
 						],
             "source":  [
@@ -627,7 +647,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_4_expressing"
+								"sample_key": "library_trypsin_4_expressing",
+                "source_key": "library_trypsin_4"
 							}
 						],
             "source":  [
@@ -646,7 +667,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_5"
+								"sample_key": "library_chymotrypsin_5",
+                "source_key": "library_chymotrypsin_4"
 							}
 						],
             "source":  [
@@ -665,7 +687,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_5"
+								"sample_key": "library_trypsin_5",
+                "source_key": "library_trypsin_4"
 							}
 						],
             "source":  [
@@ -684,7 +707,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_chymotrypsin_6"
+								"sample_key": "library_chymotrypsin_6",
+                "source_key": "library_chymotrypsin_4"
 							}
 						],
             "source":  [
@@ -703,7 +727,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "library_trypsin_6"
+								"sample_key": "library_trypsin_6",
+                "source_key": "library_trypsin_4"
 							}
 						],
             "source":  [
@@ -722,7 +747,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "chymotrypsin_control"
+								"sample_key": "chymotrypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -741,7 +767,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "trypsin_control"
+								"sample_key": "trypsin_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -760,7 +787,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "high_binding_control"
+								"sample_key": "high_binding_control",
+                "source_key": "fitc_binding_positive"
 							}
 						],
             "source":  [
@@ -779,7 +807,8 @@
           {
             "destination":  [
 							{
-								"sample_key": "autofluorescence_control"
+								"sample_key": "autofluorescence_control",
+                "source_key": "binding_negative"
 							}
 						],
             "source":  [

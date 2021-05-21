@@ -50,7 +50,7 @@ class YeastDisplayPlan(ExternalPlan):
 
             elif step_type == "dna_seq":
                 step = DNASeqStep(self, step_data)
-            
+
             else:
                 step = None
 
@@ -76,7 +76,8 @@ class YeastDisplayPlan(ExternalPlan):
         :type s: object
         :return: boolean
         """
-        return isinstance(s, Sample) and s.sample_type.name == "Protease"
+        protease_sample_types = ["Protease", "Biotinylated Binding Target"]
+        return isinstance(s, Sample) and s.sample_type.name in protease_sample_types
 
 
 class YeastDisplayPlanStep(PlanStep):
@@ -125,12 +126,13 @@ class DNASeqStep(YeastDisplayPlanStep):
     # TODO: Make this more general and less stupid
     def create_transformations_from_params(self):
         input_samples = self.plan.input_samples
+        input_items = self.plan.input_items
         qpcr_1_reverse_primer = input_samples.get("qpcr_1_reverse_primer")
         qpcr_1_forward_primer = input_samples.get("qpcr_1_forward_primer")
         qpcr_2_reverse_primer = input_samples.get("qpcr_2_reverse_primer")
         qpcr_2_forward_primer = input_samples.get("qpcr_2_forward_primer")
 
-        template_items = [i for i in input_samples.values() if self.istemplate(i)]
+        template_items = [i for i in input_items.values() if self.istemplate(i)]
         template_items.sort(key=lambda i: i.id)
 
         for i, template_item in enumerate(template_items):
@@ -138,7 +140,8 @@ class DNASeqStep(YeastDisplayPlanStep):
                 "source": [
                     {
                         "input_name": "Template",
-                        "item": template_item
+                        "item": template_item,
+                        "sample_key": template_item.id
                     },
                     {
                         "input_name": "Forward Primer",
@@ -187,13 +190,11 @@ class DNASeqStep(YeastDisplayPlanStep):
             extract_leg = ExtractDNALeg(self, cursor)
             extract_leg.set_yeast_from_sample(library_sample)
             extract_leg.add()
-            input_op = extract_leg.get_input_op()
 
-            # print("Attempting to set fv for %d" % library_item.id)
             try:
-                input_op.set_field_value("Yeast Library", "input", item=library_item)
-            except:
-                print("Failed to set fv for %d" % library_item.id)
+                extract_leg.set_field_value(extract_leg.get_input_op(), "Yeast Library", "input", item=library_item)
+            except Exception as e:
+                print("Failed to set fv for {}: {}".format(library_item.id, e))
 
             upstr_op = extract_leg.get_output_op()
 
@@ -241,7 +242,7 @@ class DNASeqStep(YeastDisplayPlanStep):
 
             cursor.incr_x()
             cursor.return_y()
-        
+
         cursor.update_max_x()
 
 
@@ -370,7 +371,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
                 partitioned[sample].append(t)
 
             proteases = list(partitioned.keys())
-            proteases.sort()
+            proteases.sort(key=lambda p: p.name)
 
             for p in proteases:
                 txns = partitioned[p]
@@ -387,6 +388,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 
                         this_leg.set_yeast(input_yeast)
                         this_leg.set_protease(src)
+                        this_leg.set_antibody(src)
 
                         # This is not a good way to set these variables
                         if ngs_sample:
@@ -411,7 +413,7 @@ class YeastDisplayStep(YeastDisplayPlanStep):
 
                         if output_op:
                             self.add_output_operation(dst, output_op)
-                            self.plan.add_input_sample(dst, output_op.output('Yeast Culture').sample)
+                            # self.plan.add_input_sample(dst, output_op.output('Yeast Culture').sample)
 
                         cursor.incr_x()
                         cursor.return_y()

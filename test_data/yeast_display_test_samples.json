@@ -15,7 +15,7 @@
       {
         "name": "AMA1-best",
         "sample_type": "Yeast Strain",
-        "description": "fitc_binding_positive",
+        "description": "fitc binding positive",
         "project": "Testing"
       },
       {
@@ -25,27 +25,45 @@
         "project": "Testing"
       },
       {
+        "name": "BINDING TARGET SAMPLE NAME",
+        "sample_type": "Biotinylated Binding Target",
+        "description": "binding target",
+        "project": "Testing"
+      },
+      {
         "name": "Chymotrypsin",
         "sample_type": "Protease",
         "description": "chymotrypsin",
         "project": "Testing"
       },
       {
+        "name": "BINDING POSITIVE CONTROL SAMPLE NAME",
+        "sample_type": "Yeast Strain",
+        "description": "fitc + sape binding positive",
+        "project": "Testing"
+      },
+      {
+        "name": "Anti-c-myc-FITC + SAPE",
+        "sample_type": "Antibody",
+        "description": "anti myc plus sape",
+        "project": "Testing"
+      },
+      {
         "name": "Anti-c-myc-FITC",
         "sample_type": "Antibody",
-        "description": "anti_myc",
+        "description": "anti myc",
         "project": "Testing"
       },
       {
         "name": "SDO -His -Trp -Ura",
         "sample_type": "Media",
-        "description": "propagation_media",
+        "description": "propagation media",
         "project": "Testing"
       },
       {
         "name": "SDO + 2% Galactose -His -Trp -Ura",
         "sample_type": "Media",
-        "description": "induction_media",
+        "description": "induction media",
         "project": "Testing"
       }
     ]

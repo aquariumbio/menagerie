@@ -5,12 +5,12 @@ from util.format_output import print_blue
 
 def main():
     args = get_args()
-    
+
     if args.test:
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
-            'plan_path': "yeast_display_plans/test_ngs_prep_params",
+            'plan_path': "yeast_display_plans/template_ngs_prep_params",
             'aq_instance': "laptop"
         }
     else:

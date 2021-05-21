@@ -27,9 +27,9 @@ def get_obj_by_attr(objects, attr, value):
 
 class ExternalPlan(metaclass=ABCMeta):
     """
-    `ExternalPlan` Takes JSON-formatted plan data as input and instantiates 
-    Aquarium Session and Plan models. Based on the structure of the input plan, 
-    it also creates and manages other objects, including `PlanStep`, 
+    `ExternalPlan` Takes JSON-formatted plan data as input and instantiates
+    Aquarium Session and Plan models. Based on the structure of the input plan,
+    it also creates and manages other objects, including `PlanStep`,
     `Transformation`, and `Leg`.
     """
     def __init__(self, plan_path, aq_instance, aq_plan_name=None):
@@ -56,9 +56,11 @@ class ExternalPlan(metaclass=ABCMeta):
         self.plan_path = plan_path
         self.aq_plan_name = aq_plan_name or os.path.split(plan_path)[1]
         self.aq_plan = Plan(name=self.aq_plan_name)
+        self.aq_plan.connect_to_session(self.session)
 
         self.steps = []
         self.input_samples = {}
+        self.input_items = {}
         self.temp_data_associations = []
 
         self.plan = self.load_json_from_file('plan.json')
@@ -69,12 +71,12 @@ class ExternalPlan(metaclass=ABCMeta):
         self.populate_from_database()
 
         self.plan_params = self.load_json_from_file("params.json")
-        self.load_inputs_from_params() 
-        
+        self.load_inputs_from_params()
+
         # Create PlanStep objects based on step type
         for step_data in self.plan["steps"]:
             step = self.initialize_step(step_data)
-            if step: 
+            if step:
                 self.steps.append(step)
             else:
                 msg = "Unrecognized step type \"{}\" in plan.json"
@@ -83,10 +85,10 @@ class ExternalPlan(metaclass=ABCMeta):
     @abstractmethod
     def initialize_step(self, step_data):
         """
-        Initialize a `PlanStep` object based on `step_data` from 
+        Initialize a `PlanStep` object based on `step_data` from
             `plan.json`. Each class derived from `ExternalPlan` must override
-            this method with its own in order to deal with customization. 
-            Generally, these methods should call `super().initialize_step(step_data)` 
+            this method with its own in order to deal with customization.
+            Generally, these methods should call `super().initialize_step(step_data)`
             to cover generally applicable step types such as `ProvisionStep`.
 
         :param step_data: one of the JSON-derived step objects from `plan.json`
@@ -112,8 +114,8 @@ class ExternalPlan(metaclass=ABCMeta):
 
     def populate_from_database(self):
         """
-        Parses part of aquarium_defaults.json and finds corresponding 
-        records in Aq. Populates the data structure populated with 
+        Parses part of aquarium_defaults.json and finds corresponding
+        records in Aq. Populates the data structure populated with
         the records.
         """
         for d in self.operation_defaults:
@@ -131,7 +133,7 @@ class ExternalPlan(metaclass=ABCMeta):
                                     raise InputError("Sample not found: {}".format(sample_name))
                             except InputError as e:
                                 warn(e.message)
-                                
+
                     ot_data = io_data.get("object_type", [])
                     for o in ot_data:
                         ot_name = o.get("name")
@@ -182,7 +184,8 @@ class ExternalPlan(metaclass=ABCMeta):
             elif key == "items":
                 items = self.session.Item.find(sample_data)
                 for item in items:
-                    self.add_input_sample(item.id, item)
+                    self.add_input_sample(item.id, item.sample)
+                    self.add_input_item(item.id, item)
 
             # A list of Samples.
             elif isinstance(sample_data, list):
@@ -232,7 +235,7 @@ class ExternalPlan(metaclass=ABCMeta):
 
             s = self.session.Sample.new(
                 name=sample_name,
-                project='SD2',
+                project='Added by Menagerie',
                 sample_type_id=st.id,
                 properties=allowable_properties
             )
@@ -280,9 +283,15 @@ class ExternalPlan(metaclass=ABCMeta):
         return next(s for s in self.steps if s.step_id == step_id)
 
     def create_aq_plan(self):
-        """Connects the Plan to the Aq session, then creates the Plan."""
-        self.aq_plan.connect_to_session(self.session)
+        """Creates the Plan."""
         self.aq_plan.create()
+
+    def add_wires(self, wires):
+        for src, dst in wires:
+            self.add_wire(src, dst)
+
+    def add_wire(self, src, dst):
+        self.aq_plan.wire(src, dst)
 
     def update_temp_data_assoc(self, obj, data_associations):
         """
@@ -339,6 +348,9 @@ class ExternalPlan(metaclass=ABCMeta):
         """
         self.input_samples[key] = sample
 
+    def add_input_item(self, key, item):
+        self.input_items[key] = item
+
     def input_sample(self, sample_key):
         """
         Return the input Sample based on the key. If not found, return the key
@@ -360,8 +372,8 @@ class ExternalPlan(metaclass=ABCMeta):
 
 class PlanStep:
     """
-    A `PlanStep` represents a set of `Transformations` that take place 
-    in parallel. For exaple, several plasmid assembly operations or samples 
+    A `PlanStep` represents a set of `Transformations` that take place
+    in parallel. For exaple, several plasmid assembly operations or samples
     in a round of yeast display selection.
     """
     def __init__(self, plan, plan_step):
@@ -437,8 +449,8 @@ class PlanStep:
 
     @staticmethod
     def sample_key(element):
-        # TODO: Why isn't this reversed?
-        return element.get('sample') or element.get('sample_key')
+        # Note: Devin reversed the order of this for planinf binding experiments
+        return element.get('sample_key') or element.get('sample')
 
     def report(self):
         print(self.plan_step.get("name") + ' complete')
@@ -454,6 +466,9 @@ class ProvisionStep(PlanStep):
     def provision_samples(self):
         """Finds all the input samples for the Plan."""
         samples = self.operator.get("samples", [])
+        if not samples: return
+
+        print("Provisioning {} Samples".format(len(samples)))
 
         for sample in samples:
             sample_name = sample["name"]
@@ -463,9 +478,12 @@ class ProvisionStep(PlanStep):
 
             if aq_samples:
                 self.plan.add_input_sample(sample_key, aq_samples[0])
+                s = self.plan.input_sample(sample_key)
+                print("    {}: {}".format(sample_key, s.name))
             else:
                 raise InputError("Unable to find or add sample {}".format(sample_name))
 
+        print()
 
 class Transformation:
     """
@@ -475,8 +493,20 @@ class Transformation:
     def __init__(self, plan_step, transformation):
         self.plan_step = plan_step
         self.plan = self.plan_step.plan
+
         self.source = self.format(transformation['source'])
+        for s in self.source:
+            if not s.get('sample'):
+                s['sample'] = self.plan.input_sample(self.sample_key(s))
+            s['sample_type'] = s['sample'].sample_type.name
+
         self.destination = self.format(transformation['destination'])
+        for d in self.destination:
+            sample_key = self.sample_key(d)
+            source_key = self.source_key(d)
+            s = self.plan.input_sample(sample_key) or self.plan.input_sample(source_key)
+            if s:
+                self.plan.add_input_sample(sample_key, s)
 
     def source_samples(self):
         return [self.sample_key(x) for x in self.source]
@@ -511,15 +541,19 @@ class Transformation:
     def sample_key(element):
         return PlanStep.sample_key(element)
 
+    @staticmethod
+    def source_key(element):
+        return element.get('source_key')
+
 
 class Leg:
     """
-    A `Leg` is a relatively simple and frequently-used chain of 
-    Aquarium `Operations` with a defined set of inputs and outputs, 
-    loosely corresponding to a **Module** in the 
-    Aquarium **Designer** GUI. Generally, new workflows will require 
-    the creation of new concrete classes.
+    A `Leg` is a relatively simple and frequently-used chain of
+    Aquarium `Operations` with a defined set of inputs and outputs,
+    loosely corresponding to a **Module** in the Aquarium **Designer**
+    GUI. Generally, new workflows will require the creation of new concrete classes.
     """
+
     # The oder of OperationTypes
     leg_order = []
 
@@ -534,9 +568,9 @@ class Leg:
         :type cursor: Cursor
         """
         self.plan_step = plan_step
-        self.ext_plan = self.plan_step.plan
-        self.aq_plan = self.ext_plan.aq_plan
-        self.session = self.ext_plan.session
+        self.plan = self.plan_step.plan
+        self.aq_plan = self.plan.aq_plan
+        self.session = self.plan.session
         self.cursor = cursor
 
         self.op_data = []
@@ -555,7 +589,10 @@ class Leg:
         """
         self.create_operations(container_opt)
         self.aq_plan.add_operations([od["operation"] for od in self.op_data])
-        self.aq_plan.add_wires(self.wires)
+
+        for src, dst in self.wires:
+            self.aq_plan.wire(src, dst)
+
         print("### " + str(len(self.aq_plan.operations)) + " total operations")
         print()
 
@@ -563,7 +600,7 @@ class Leg:
         """
         Instantiates operations and places them in self.op_data along with data for
         populating ObjectType fields. Also wires the operations together
-        based on primary sample. 
+        based on primary sample.
 
         :return: None
         """
@@ -572,7 +609,7 @@ class Leg:
             if isinstance(ot_attr, str):
                 ot_attr = {"name": ot_attr}
 
-            od = copy.deepcopy(get_obj_by_name(self.ext_plan.defaults, ot_attr["name"]))
+            od = copy.deepcopy(get_obj_by_name(self.plan.defaults, ot_attr["name"]))
 
             # TODO: Make this a proper warning.
             if not od:
@@ -615,7 +652,7 @@ class Leg:
 
         :param operation: the Operation to be set
         :type operation: Operation
-        :param this_io: dict of i/o data for an OperationType 
+        :param this_io: dict of i/o data for an OperationType
             from aquarium_defaults.json
         :type this_io: dict
         :param container_opt: an option for specifying one of several containers
@@ -626,28 +663,19 @@ class Leg:
 
         for ft in op_type.field_types:
             ft_io = this_io.get(ft.role, {}).get(ft.name, {})
-            
+
             if ft.ftype == 'sample':
                 io_list = ft_io.get("sample")
                 if io_list:
                     io_object = io_list[0].get("sample")
                     container = self.choose_container(ft_io, container_opt)
                     if ft.array and isinstance(io_object, list):
-                        values = [{
-                            "sample": io_object.pop(0),
-                            "container": container
-                        }]
-
+                        values = [{"sample": s, "container": container} for s in io_object]
                         try:
-                            operation.set_field_value_array(ft.name, ft.role, values)
+                            self.set_field_value_array(operation, ft.name, ft.role, values)
                         except AquariumModelError as e:
                             warn("%s: %s" % (op_type.name, e))
 
-                        for obj in io_object:
-                            try:
-                                operation.add_to_field_value_array(ft.name, ft.role, sample=obj, container=container)
-                            except AquariumModelError as e:
-                                warn("%s: %s" % (op_type.name, e))
                     else:
                         if isinstance(io_object, Item):
                             sample = None
@@ -657,7 +685,7 @@ class Leg:
                             item = None
 
                         try:
-                            operation.set_field_value(ft.name, ft.role, sample=sample, item=item, container=container)
+                            self.set_field_value(operation, ft.name, ft.role, sample=sample, item=item, container=container)
                         except AquariumModelError as e:
                             warn("%s: %s" % (op_type.name, e))
 
@@ -666,7 +694,7 @@ class Leg:
                 if io_list:
                     io_object = io_list[0].get("value")
                     try:
-                        operation.set_field_value(ft.name, ft.role, value=io_object)
+                        self.set_field_value(operation, ft.name, ft.role, value=io_object)
                     except AquariumModelError as e:
                         warn("%s: %s" % (op_type.name, e))
 
@@ -687,16 +715,32 @@ class Leg:
 
             else:
                 raise InputError("Option required to specify container: " + ot_data)
-        
+
         elif len(ot_data) == 1:
             return ot_data[0]["object_type"]
+
+    def set_field_value(self, operation, name, role, sample=None, item=None, value=None, container=None):
+        if role == 'input':
+            operation.set_input(name, sample=sample, item=item, value=value, container=container)
+        elif role == 'output':
+            operation.set_output(name, sample=sample, item=item, value=value, container=container)
+        else:
+            raise InputError("Unrecognized role: " + role)
+
+    def set_field_value_array(self, operation, name, role, values):
+        if role == 'input':
+            pass
+        elif role == 'output':
+            pass
+        else:
+            raise InputError("Unrecognized role: " + role)
 
     def replace_defaults(self, od):
         for role in ["input", "output"]:
             for name, replacement in self.sample_io.items():
                 role_defaults = od.get(role, {})
 
-                if not role_defaults.get(name): 
+                if not role_defaults.get(name):
                     role_defaults[name] = {}
 
                 if isinstance(replacement, Sample):
@@ -719,8 +763,8 @@ class Leg:
         :param dnstr_op: the downstream (later) Operation
         :type dnstr_op: Operation
         """
-        wire_pair = self.get_wire_pair(upstr_op, dnstr_op)
-        self.aq_plan.add_wires([wire_pair])
+        src, dst = self.get_wire_pair(upstr_op, dnstr_op)
+        self.plan.add_wire(src, dst)
         self.propagate_sample(upstr_op, dnstr_op)
 
     def wire_input_array(self, upstr_ops, dnstr_op):
@@ -736,10 +780,9 @@ class Leg:
         dnstr_fvs = self.primary_io_array(dnstr_op, "input")
 
         for upstr_op in upstr_ops:
-            w0 = self.primary_io(upstr_op, "output")
-            w1 = [fv for fv in dnstr_fvs if fv.sample.name == w0.sample.name][0]
-            wire_pair = [w0, w1]
-            self.aq_plan.add_wires([wire_pair])
+            src = self.primary_io(upstr_op, "output")
+            dst = [fv for fv in dnstr_fvs if fv.sample.name == src.sample.name][0]
+            self.plan.add_wire(src, dst)
 
     # TODO: This method may be redundant
     def propagate_sample(self, upstr_op, dnstr_op):
@@ -855,8 +898,8 @@ class Leg:
         :type start_date: Date
         """
         op = self.get_input_op()
-        v = "{ \"delay_until\": \"%s\" }" % start_date
-        op.set_field_value("Options", "input", value=v)
+        value = "{ \"delay_until\": \"%s\" }" % start_date
+        op.set_input("Options", value=value)
 
     @classmethod
     def length(cls):

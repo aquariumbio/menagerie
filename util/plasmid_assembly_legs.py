@@ -19,7 +19,7 @@ class CloningLeg(Leg):
     def set_sample_inputs(self, source):
         for s in source:
             this_io = self.sample_io.get(s["input_name"])
-            this_sample = self.ext_plan.input_sample(s["name"])
+            this_sample = self.plan.input_sample(s["name"])
 
             if this_io:
                 if isinstance(this_io, list):
@@ -32,7 +32,7 @@ class CloningLeg(Leg):
 
     def set_sample_outputs(self, destination):
         for handle in self.primary_handles:
-            self.sample_io[handle] = self.ext_plan.input_sample(destination["name"])
+            self.sample_io[handle] = self.plan.input_sample(destination["name"])
 
     def set_sample_io(self, source, destination):
         self.set_sample_outputs(destination)
@@ -52,13 +52,13 @@ class GoldenGateLeg(CloningLeg):
         super().__init__(plan_step, cursor)
 
     def set_sample_io(self, source, destination):
-        self.sample_io["Plasmid"] = self.ext_plan.input_sample(destination["name"])
+        self.sample_io["Plasmid"] = self.plan.input_sample(destination["name"])
 
         backbones = [s for s in source if s["input_name"].startswith("Vector")] or [None]
-        self.sample_io["Backbone"] = self.ext_plan.input_sample(backbones[0])
+        self.sample_io["Backbone"] = self.plan.input_sample(backbones[0])
 
         inserts = [s for s in source if not s["input_name"].startswith("Vector")]
-        self.sample_io["Inserts"] = [self.ext_plan.input_sample(i["name"]) for i in inserts]
+        self.sample_io["Inserts"] = [self.plan.input_sample(i["name"]) for i in inserts]
 
 
 class GibsonLeg(CloningLeg):
@@ -122,11 +122,11 @@ class PCRLeg(CloningLeg):
         pour_gel.y = self.cursor.y
 
         run_gel = get_obj_by_name(self.op_data, "Run Gel")["operation"]
-        gel_output = pour_gel.output("Lane")
-        gel_input = run_gel.input("Gel")
+        src = pour_gel.output("Lane")
+        dst = run_gel.input("Gel")
 
         self.aq_plan.add_operations([pour_gel])
-        self.aq_plan.add_wires([[gel_output, gel_input]])
+        self.plan.add_wire(src, dst)
 
 
 class YeastTransformationLeg(CloningLeg):
@@ -163,17 +163,17 @@ class YeastTransformationLeg(CloningLeg):
         super().set_sample_io(source, destination)
 
         for h in self.dna_handles:
-            self.sample_io[h] = self.ext_plan.input_sample(source["Integrant"])
+            self.sample_io[h] = self.plan.input_sample(source["Integrant"])
 
-        self.sample_io["Parent"] = self.ext_plan.input_sample(source["Parent"])
+        self.sample_io["Parent"] = self.plan.input_sample(source["Parent"])
 
     def get_output_op(self):
         return get_obj_by_name(self.op_data, "Check Yeast Plate")["operation"]
 
     def wire_plasmid(self):
-        upstr_fv = self.select_op("Plasmid Digest").output("Digested Plasmid")
-        dnstr_fv = self.select_op("Yeast Transformation").input("Genetic Material")
-        self.aq_plan.add_wires([[upstr_fv, dnstr_fv]])
+        src = self.select_op("Plasmid Digest").output("Digested Plasmid")
+        dst = self.select_op("Yeast Transformation").input("Genetic Material")
+        self.plan.add_wire(src, dst)
 
 
 class YeastGenotypingLeg(CloningLeg):
@@ -196,4 +196,4 @@ class YeastGenotypingLeg(CloningLeg):
 
     # def set_sample_io(self, source, destination):
     #     for h in self.primary_handles:
-    #         self.sample_io[h] = self.ext_plan.input_sample(destination)
+    #         self.sample_io[h] = self.plan.input_sample(destination)

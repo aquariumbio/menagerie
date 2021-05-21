@@ -7,40 +7,56 @@
         "project": "Testing"
       },
       {
-        "name": "Petcon Forward",
+        "name": "qPCR1 Forward Primer",
         "sample_type": "Primer Mix",
         "description": "qpcr_1_forward_primer",
         "project": "Testing"
       },
       {
-        "name": "Petcon Reverse",
+        "name": "qPCR1 Reverse Primer",
         "sample_type": "Primer Mix",
         "description": "qpcr_1_reverse_primer",
         "project": "Testing"
       },
       {
-        "name": "Petcon NGS prep forward primer",
+        "name": "qPCR2 Forward Primer",
         "sample_type": "Primer",
         "description": "qpcr_2_forward_primer for adding Illumina adapter",
-        "project": "Testing"
+        "project": "Testing",
+        "properties": {
+          "Anneal Sequence": "foo",
+          "T Anneal": 42
+        }
       },
       {
-        "name": "P7-finish_TSBC01-r",
+        "name": "qPCR2 Reverse Primer 01",
         "sample_type": "Primer",
         "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
-        "project": "Testing"
+        "project": "Testing",
+        "properties": {
+          "Anneal Sequence": "foo",
+          "T Anneal": 42
+        }
       },
       {
-        "name": "P7-finish_TSBC02-r",
+        "name": "qPCR2 Reverse Primer 02",
         "sample_type": "Primer",
         "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
-        "project": "Testing"
+        "project": "Testing",
+        "properties": {
+          "Anneal Sequence": "foo",
+          "T Anneal": 42
+        }
       },
       {
-        "name": "P7-finish_TSBC03-r",
+        "name": "qPCR2 Reverse Primer 03",
         "sample_type": "Primer",
         "description": "qpcr_2_reverse_primer for adding Illumina adapter and index",
-        "project": "Testing"
+        "project": "Testing",
+        "properties": {
+          "Anneal Sequence": "foo",
+          "T Anneal": 42
+        }
       }
     ],
     "items": [
@@ -55,6 +71,30 @@
         {
             "sample": "DNA LIBRARY SAMPLE NAME",
             "object_type": "Yeast Library in Soln 1"
+        },
+        {
+            "sample": "qPCR1 Forward Primer",
+            "object_type": "Primer Mix Stock"
+        },
+        {
+            "sample": "qPCR1 Reverse Primer",
+            "object_type": "Primer Mix Stock"
+        },
+        {
+            "sample": "qPCR2 Forward Primer",
+            "object_type": "Primer Aliquot"
+        },
+        {
+            "sample": "qPCR2 Reverse Primer 01",
+            "object_type": "96-Well Primer Aliquot Plate"
+        },
+        {
+            "sample": "qPCR2 Reverse Primer 02",
+            "object_type": "96-Well Primer Aliquot Plate"
+        },
+        {
+            "sample": "qPCR2 Reverse Primer 03",
+            "object_type": "96-Well Primer Aliquot Plate"
         }
     ]
 }

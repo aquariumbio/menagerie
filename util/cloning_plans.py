@@ -179,8 +179,8 @@ class YeastTransformationStep(CloningPlanStep):
 
                 upstr_op = step_outputs.get(integrant_src)
                 dnstr_op = build_leg.get_input_op()
-                wire_pair = [upstr_op.output("Plasmid"), dnstr_op.input("Integrant")]
-                self.plan.aq_plan.add_wires([wire_pair])
+                src, dst = [upstr_op.output("Plasmid"), dnstr_op.input("Integrant")]
+                self.plan.add_wire(src, dst)
 
                 upstr_op = build_leg.get_output_op()
                 step_outputs[dst] = upstr_op

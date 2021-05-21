@@ -12,9 +12,9 @@ def main():
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
-            'plan_path': 'yeast_display_plans/template_stability', 
-            'start_date': datetime.today(), 
-            'aq_instance': 'laptop'
+            'plan_path': 'yeast_display_plans/template_stability',
+            'start_date': datetime.today(),
+            'aq_instance': 'laptop_production'
         }
     else:
         # Ask for inputs on the command line
