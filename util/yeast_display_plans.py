@@ -126,12 +126,13 @@ class DNASeqStep(YeastDisplayPlanStep):
     # TODO: Make this more general and less stupid
     def create_transformations_from_params(self):
         input_samples = self.plan.input_samples
+        input_items = self.plan.input_items
         qpcr_1_reverse_primer = input_samples.get("qpcr_1_reverse_primer")
         qpcr_1_forward_primer = input_samples.get("qpcr_1_forward_primer")
         qpcr_2_reverse_primer = input_samples.get("qpcr_2_reverse_primer")
         qpcr_2_forward_primer = input_samples.get("qpcr_2_forward_primer")
 
-        template_items = [i for i in input_samples.values() if self.istemplate(i)]
+        template_items = [i for i in input_items.values() if self.istemplate(i)]
         template_items.sort(key=lambda i: i.id)
 
         for i, template_item in enumerate(template_items):
@@ -139,7 +140,8 @@ class DNASeqStep(YeastDisplayPlanStep):
                 "source": [
                     {
                         "input_name": "Template",
-                        "item": template_item
+                        "item": template_item,
+                        "sample_key": template_item.id
                     },
                     {
                         "input_name": "Forward Primer",
@@ -188,13 +190,11 @@ class DNASeqStep(YeastDisplayPlanStep):
             extract_leg = ExtractDNALeg(self, cursor)
             extract_leg.set_yeast_from_sample(library_sample)
             extract_leg.add()
-            input_op = extract_leg.get_input_op()
 
-            # print("Attempting to set fv for %d" % library_item.id)
             try:
-                input_op.set_field_value("Yeast Library", "input", item=library_item)
-            except:
-                print("Failed to set fv for %d" % library_item.id)
+                extract_leg.set_field_value(extract_leg.get_input_op(), "Yeast Library", "input", item=library_item)
+            except Exception as e:
+                print("Failed to set fv for {}: {}".format(library_item.id, e))
 
             upstr_op = extract_leg.get_output_op()
 
