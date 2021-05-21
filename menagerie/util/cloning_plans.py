@@ -1,7 +1,5 @@
 import json
 
-import pydent
-from pydent import models
 from pydent.models import Sample
 
 from util.plans import ExternalPlan, PlanStep, Transformation, get_obj_by_attr

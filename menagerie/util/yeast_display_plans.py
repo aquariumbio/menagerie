@@ -2,8 +2,6 @@ import json
 import re
 import os
 
-import pydent
-from pydent import models
 from pydent.models import Sample, Item
 
 from util.plans import ExternalPlan, PlanStep, Transformation, Measurement, InputError

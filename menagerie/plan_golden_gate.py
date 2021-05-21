@@ -12,7 +12,7 @@ def main():
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
-            "plan_path": "golden_gate_test",
+            "plan_path": "",
             "aq_instance": "nursery"
         }
     else:

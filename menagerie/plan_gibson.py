@@ -5,12 +5,12 @@ from util.format_output import print_blue
 
 def main():
     args = get_args()
-    
+
     if args.test:
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
-            'plan_path': 'cloning_plans/test_gibson',
+            'plan_path': 'config/cloning/test_gibson',
             'aq_instance': 'laptop'
         }
     else:

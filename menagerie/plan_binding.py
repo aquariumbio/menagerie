@@ -12,7 +12,7 @@ def main():
         # Override get_input() for convenience when testing code
         print_blue("RUNNING IN TEST MODE")
         inputs = {
-            'plan_path': 'yeast_display_plans/template_simple_binding',
+            'plan_path': 'config/yeast_display/template_simple_binding',
             'start_date': datetime.today(),
             'aq_instance': 'laptop_production'
         }
