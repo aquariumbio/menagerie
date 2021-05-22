@@ -5,4 +5,5 @@ docker run \
     --interactive --tty --rm \
     --volume "$PWD":/wd \
     --workdir /wd \
-    "plan_ngs_prep"  "$@"
+    --volume "$1:/script/data" \
+    "plan_ngs_prep"  "${@:2}"

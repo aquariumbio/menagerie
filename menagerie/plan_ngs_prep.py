@@ -15,9 +15,9 @@ def main():
         }
     else:
         # Ask for inputs on the command line
-        inputs = get_input(start_date=False)
+        inputs = get_input(start_date=False, plan_path=False)
 
-    plan = YeastDisplayPlan(inputs['plan_path'], inputs['aq_instance'])
+    plan = YeastDisplayPlan('/script/data', inputs['aq_instance'])
 
     # Keeps track of where to put the next operation in the Aquarium Designer GUI
     cursor = Cursor(y=18)
