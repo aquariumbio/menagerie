@@ -54,6 +54,7 @@ Run
 ```bash
 sh menagerie-install.sh
 ```
+If running this script for the first time, close the terminal and open new one. 
 
 ## Use
 ### Plan NGS Prep From Parameters
