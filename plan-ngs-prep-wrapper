@@ -1,0 +1,9 @@
+#!/bin/sh
+
+docker run \
+    --net=host \
+    --interactive --tty --rm \
+    --volume "$PWD":/wd \
+    --workdir /wd \
+    --volume "$1:/script/data" \
+    "plan_ngs_prep"  "${@:2}"
