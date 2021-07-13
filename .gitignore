@@ -101,7 +101,7 @@ ENV/
 .mypy_cache/
 
 #sd2e
-*/secrets.json
+secrets.json
 config.yml
 
 .vscode/
